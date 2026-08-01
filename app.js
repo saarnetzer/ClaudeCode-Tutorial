@@ -58,7 +58,14 @@
       completeBtn.addEventListener('click', function () {
         var d = getDone();
         var i = d.indexOf(lessonId);
-        if (i === -1) d.push(lessonId); else d.splice(i, 1);
+        if (i === -1) {
+          d.push(lessonId);
+          if (window.goatcounter && window.goatcounter.count) {
+            window.goatcounter.count({ path: 'complete-' + lessonId, title: 'Lesson completed: ' + lessonId, event: true });
+          }
+        } else {
+          d.splice(i, 1);
+        }
         setDone(d);
         render();
       });
