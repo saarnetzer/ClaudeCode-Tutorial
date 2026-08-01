@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מדריך עזר · Git ו-GitHub מאפס</title>
+<meta name="description" content="מדריך Git ו-GitHub למתחילים: מה ההבדל ביניהם, התקנת Git בכל מערכת הפעלה, פתיחת חשבון GitHub צעד אחר צעד, וחיבור המחשב לחשבון.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/git-basics.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="מדריך עזר · Git ו-GitHub מאפס">
+<meta property="og:description" content="מדריך Git ו-GitHub למתחילים: מה ההבדל ביניהם, התקנת Git בכל מערכת הפעלה, פתיחת חשבון GitHub צעד אחר צעד, וחיבור המחשב לחשבון.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/git-basics.html">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
+<meta property="og:locale" content="he_IL">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> קורס Claude Code</a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">מדריך עזר · לפני פרק 3</span>
+  <h1>Git ו-GitHub מאפס — התקנה, חשבון וחיבור</h1>
+  <p class="lead">פרק 3 מניח שיש לכם Git מותקן וחשבון GitHub. אין לכם? העמוד הזה מסדר את זה ברבע שעה, צעד אחר צעד — ומההתקנה הזו והלאה, את פקודות ה-git עצמן כבר לא תצטרכו לשנן: Claude יריץ אותן בשבילכם.</p>
+
+  <h2>קודם כול: מה זה בכלל, ומה ההבדל?</h2>
+  <ul>
+    <li><strong>Git</strong> היא תוכנה שרצה על המחשב שלכם ושומרת "נקודות שמירה" (קומיטים) של הפרויקט. כמו שמירה במשחק: אפשר תמיד לחזור אחורה. היא עובדת גם בלי אינטרנט ובלי שום חשבון.</li>
+    <li><strong>GitHub</strong> הוא אתר (בבעלות Microsoft) שמאחסן עותק של הפרויקט בענן: גיבוי, שיתוף עם אחרים, ו-Pull Requests. בשבילו כן צריך חשבון.</li>
+  </ul>
+  <p>במילים אחרות: Git = מנוע השמירה במחשב, GitHub = הענן שמעליו. לקורס צריך את שניהם — Git כבר מפרק 3, ו-GitHub לחלק מהתרגילים ולפרק 9.</p>
+  <div class="callout info">
+    <span class="co-title">💡 למה זה חשוב דווקא בקורס על סוכנים?</span>
+    כשסוכן AI עורך עשרות קבצים בשבילכם, Git הוא רשת הביטחון: כל שינוי נרשם, וכל טעות הפיכה ב-10 שניות. זו הסיבה שפרק 3 מגיע כל כך מוקדם בקורס.
+  </div>
+
+  <h2>שלב 1: מתקינים Git</h2>
+  <p>ייתכן שהוא כבר מותקן אצלכם — בדקו קודם בטרמינל:</p>
+  <pre><code>git --version</code></pre>
+  <p>קיבלתם מספר גרסה? דלגו לשלב 2. קיבלתם "command not found"? מתקינים:</p>
+
+  <h3>🪟 Windows</h3>
+  <pre><span class="pre-label">PowerShell</span><code>winget install --id Git.Git -e</code></pre>
+  <p>או הורידו את המתקין מהאתר הרשמי: <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">git-scm.com/download/win</a> (לחצו "הבא" על כל ברירות המחדל — הן טובות). בסיום סגרו ופתחו מחדש את הטרמינל.</p>
+
+  <h3>🍎 macOS</h3>
+  <pre><code>xcode-select --install</code></pre>
+  <p>זה מתקין את כלי הפיתוח של Apple, ש-Git כלול בהם. חלופה למי שמשתמש ב-<a href="https://brew.sh" target="_blank" rel="noopener">Homebrew</a>: ‏<code dir="ltr">brew install git</code>.</p>
+
+  <h3>🐧 Linux</h3>
+  <pre><code>sudo apt install git      # Ubuntu / Debian
+sudo dnf install git      # Fedora</code></pre>
+
+  <div class="callout tip">
+    <span class="co-title">✅ בדיקה</span>
+    פתחו טרמינל חדש והריצו <code dir="ltr">git --version</code>. מספר גרסה = מותקן. הלאה.
+  </div>
+
+  <h2>שלב 2: מציגים את עצמכם ל-Git</h2>
+  <p>‏Git חותם כל נקודת שמירה בשם ובאימייל. הגדירו אותם פעם אחת (בכל מערכת הפעלה, אותן פקודות):</p>
+  <pre><code>git config --global user.name "השם שלכם"
+git config --global user.email "you@example.com"</code></pre>
+  <p>השתמשו באותו אימייל שתפתחו איתו את חשבון GitHub בשלב הבא — כך התרומות שלכם יזוהו נכון.</p>
+
+  <h2>שלב 3: פותחים חשבון GitHub (חינם)</h2>
+  <ol>
+    <li>גשו אל <a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a>.</li>
+    <li>הזינו <strong>אימייל</strong> (זה מהשלב הקודם), בחרו <strong>סיסמה</strong> חזקה, ובחרו <strong>שם משתמש</strong>.</li>
+    <li>אשרו את קוד האימות שיישלח לאימייל — וזהו, יש לכם חשבון.</li>
+  </ol>
+  <div class="callout warn">
+    <span class="co-title">⚠️ רגע לפני שבוחרים שם משתמש</span>
+    שם המשתמש יופיע בכתובת של כל פרויקט שתפרסמו (למשל <code dir="ltr">github.com/your-name</code>) — והוא גם קורות החיים הציבוריים שלכם כמפתחים. בחרו משהו מקצועי שתשמחו לראות גם בעוד חמש שנים; באנגלית, קצר, בלי מספרים אקראיים.
+  </div>
+  <p><strong>מומלץ בחום:</strong> הפעילו אימות דו-שלבי (2FA) — בהגדרות החשבון: ‏Settings ← Password and authentication ← Two-factor authentication. חמש דקות שמגינות על כל הקוד שלכם.</p>
+
+  <h2>שלב 4: מחברים את המחשב לחשבון</h2>
+  <p>הדרך הנוחה ביותר — וזו שהקורס משתמש בה — היא <strong>GitHub CLI</strong> (הפקודה <code>gh</code>):</p>
+  <h3>התקנה</h3>
+  <pre><span class="pre-label">Windows (PowerShell)</span><code>winget install --id GitHub.cli -e</code></pre>
+  <pre><span class="pre-label">macOS</span><code>brew install gh</code></pre>
+  <pre><span class="pre-label">Linux</span><code>sudo apt install gh   # או לפי ההוראות ב-cli.github.com</code></pre>
+  <h3>התחברות (פעם אחת)</h3>
+  <pre><code>gh auth login</code></pre>
+  <p>עונים על השאלות כך: ‏<strong>GitHub.com</strong> ← ‏<strong>HTTPS</strong> ← ‏<strong>Login with a web browser</strong>. יופיע קוד בן 8 תווים — העתיקו אותו, אשרו בדפדפן שנפתח, וזהו.</p>
+  <div class="callout tip">
+    <span class="co-title">✅ בדיקה סופית שהכול מחובר</span>
+    הריצו <code dir="ltr">gh auth status</code>. אם אתם רואים ✓ ליד שם המשתמש שלכם — המחשב מחובר לחשבון, ואתם מוכנים לחלוטין לפרק 3, כולל תרגיל ה-Pull Request.
+  </div>
+
+  <h2>זהו — אתם מסודרים</h2>
+  <p>שימו לב מה <em>לא</em> עשינו כאן: לא למדנו אף פקודת git מעבר ל-config. זה בכוונה — בפרק 3 תגלו שאת כל העבודה השוטפת (קומיטים, ענפים, שחזורים, PRs) מבקשים מ-Claude במילים חופשיות, והוא מריץ את הפקודות הנכונות. התשתית שבניתם עכשיו היא כל מה שהיה חסר.</p>
+
+  <h2>רוצים להעמיק? (לא חובה)</h2>
+  <ul>
+    <li><a href="https://git-scm.com/book/en/v2" target="_blank" rel="noopener">Pro Git — הספר הרשמי והחינמי</a></li>
+    <li><a href="https://docs.github.com/en/get-started" target="_blank" rel="noopener">Getting started — התיעוד הרשמי של GitHub</a></li>
+    <li><a href="https://cli.github.com/manual/" target="_blank" rel="noopener">המדריך המלא ל-GitHub CLI</a></li>
+  </ul>
+
+  <nav class="lesson-nav">
+    <a href="index.html"><span class="dir-label">→ חזרה</span>לתוכן הקורס</a>
+    <a href="lesson-03.html"><span class="dir-label">מוכנים? ←</span>פרק 3: עבודה עם Git ו-GitHub</a>
+  </nav>
+</main>
+
+<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="https://github.com/saarnetzer/ClaudeCode-Tutorial/issues" target="_blank" rel="noopener">מצאתם טעות? פתחו issue</a><br>© 2026 סער נצר (<a href="https://github.com/saarnetzer" target="_blank" rel="noopener">Saar Netzer</a>) · כל הזכויות שמורות · נבנה באמצעות Claude Code</footer>
+</body>
+</html>
