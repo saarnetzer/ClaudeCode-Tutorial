@@ -40,6 +40,19 @@
   </div>
   <p><strong>הלקח מהעולם הזה:</strong> המבקר חייב להיות נפרד מהמבצע — ובלי הרשאות כתיבה, כדי שהביקורת תישאר ביקורת.</p>
 
+  <h3>מרחיבים: ארגון הפיתוח המלא</h3>
+  <p>צוות הפיצ'ר הוא הליבה, אבל ארגון פיתוח שלם מפעיל צוותים נוספים לצידו — כל אחד עם הסוכנים שלו:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>צוות</th><th>הסוכנים ותפקידם</th></tr>
+    <tr><td><strong>צוות אבטחה (Security)</strong><br><span style="opacity:.7">מבקר כל שינוי ותלות לפני שהם מגיעים לפרודקשן</span></td><td><code dir="ltr">threat-modeler</code> — מנתח סיכונים לכל פיצ׳ר חדש עוד בשלב ה־SPEC<br><code dir="ltr">secrets-scanner</code> — סורק סודות ומפתחות בקוד ובהיסטוריית git<br><code dir="ltr">dependency-auditor</code> — בודק חולשות ידועות בתלויות ומתעדף תיקון<br><code dir="ltr">authz-reviewer</code> — בודק הרשאות וגישה בכל נקודת קצה חדשה<br><code dir="ltr">security-reporter</code> — מרכז את הממצאים לדוח מדורג אחד</td></tr>
+    <tr><td><strong>צוות תשתיות (DevOps)</strong><br><span style="opacity:.7">הדרך מהקוד לשרתים — מהירה, זולה והפיכה</span></td><td><code dir="ltr">iac-writer</code> — כותב ומעדכן תשתית־כקוד (Terraform, K8s)<br><code dir="ltr">ci-doctor</code> — מאבחן כשלי CI ומתקן או מדווח<br><code dir="ltr">cost-watcher</code> — מנטר עלויות ענן ומתריע על חריגות<br><code dir="ltr">capacity-planner</code> — מתכנן משאבים לפי מגמות עומס<br><code dir="ltr">rollback-guardian</code> — מוודא שלכל שינוי יש דרך חזרה מוכנה</td></tr>
+    <tr><td><strong>צוות איכות (QA)</strong><br><span style="opacity:.7">שכבת בדיקות שמעבר לטסטים של צוות הפיצ׳ר</span></td><td><code dir="ltr">e2e-writer</code> — תרחישי קצה־לקצה בדפדפן אמיתי (פרק 7)<br><code dir="ltr">perf-tester</code> — מודד ביצועים ותופס רגרסיות איטיות<br><code dir="ltr">a11y-checker</code> — בודק נגישות: ניגודיות, מקלדת, קוראי מסך<br><code dir="ltr">regression-hunter</code> — הופך כל באג ישן לטסט שימנע את חזרתו</td></tr>
+    <tr><td><strong>צוות תחזוקה ותיעוד</strong><br><span style="opacity:.7">העבודה השקטה שמחזיקה את הפרויקט בריא</span></td><td><code dir="ltr">dep-updater</code> — עדכוני תלויות ליליים על ענף נפרד (פרק 9)<br><code dir="ltr">dead-code-cleaner</code> — מאתר ומסיר קוד שאין לו קוראים<br><code dir="ltr">api-doc-writer</code> — מסנכרן את התיעוד עם הקוד בכל שינוי<br><code dir="ltr">changelog-writer</code> — מנסח את רשימת השינויים לכל גרסה</td></tr>
+  </table>
+  </div>
+  <p><strong>איך הצוותים נפגשים:</strong> ב‑Pull Request. צוות הפיצ'ר מייצר, אבטחה ואיכות מבקרים כל PR, תשתיות מספקת את המסלול לפרודקשן — ותחזוקה עוברת ברקע על כל היתר.</p>
+
   <h2>2. עולם התוכן והשיווק: "מערכת המגזין" ✍️</h2>
   <p><strong>הבעיה:</strong> פוסט לבלוג של חברה דורש מחקר, כתיבה, עריכה לשונית והתאמה לקידום במנועי חיפוש — ארבע מיומנויות שונות שכותב אחד ממהר עושה בינוני.</p>
   <p><strong>התבנית:</strong> פס ייצור, עם העורך כשומר סף שרשאי להחזיר טיוטה אחורה.</p>
@@ -69,6 +82,19 @@ tools: Read, Edit
 החזר: הטקסט הערוך + רשימת השינויים המהותיים ונימוקם.</code></pre>
   <p><strong>הלקח מהעולם הזה:</strong> חוזה התוצרים של החוקר ("מקור לכל טענה") הוא מה שמונע מהצוות כולו להמציא עובדות. אמינות נבנית בתחילת השרשרת.</p>
 
+  <h3>מרחיבים: מחלקת השיווק המלאה</h3>
+  <p>מערכת המגזין מייצרת את תוכן הליבה — ומסביבה פועלת מחלקה שלמה:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>צוות</th><th>הסוכנים ותפקידם</th></tr>
+    <tr><td><strong>צוות סושיאל</strong><br><span style="opacity:.7">מפיץ ומתאים את התוכן לכל פלטפורמה</span></td><td><code dir="ltr">trend-scout</code> — מזהה נושאים חמים בתחום לפני כולם<br><code dir="ltr">post-writer</code> — ממיר כל מאמר לגרסאות לכל רשת חברתית<br><code dir="ltr">engagement-analyst</code> — מנתח מה עבד, מה לא, ולמה<br><code dir="ltr">calendar-planner</code> — בונה לוח פרסום שבועי מאוזן</td></tr>
+    <tr><td><strong>צוות קמפיינים</strong><br><span style="opacity:.7">פרסום ממומן שנמדד בכל שקל</span></td><td><code dir="ltr">audience-profiler</code> — מגדיר קהלי יעד ומסר לכל קהל<br><code dir="ltr">ad-copywriter</code> — כותב גרסאות מודעה מותאמות לכל קהל<br><code dir="ltr">ab-test-designer</code> — מתכנן ניסויי A/B עם מדדי הצלחה ברורים<br><code dir="ltr">budget-monitor</code> — עוקב אחרי עלות־המרה ומתריע על בזבוז</td></tr>
+    <tr><td><strong>צוות SEO</strong><br><span style="opacity:.7">מרחיב את בדיקת ה־SEO הבסיסית לאסטרטגיה</span></td><td><code dir="ltr">keyword-researcher</code> — חוקר ביטויי חיפוש ורמת תחרות<br><code dir="ltr">content-gap-analyst</code> — מאתר נושאים שהמתחרים מכסים ואתם לא<br><code dir="ltr">internal-linker</code> — מציע קישורים פנימיים בין תכנים קיימים<br><code dir="ltr">rank-tracker</code> — עוקב אחרי דירוגים ומדווח על שינויים</td></tr>
+    <tr><td><strong>צוות מיתוג</strong><br><span style="opacity:.7">שומר שכל התוכן נשמע כמו אותו ארגון</span></td><td><code dir="ltr">brand-guardian</code> — אוכף טון, מסרים ומינוח אחידים בכל תוצר<br><code dir="ltr">visual-brief-writer</code> — כותב בריפים מדויקים למעצבים<br><code dir="ltr">consistency-checker</code> — סורק אתר וחומרים ומאתר סתירות במסרים</td></tr>
+  </table>
+  </div>
+  <p><strong>איך הצוותים נפגשים:</strong> המגזין מייצר, סושיאל וקמפיינים מפיצים, SEO מכוון את הנושאים הבאים — וה‑brand-guardian מבקר את כולם לפני פרסום.</p>
+
   <h2>3. עולם הנתונים: "צוות הדוח השבועי" 📊</h2>
   <p><strong>הבעיה:</strong> כל שבוע צריך לענות על אותה שאלה עסקית ("מה קרה במכירות ולמה") מתוך נתונים גולמיים — תהליך של איסוף, ניקוי, ניתוח והצגה.</p>
   <p><strong>התבנית:</strong> מנהל־ועובדים. למה לא פס ייצור? כי הניתוח מכתיב את ההמשך: ממצא חריג דורש צלילה נוספת, שבוע רגיל לא. המתאם מחליט.</p>
@@ -82,6 +108,19 @@ tools: Read, Edit
   </table>
   </div>
   <p><strong>הלקח מהעולם הזה:</strong> שני דברים. האחד — הרשאות readonly למסד הנתונים (פרק 7) הן מה שמאפשר לתת לצוות לרוץ בלי פיקוח. השני — "עוצמת ביטחון לכל ממצא" בחוזה של האנליסט מונעת מהדוח להציג ניחוש כעובדה.</p>
+
+  <h3>מרחיבים: ארגון הנתונים המלא</h3>
+  <p>הדוח השבועי הוא התוצר הנראה — מתחתיו עובדים עוד צוותים:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>צוות</th><th>הסוכנים ותפקידם</th></tr>
+    <tr><td><strong>צוות הנדסת נתונים</strong><br><span style="opacity:.7">הצינורות שמזינים את כל השאר</span></td><td><code dir="ltr">pipeline-builder</code> — בונה ומתחזק צינורות איסוף ועיבוד (ETL)<br><code dir="ltr">schema-guardian</code> — שומר על מבנה הנתונים ותאימות לאחור<br><code dir="ltr">quality-monitor</code> — בודק כל לילה שלמות, טריות וכפילויות<br><code dir="ltr">backfill-runner</code> — משלים נתונים היסטוריים בזהירות וביומן מלא</td></tr>
+    <tr><td><strong>צוות מחקר</strong><br><span style="opacity:.7">מהשערה לניסוי מבוקר</span></td><td><code dir="ltr">hypothesis-designer</code> — מנסח השערות עם קריטריון הפרכה ברור<br><code dir="ltr">experiment-runner</code> — מריץ ניסויים ושומר תוצאות גולמיות<br><code dir="ltr">evaluator</code> — בוחן תוצאות מול מדדים שהוגדרו מראש<br><code dir="ltr">experiment-logger</code> — מתעד הכול כך שכל ניסוי ניתן לשחזור</td></tr>
+    <tr><td><strong>צוות BI</strong><br><span style="opacity:.7">מהנתונים להחלטות עסקיות</span></td><td><code dir="ltr">metric-definer</code> — מגדיר מדדים אחידים — הגדרה אחת לכל הארגון<br><code dir="ltr">dashboard-builder</code> — בונה ומעדכן לוחות מחוונים<br><code dir="ltr">anomaly-explainer</code> — מסביר כל חריגה במדד: אמיתית או רעש<br><code dir="ltr">stakeholder-reporter</code> — מתרגם ממצאים לשפה עסקית להנהלה</td></tr>
+    <tr><td><strong>צוות פרטיות וגברנס</strong><br><span style="opacity:.7">הגבולות החוקיים והאתיים של הנתונים</span></td><td><code dir="ltr">pii-scanner</code> — מאתר מידע אישי מזהה בכל מאגר חדש<br><code dir="ltr">access-reviewer</code> — סוקר תקופתית מי ניגש למה ולמה<br><code dir="ltr">retention-auditor</code> — אוכף מדיניות שמירה ומחיקת נתונים</td></tr>
+  </table>
+  </div>
+  <p><strong>איך הצוותים נפגשים:</strong> הנדסת הנתונים מזינה את כולם; צוות הפרטיות מבקר כל צינור ומאגר חדש לפני עלייה לאוויר; BI והמחקר צורכים — והדוח השבועי הוא רק החלון הקטן שרואה ההנהלה.</p>
 
   <h2>4. עולם התפעול: "משמרת הלילה" 🌙</h2>
   <p><strong>הבעיה:</strong> תקלות לא מחכות לשעות העבודה. צריך מישהו שמנטר, מאבחן, מתקן את מה שבטוח לתקן — ומעיר בני אדם רק כשבאמת צריך.</p>
@@ -97,6 +136,19 @@ tools: Read, Edit
   </div>
   <p><strong>הלקח מהעולם הזה:</strong> שדה "בטוח לתיקון אוטומטי?" בחוזה של המאבחן הוא נקודת ההכרעה כולה: fixer מטפל רק ב"כן", וכל "לא" עולה לבן אדם. הצוות אוטונומי בדיוק עד גבול הסיכון — ולא צעד אחד מעבר.</p>
 
+  <h3>מרחיבים: ארגון התפעול המלא</h3>
+  <p>משמרת הלילה מגיבה לתקלות — סביבה פועלים צוותים שמונעים אותן מראש:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>צוות</th><th>הסוכנים ותפקידם</th></tr>
+    <tr><td><strong>צוות SecOps</strong><br><span style="opacity:.7">אבטחה תפעולית שוטפת</span></td><td><code dir="ltr">log-forensic</code> — חוקר אירועים חשודים לעומק בלוגים<br><code dir="ltr">ioc-scanner</code> — מצליב אינדיקטורים מוכרים של תקיפה<br><code dir="ltr">patch-prioritizer</code> — מתעדף עדכוני אבטחה לפי חשיפה בפועל<br><code dir="ltr">access-anomaly-watcher</code> — מזהה דפוסי גישה חריגים לחשבונות</td></tr>
+    <tr><td><strong>צוות FinOps</strong><br><span style="opacity:.7">העלות כאזעקה תפעולית</span></td><td><code dir="ltr">cost-watcher</code> — מנטר הוצאות ענן ברמה יומית<br><code dir="ltr">waste-hunter</code> — מאתר משאבים רדומים ששוכחים לכבות<br><code dir="ltr">rightsizing-advisor</code> — ממליץ על התאמת גדלי שרתים לעומס אמיתי<br><code dir="ltr">forecast-reporter</code> — חוזה חריגות תקציב לפני סוף החודש</td></tr>
+    <tr><td><strong>צוות אמינות (SRE)</strong><br><span style="opacity:.7">לומד מכל תקלה כדי שלא תחזור</span></td><td><code dir="ltr">slo-tracker</code> — עוקב אחרי יעדי זמינות מול המציאות<br><code dir="ltr">postmortem-writer</code> — כותב תחקיר ללא־האשמה אחרי כל אירוע<br><code dir="ltr">runbook-maintainer</code> — מעדכן את ספרי הנהלים לפי לקחי התחקירים<br><code dir="ltr">chaos-planner</code> — מתכנן תרגילי כשל מבוקרים לחיזוק המערכת</td></tr>
+    <tr><td><strong>צוות שדרוגים</strong><br><span style="opacity:.7">שינויים גדולים בלי לילות לבנים</span></td><td><code dir="ltr">migration-planner</code> — מפרק מעברי גרסה לשלבים הפיכים<br><code dir="ltr">canary-watcher</code> — מנטר פריסות הדרגתיות ועוצר בסימן ראשון<br><code dir="ltr">dep-updater</code> — מריץ עדכוני תלויות שוטפים על ענף נפרד<br><code dir="ltr">rollback-guardian</code> — שומר שלכל שלב יש נסיגה מוכנה ובדוקה</td></tr>
+  </table>
+  </div>
+  <p><strong>איך הצוותים נפגשים:</strong> משמרת הלילה מגיבה; ה‑SRE הופך כל אירוע שלה לתחקיר ולנוהל מעודכן; SecOps ו‑FinOps מנטרים כל אחד את הציר שלו; ושדרוגים דואג שגם שינוי גדול לא יעיר אף אחד.</p>
+
   <h2>5. עולם המסחר והשירות: "צוות התמיכה" 🛒</h2>
   <p><strong>הבעיה:</strong> תיבת פניות של חנות מקוונת מקבלת ערבוב של שאלות מוצר, בעיות משלוח, בקשות החזר ותלונות — לכל סוג מומחיות וטון אחרים.</p>
   <p><strong>התבנית:</strong> ממיין ← מומחים במקביל ← בקרה אנושית. הממיין מפצל, כל מומחה מטפל בערימה שלו בו־זמנית.</p>
@@ -111,9 +163,23 @@ tools: Read, Edit
   </div>
   <p><strong>הלקח מהעולם הזה:</strong> שימו לב מה הצוות הזה <em>לא</em> עושה — הוא לא שולח תשובות. התוצר הוא טיוטות בתור לאישור, ו"דורש אדם" מסלים מיד תלונות רגישות. בעולם שנוגע בלקוחות אמיתיים, הצוות מכין — האדם לוחץ "שלח". לפחות עד שנבנה אמון, בהדרגה ובמדידה.</p>
 
+  <h3>מרחיבים: ארגון המסחר המלא</h3>
+  <p>התמיכה היא נקודת המגע — סביבה פועל ארגון שלם, כולל צוות מכירות:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>צוות</th><th>הסוכנים ותפקידם</th></tr>
+    <tr><td><strong>צוות מכירות</strong><br><span style="opacity:.7">מהליד להצעה — טיוטות בלבד, אדם סוגר</span></td><td><code dir="ltr">lead-qualifier</code> — מדרג פניות נכנסות לפי פוטנציאל אמיתי<br><code dir="ltr">outreach-writer</code> — מנסח פניות מותאמות אישית — לאישור אנושי<br><code dir="ltr">proposal-drafter</code> — מרכיב הצעות מחיר מהקטלוג והמחירון<br><code dir="ltr">crm-updater</code> — מתעד כל אינטראקציה במערכת הלקוחות<br><code dir="ltr">followup-scheduler</code> — מתזמן תזכורות מעקב כדי שאף ליד לא יאבד</td></tr>
+    <tr><td><strong>צוות קטלוג</strong><br><span style="opacity:.7">החנות עצמה: מוצרים, מחירים, מלאי</span></td><td><code dir="ltr">description-writer</code> — כותב תיאורי מוצר אחידים ומדויקים<br><code dir="ltr">price-monitor</code> — משווה מחירי מתחרים ומתריע על פערים<br><code dir="ltr">inventory-watcher</code> — מתריע על מלאי נמוך לפי קצב מכירה<br><code dir="ltr">image-checker</code> — מוודא שלכל מוצר תמונות ותיוג תקינים</td></tr>
+    <tr><td><strong>צוות חוויית לקוח</strong><br><span style="opacity:.7">מהתלונות לתובנות</span></td><td><code dir="ltr">review-analyzer</code> — מנתח ביקורות ומזהה דפוסים חוזרים<br><code dir="ltr">churn-detector</code> — מאתר לקוחות בסיכון נטישה לפי התנהגות<br><code dir="ltr">nps-reporter</code> — מסכם משוב ומגמות שביעות רצון<br><code dir="ltr">voice-of-customer</code> — מתרגם תלונות חוזרות להצעות שיפור למוצר</td></tr>
+    <tr><td><strong>צוות תפעול הזמנות</strong><br><span style="opacity:.7">מהקנייה עד הדלת</span></td><td><code dir="ltr">fraud-flagger</code> — מסמן הזמנות חשודות לבדיקה אנושית<br><code dir="ltr">returns-processor</code> — מכין טיפול בהחזרות לפי המדיניות<br><code dir="ltr">shipping-tracker</code> — עוקב אחרי משלוחים ומתריע על עיכובים</td></tr>
+  </table>
+  </div>
+  <p><strong>איך הצוותים נפגשים:</strong> התמיכה שומעת את הלקוח, חוויית הלקוח מתרגמת את זה לתובנות, מכירות וקטלוג פועלים לפיהן — והכול תחת אותו כלל ברזל: בכל נגיעה בלקוח אמיתי, הסוכנים מכינים טיוטה והאדם לוחץ "שלח".</p>
+
   <h2>מה חוזר בכל חמשת העולמות</h2>
   <ul class="checklist">
     <li><strong>אותם ארבעה רכיבים:</strong> מתאם, מומחים, זיכרון משותף, חוזה תוצרים — רק השמות מתחלפים</li>
+    <li><strong>ארגון שלם = צוותים של צוותים:</strong> כל צוות נשאר קטן וממוקד, והחיבור ביניהם עובר דרך תוצרים מוגדרים (PR, דוח, טיוטה) — לא דרך "כולם מדברים עם כולם"</li>
     <li><strong>תמיד יש מבקר:</strong> סוקר קוד, עורך לשוני, בודק ניסוח — תפקיד הביקורת שורד בכל תחום</li>
     <li><strong>הרשאות לפי תפקיד:</strong> readonly לקוראים, רשימות מאושרות למתקנים, שליחה רק דרך אדם</li>
     <li><strong>האדם בנקודות ההכרעה:</strong> אישור תוכנית, השלמת critical, לחיצת "שלח" — כל צוות מגדיר את שלו</li>
