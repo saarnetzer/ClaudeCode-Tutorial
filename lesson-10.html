@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרק 10 · סוכנים אוטונומיים לגמרי — Agent SDK ועקרונות עבודה</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> קורס Claude Code</a></div>
+  <nav><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">פרק 10 מתוך 10 · הפסגה</span>
+  <h1>סוכנים אוטונומיים לגמרי — Agent SDK ועקרונות עבודה</h1>
+  <p class="lead">הגעתם לפסגה. בפרק הזה נבנה סוכן משלנו בקוד עם ה‑Claude Agent SDK — אותו מנוע שמריץ את Claude Code עצמו — ונלמד את חמשת העקרונות שמבדילים בין סוכן אוטונומי שמייצר ערך לבין כזה שמייצר בלגן.</p>
+
+  <h2>מה נלמד בפרק</h2>
+  <ul class="checklist">
+    <li>מה זה ה‑Claude Agent SDK ולמה הוא נקודת הזינוק הטובה ביותר</li>
+    <li>סוכן ראשון ב‑TypeScript וב‑Python</li>
+    <li>הוספת כלים מותאמים והרשאות מתוכנתות</li>
+    <li>חמשת עקרונות האוטונומיה הבטוחה</li>
+    <li>לאן ממשיכים מכאן</li>
+  </ul>
+
+  <h2>מה זה ה‑Agent SDK</h2>
+  <p>ה‑<strong>Claude Agent SDK</strong> הוא ספרייה (ל‑TypeScript ול‑Python) שנותנת לכם בקוד את כל מה שמניע את Claude Code: הלולאה הסוכנית (חשיבה → כלי → תוצאה → חשיבה...), כלי הקבצים והטרמינל, מערכת ההרשאות, subagents,‏ hooks ו‑MCP. במקום לבנות תשתית סוכנים מאפס — אתם מקבלים את התשתית המוכחת ומרכיבים עליה את הסוכן <em>שלכם</em>: הלוגיקה, הגבולות, וההשתלבות במערכת שלכם.</p>
+  <pre><code># TypeScript
+npm install @anthropic-ai/claude-agent-sdk
+
+# Python
+pip install claude-agent-sdk</code></pre>
+
+  <h2>סוכן ראשון: 20 שורות</h2>
+  <h3>TypeScript</h3>
+  <pre><span class="pre-label">agent.ts</span><code>import { query } from "@anthropic-ai/claude-agent-sdk";
+
+const result = query({
+  prompt: "מצא את כל קבצי ה-TODO בפרויקט וסכם אותם בקובץ TODO_REPORT.md",
+  options: {
+    cwd: "/path/to/project",
+    allowedTools: ["Read", "Grep", "Glob", "Write"],
+    maxTurns: 20,
+  },
+});
+
+for await (const message of result) {
+  if (message.type === "assistant") {
+    console.log(message.message.content);   // לראות את הסוכן "חושב"
+  }
+  if (message.type === "result") {
+    console.log("סיכום:", message.result);
+    console.log("עלות ($):", message.total_cost_usd);
+  }
+}</code></pre>
+  <h3>Python</h3>
+  <pre><span class="pre-label">agent.py</span><code>import anyio
+from claude_agent_sdk import query, ClaudeAgentOptions
+
+async def main():
+    async for message in query(
+        prompt="מצא את כל קבצי ה-TODO בפרויקט וסכם אותם בקובץ TODO_REPORT.md",
+        options=ClaudeAgentOptions(
+            cwd="/path/to/project",
+            allowed_tools=["Read", "Grep", "Glob", "Write"],
+            max_turns=20,
+        ),
+    ):
+        print(message)
+
+anyio.run(main)</code></pre>
+  <p>הריצו — ותראו בפלט את הסוכן עובד: מחפש, קורא, כותב, ומחזיר תוצאה סופית עם עלות. <strong>זה סוכן אוטונומי אמיתי</strong>: נתתם מטרה, והוא בחר לבד את הצעדים.</p>
+
+  <h2>כלי מותאם אישית</h2>
+  <p>הכוח האמיתי: לתת לסוכן כלים מהעולם <em>שלכם</em>. כלים מותאמים מוגדרים כשרת MCP פנימי בתוך התהליך:</p>
+  <pre><span class="pre-label">tools.ts</span><code>import { tool, createSdkMcpServer, query } from "@anthropic-ai/claude-agent-sdk";
+import { z } from "zod";
+
+const sendAlert = tool(
+  "send_alert",
+  "שולח התראה לצוות התפעול. השתמש רק לתקלות ברמת חומרה גבוהה.",
+  { message: z.string(), severity: z.enum(["low", "high"]) },
+  async (args) => {
+    await notifyOps(args.message, args.severity);   // הלוגיקה שלכם
+    return { content: [{ type: "text", text: "ההתראה נשלחה" }] };
+  }
+);
+
+const opsServer = createSdkMcpServer({
+  name: "ops-tools",
+  tools: [sendAlert],
+});
+
+const result = query({
+  prompt: "בדוק את הלוגים של הלילה. אם יש תקלה חמורה - שלח התראה",
+  options: {
+    mcpServers: { "ops-tools": opsServer },
+    allowedTools: ["Read", "Grep", "mcp__ops-tools__send_alert"],
+    maxTurns: 30,
+  },
+});</code></pre>
+  <p>שימו לב לתיאור הכלי — "השתמש רק לתקלות חמורות". כמו ב‑Skills וב‑subagents, התיאור הוא הממשק בין הכוונה שלכם לשיקול הדעת של הסוכן. ואם רוצים שליטה קשיחה יותר: ה‑SDK תומך גם ב‑hooks וב‑<code>canUseTool</code> — פונקציה שלכם שמאשרת או דוחה כל קריאת כלי בזמן אמת, בקוד.</p>
+
+  <h2>חמשת עקרונות האוטונומיה הבטוחה</h2>
+  <p>כל מה שלמדתם בקורס מתנקז לחמישה עקרונות. סוכן שעומד בכולם — אפשר באמת לשחרר:</p>
+  <h3>1. לולאת משוב שהסוכן מריץ בעצמו</h3>
+  <p>אוטונומיה בלי דרך לבדוק הצלחה היא ניחוש. טסטים (פרק 3), דפדפן (פרק 7), קומפילציה, lint — הסוכן חייב כלי שאומר לו "הצלחת/נכשלת" בלי בן אדם. נסחו כל משימה עם קריטריון בדיקה: <em>"...וסיימת רק כשכל הטסטים ירוקים"</em>.</p>
+  <h3>2. גבולות בקוד, לא בהבטחות</h3>
+  <p>הרשאות מינימום (<code dir="ltr">allowedTools</code>), ‏hooks חוסמים (פרק 6), משתמשי readonly (פרק 7), סביבה מבודדת (פרק 9). מה שאסור — שיהיה <em>בלתי אפשרי</em>, לא רק "לא מומלץ".</p>
+  <h3>3. בלמים כמותיים</h3>
+  <p>‏<code dir="ltr">maxTurns</code> לכל ריצה, ניטור עלות מה‑JSON שחוזר, ו‑timeout חיצוני. סוכן שתקוע בלולאה צריך להיעצר מעצמו — לא כשתשימו לב לחשבון.</p>
+  <h3>4. זיכרון חיצוני ועבודה בפרוסות</h3>
+  <p>משימות ארוכות מפרקים לשלבים שכל אחד נגמר בקומיט ובעדכון קובץ מצב (PROGRESS.md — פרק 4). ריצה שנקטעת ממשיכה מהקובץ, לא מאפס. git הוא עמוד השדרה: כל שלב הפיך.</p>
+  <h3>5. אדם בנקודות ההכרעה</h3>
+  <p>אוטונומיה "לגמרי" לא אומרת "בלי בני אדם" — אלא שהאדם עובר מהלולאה הפנימית לנקודות הביקורת: הסוכן עובד לבד שעות, אבל התוצר הוא PR שאתם מאשרים, והתראות (Notification hooks, ‏send_alert) מזעיקות אתכם כשמשהו חריג. אתם מנהלים, לא מלווים צמוד.</p>
+
+  <div class="callout tip">
+    <span class="co-title">✅ המבחן הסופי</span>
+    לפני שמשחררים סוכן לרוץ לבד, שאלו: "מה הדבר הכי גרוע שיכול לקרות בריצה הזו?" אם התשובה היא "ענף git מבולגן שאמחק" — קדימה. אם התשובה כוללת מסד נתונים אמיתי, כסף או לקוחות — חסר עיקרון 2. חזרו לחזק גבולות.
+  </div>
+
+  <h2>תרגילים</h2>
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 10.1</span> הסוכן הראשון שלכם בקוד</div>
+    <p>הריצו את סוכן ה‑TODO מהדוגמה (בשפה שנוחה לכם) על פרויקט אמיתי. אחר כך שנו את המשימה למשהו שלכם: יצירת דוח תיעוד, איתור קוד מת, בדיקת עקביות תרגומים. עקבו בפלט אחרי הצעדים שהוא בוחר.</p>
+    <details class="solution"><summary>אם משהו נתקע</summary>
+      <p>ודאו שמשתנה הסביבה <code dir="ltr">ANTHROPIC_API_KEY</code> מוגדר, ושה‑allowedTools כוללים את מה שהמשימה באמת דורשת (כתיבת דוח = צריך Write). שגיאת "כלי לא מורשה" בפלט היא רמז מדויק למה שחסר.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 10.2</span> כלי מותאם + שיקול דעת</div>
+    <p>בנו סוכן "בודק בריאות פרויקט" עם כלי מותאם אחד: <code dir="ltr">report_status(status, details)</code> שכותב לקובץ JSON (או שולח הודעה אמיתית — טלגרם/סלאק אם בא לכם). המשימה: "הרץ טסטים ו‑lint; דווח ok אם הכול תקין, ו‑failed עם פירוט אם לא". הריצו פעם על פרויקט תקין ופעם על שבור.</p>
+    <details class="solution"><summary>מה בודקים כאן</summary>
+      <p>שהסוכן מפעיל את הכלי שלכם <em>נכון</em>: פעם אחת עם ok, פעם עם failed + פירוט אמיתי של הכשל. אם הוא מדווח ok על פרויקט שבור — חדדו את הפרומפט ("הרץ בפועל וקרא את הפלט; אל תניח"). ברוכים הבאים להנדסת סוכנים.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 10.3</span> פרויקט גמר: הסוכן הלילי</div>
+    <p>חברו הכול: בנו סוכן שרץ מתוזמן (cron או GitHub Actions מתוזמן) פעם ביום על ריפו שלכם, ומבצע משימת תחזוקה לבחירתכם מקצה לקצה — על ענף נפרד, עם טסטים כלולאת משוב, maxTurns, קובץ מצב, ו‑PR כתוצר. תנו לו לרוץ שלושה לילות וסקרו את התוצרים.</p>
+    <details class="solution"><summary>מסגרת מומלצת</summary>
+      <p>קחו את <code dir="ltr">nightly-deps.sh</code> מפרק 9 כשלד, והחליפו את המשימה: ניקוי קוד מת, שיפור כיסוי טסטים ("הוסף טסט אחד לקובץ הכי פחות מכוסה"), או עדכון תיעוד. עברו על חמשת העקרונות כ‑checklist לפני ההרצה הראשונה. אחרי שלושה לילות תדעו בדיוק מה לחזק — וזו בדיוק המיומנות של מהנדס סוכנים.</p>
+    </details>
+  </div>
+
+  <h2>סיימתם את הקורס 🎉</h2>
+  <p>תסתכלו אחורה רגע: התחלתם מהתקנה של כלי טרמינל, ואתם מסיימים עם היכולת לתכנן, לבנות ולשחרר סוכני AI שעובדים בשבילכם — עם גבולות נכונים, לולאות משוב ובקרה אנושית חכמה. זו מיומנות שהעולם רק מתחיל להבין את ערכה.</p>
+  <p><strong>לאן ממשיכים?</strong></p>
+  <ul>
+    <li><a href="https://code.claude.com/docs" target="_blank" rel="noopener">התיעוד הרשמי של Claude Code</a> — הכיסוי המלא והמתעדכן של כל מה שלמדנו</li>
+    <li><a href="https://docs.claude.com/en/api/agent-sdk/overview" target="_blank" rel="noopener">תיעוד ה‑Agent SDK</a> — העמקה בבניית סוכנים בקוד</li>
+    <li><a href="https://www.anthropic.com/engineering" target="_blank" rel="noopener">בלוג ההנדסה של Anthropic</a> — מאמרים כמו "Building Effective Agents" ו‑"Claude Code Best Practices"</li>
+    <li>והכי חשוב — <strong>הפרויקטים שלכם</strong>: קחו תהליך אחד מעצבן שאתם עושים ידנית, ותנו לו סוכן.</li>
+  </ul>
+
+  <div class="complete-row"><button id="completeBtn" data-lesson="l10"></button></div>
+
+  <nav class="lesson-nav">
+    <a href="lesson-09.html"><span class="dir-label">→ הפרק הקודם</span>מצב Headless ואוטומציה ב‑CI</a>
+    <a href="index.html"><span class="dir-label">חזרה ←</span>לתוכן הקורס</a>
+  </nav>
+</main>
+
+<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a></footer>
+</body>
+</html>

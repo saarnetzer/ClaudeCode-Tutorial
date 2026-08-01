@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרק 1 · מה זה Claude Code? התקנה והרצה ראשונה</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> קורס Claude Code</a></div>
+  <nav><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">פרק 1 מתוך 10</span>
+  <h1>מה זה Claude Code? התקנה והרצה ראשונה</h1>
+  <p class="lead">בפרק הזה תבינו מה Claude Code בעצם עושה, תתקינו אותו על המחשב שלכם, ותוך רבע שעה תריצו את השיחה הראשונה שלכם — כזו שבאמת יוצרת קוד עובד.</p>
+
+  <h2>מה נלמד בפרק</h2>
+  <ul class="checklist">
+    <li>מה ההבדל בין Claude Code לבין צ'אט רגיל עם AI</li>
+    <li>התקנה על macOS / Linux / Windows</li>
+    <li>התחברות לחשבון והרצה ראשונה</li>
+    <li>שלוש דרכים לצאת, לעצור ולהתחיל מחדש</li>
+  </ul>
+
+  <h2>אז מה זה בעצם?</h2>
+  <p><strong>Claude Code הוא סוכן תכנות שרץ בטרמינל שלכם.</strong> ההבדל בינו לבין צ'אט רגיל (כמו אתר claude.ai) הוא עצום:</p>
+  <ul>
+    <li>צ'אט רגיל <em>מדבר</em> על קוד — אתם מעתיקים ומדביקים בעצמכם.</li>
+    <li>Claude Code <em>עושה</em>: הוא קורא את הקבצים שלכם, כותב ועורך אותם, מריץ פקודות, מריץ טסטים, מתקן שגיאות שהוא רואה — ומתקדם צעד־צעד עד שהמשימה גמורה.</li>
+  </ul>
+  <p>המילה החשובה כאן היא <strong>"סוכן" (Agent)</strong>: תוכנה שמקבלת מטרה, מתכננת, מפעילה כלים (קריאת קבצים, טרמינל, חיפוש), בודקת את התוצאה של עצמה — וחוזרת על התהליך עד להצלחה. כל הקורס הזה הוא בעצם מסע: מלהשתמש בסוכן, ועד לבנות סוכנים משלכם שרצים לבד.</p>
+
+  <div class="callout info">
+    <span class="co-title">💡 לא רק לקוד</span>
+    אנשים משתמשים ב‑Claude Code גם לכתיבת מסמכים, ניתוח נתונים, אוטומציה של קבצים ועוד. אבל הבית הטבעי שלו הוא פרויקטי תוכנה — ושם נתמקד.
+  </div>
+
+  <h2>התקנה</h2>
+  <h3>macOS / Linux</h3>
+  <pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre>
+  <h3>Windows (PowerShell)</h3>
+  <pre><code>irm https://claude.ai/install.ps1 | iex</code></pre>
+  <h3>או דרך npm (אם Node.js כבר מותקן אצלכם)</h3>
+  <pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
+  <p>בסיום, ודאו שההתקנה הצליחה:</p>
+  <pre><code>claude --version</code></pre>
+  <p>אם קיבלתם מספר גרסה — אתם מוכנים.</p>
+
+  <div class="callout warn">
+    <span class="co-title">⚠️ הפקודה לא מזוהה?</span>
+    סגרו ופתחו מחדש את הטרמינל (או את PowerShell). סקריפט ההתקנה מוסיף את הכלי לנתיב המערכת, והשינוי נטען רק בחלון חדש.
+  </div>
+
+  <h2>הרצה ראשונה והתחברות</h2>
+  <p>נכנסים לתיקייה של פרויקט (או לתיקייה ריקה לניסיון) ומריצים:</p>
+  <pre><code>mkdir hello-claude &amp;&amp; cd hello-claude
+claude</code></pre>
+  <p>בהרצה הראשונה תתבקשו להתחבר. יש שתי אפשרויות:</p>
+  <ul>
+    <li><strong>מנוי Claude (Pro/Max)</strong> — התחברות דרך הדפדפן לחשבון claude.ai. הכי פשוט למשתמש פרטי.</li>
+    <li><strong>מפתח API של Anthropic Console</strong> — תשלום לפי שימוש. מתאים לצוותים ולאוטומציה (נצטרך את זה בפרק 9).</li>
+  </ul>
+  <p>אחרי ההתחברות תראו שורת קלט ממתינה. זה הכול — אתם בפנים. נסו לכתוב:</p>
+  <pre><code>בנה לי דף HTML בודד בשם index.html עם משחק איקס-עיגול פשוט, בעברית, עם עיצוב נחמד</code></pre>
+  <p>שימו לב מה קורה: Claude מציג לכם <strong>מה הוא מתכנן לעשות</strong>, ולפני כל פעולה "מסוכנת" (כתיבת קובץ, הרצת פקודה) הוא <strong>מבקש אישור</strong>. אשרו, וצפו בקובץ נוצר. פתחו את <code>index.html</code> בדפדפן — יש לכם משחק.</p>
+
+  <div class="callout tip">
+    <span class="co-title">✅ אפשר לכתוב בעברית</span>
+    Claude מבין עברית מצוין. את הדוגמאות בקורס נכתוב לפעמים בעברית ולפעמים באנגלית — שתיהן עובדות. בקוד עצמו מקובל להישאר באנגלית.
+  </div>
+
+  <h2>לצאת, לעצור, להמשיך</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>פעולה</th><th>איך</th></tr>
+    <tr><td>לעצור את Claude באמצע פעולה</td><td>מקש <kbd>Esc</kbd> — עוצר מיד, ואפשר לתת הנחיה מתוקנת</td></tr>
+    <tr><td>לצאת מהשיחה</td><td><kbd>Ctrl+C</kbd> פעמיים, או הפקודה <code>/exit</code></td></tr>
+    <tr><td>להמשיך את השיחה האחרונה</td><td><code dir="ltr">claude --continue</code></td></tr>
+    <tr><td>לבחור שיחה ישנה מרשימה</td><td><code dir="ltr">claude --resume</code></td></tr>
+  </table>
+  </div>
+
+  <h2>תרגילים</h2>
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 1.1</span> התקנה ואימות</div>
+    <p>התקינו את Claude Code לפי מערכת ההפעלה שלכם, וודאו ש‑<code>claude --version</code> מחזיר מספר גרסה. אחר כך הריצו <code>claude</code> בתיקייה ריקה והשלימו את ההתחברות.</p>
+    <details class="solution"><summary>הצצה לפתרון</summary>
+      <p>אם <code>claude --version</code> נכשל אחרי התקנה: פתחו טרמינל חדש. אם עדיין לא עובד ב‑npm — בדקו ש‑<code dir="ltr">npm bin -g</code> נמצא ב‑PATH שלכם. בהתקנת הסקריפט הרשמי זה מטופל אוטומטית.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 1.2</span> הפרויקט הראשון שלכם</div>
+    <p>בתיקייה חדשה, בקשו מ‑Claude לבנות "דף אישי" — עמוד HTML אחד עם השם שלכם, תחומי עניין וכפתור שמחליף צבע רקע. פתחו את התוצאה בדפדפן. ואז — וזה החלק החשוב — בקשו <strong>שינוי</strong>: "הוסף מצב כהה שנשמר גם אחרי רענון".</p>
+    <details class="solution"><summary>הצצה לפתרון</summary>
+      <p>הנקודה בתרגיל: לראות ש‑Claude Code זוכר את ההקשר. בבקשת השינוי לא צריך להסביר לו שוב מה יש בקובץ — הוא קורא אותו בעצמו ועורך רק את מה שצריך. לשמירת המצב הוא כנראה ישתמש ב‑<code>localStorage</code>. אם לא — בקשו במפורש.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 1.3</span> עצירה באמצע</div>
+    <p>תנו ל‑Claude משימה גדולה בכוונה ("בנה אתר שלם עם 5 עמודים...") ובאמצע העבודה לחצו <kbd>Esc</kbd>. שנו כיוון: "בעצם עמוד אחד מספיק, אבל תוסיף טופס יצירת קשר". שימו לב איך הוא מסתגל בלי להתחיל מאפס.</p>
+    <details class="solution"><summary>הצצה לפתרון</summary>
+      <p><kbd>Esc</kbd> הוא אחד הכלים החשובים ביותר בעבודה שוטפת: זול יותר לעצור ולכוון מחדש מאשר לתת ל‑Claude לסיים כיוון שגוי ואז לתקן. סוכן טוב = משוב מוקדם.</p>
+    </details>
+  </div>
+
+  <h2>סיכום הפרק</h2>
+  <ul class="checklist">
+    <li>Claude Code הוא סוכן: קורא, כותב, מריץ ומתקן — לא רק מדבר</li>
+    <li>ההתקנה היא פקודה אחת, וההתחברות דרך מנוי או מפתח API</li>
+    <li><kbd>Esc</kbd> עוצר, <code dir="ltr">--continue</code> ממשיך שיחה, <code>/exit</code> יוצא</li>
+    <li>כל פעולה משמעותית דורשת את האישור שלכם — על זה נרחיב בפרק הבא</li>
+  </ul>
+
+  <div class="complete-row"><button id="completeBtn" data-lesson="l01"></button></div>
+
+  <nav class="lesson-nav">
+    <a href="index.html"><span class="dir-label">→ חזרה</span>לתוכן הקורס</a>
+    <a href="lesson-02.html"><span class="dir-label">הפרק הבא ←</span>יסודות העבודה היומיומית</a>
+  </nav>
+</main>
+
+<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a></footer>
+</body>
+</html>

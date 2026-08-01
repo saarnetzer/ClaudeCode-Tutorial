@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרק 3 · עבודה עם Git ו‑GitHub</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> קורס Claude Code</a></div>
+  <nav><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">פרק 3 מתוך 10</span>
+  <h1>עבודה עם Git ו‑GitHub</h1>
+  <p class="lead">Git הוא רשת הביטחון שהופכת עבודה עם סוכן ממפחידה לרגועה: כל שינוי נרשם, וכל טעות הפיכה. החדשות הטובות — עם Claude Code לא צריך לשנן אף פקודת git. מבקשים במילים, הוא מבצע.</p>
+
+  <h2>מה נלמד בפרק</h2>
+  <ul class="checklist">
+    <li>למה Git חיוני במיוחד בעבודה עם סוכני AI</li>
+    <li>קומיטים וענפים בשפה חופשית</li>
+    <li>יצירת Pull Request מהטרמינל</li>
+    <li>שחזור מטעויות — הקלף החזק שלכם</li>
+  </ul>
+
+  <h2>למה Git + סוכן = שילוב מנצח</h2>
+  <p>כשסוכן עורך עשרות קבצים בשבילכם, שתי שאלות הופכות קריטיות: <em>"מה בדיוק הוא שינה?"</em> ו־<em>"איך מבטלים אם זה רע?"</em>. Git עונה על שתיהן. לכן הכלל: <strong>לפני כל משימה משמעותית — קומיט. אחרי כל שלב שהצליח — קומיט.</strong> קומיטים קטנים ותכופים הם חגורת הבטיחות של עבודה עם AI.</p>
+
+  <div class="callout info">
+    <span class="co-title">💡 חדשים ב‑Git?</span>
+    זה בסדר גמור. תחשבו על Git כ"נקודות שמירה במשחק": קומיט = שמירה. אפשר תמיד לחזור לשמירה קודמת. ענף (branch) = התחלה של קו עלילה חלופי שאפשר למזג חזרה או לזרוק. עם Claude Code אתם לא צריכים לדעת יותר מזה כדי להתחיל.
+  </div>
+
+  <h2>הכול בשפה חופשית</h2>
+  <p>במקום לזכור תחביר, פשוט מבקשים:</p>
+  <pre><code>מה השתנה בפרויקט מאז הקומיט האחרון? תראה לי סיכום לפני שנשמור</code></pre>
+  <pre><code>תעשה קומיט לשינויים עם הודעה מתאימה</code></pre>
+  <pre><code>תפתח ענף חדש בשם feature/dark-mode ותעבור אליו</code></pre>
+  <pre><code>מי שינה את הפונקציה הזאת לאחרונה ולמה? תבדוק בהיסטוריה</code></pre>
+  <p>Claude מריץ את פקודות ה‑git הנכונות (תראו אותן ותאשרו), מנסח הודעות קומיט איכותיות לפי תוכן השינוי, ואפילו יודע לחקור היסטוריה כדי לענות על שאלות "בלשיות".</p>
+
+  <h3>תרחיש אמיתי: פיצ'ר מלא בענף</h3>
+  <pre><code>1. תפתח ענף feature/contact-form
+2. תוסיף טופס יצירת קשר לעמוד הראשי עם ולידציה
+3. תריץ את הטסטים
+4. אם הכול ירוק - קומיט עם הודעה מסודרת</code></pre>
+  <p>שימו לב: נתנו רצף שלם של שלבים בבקשה אחת. Claude מבצע אותם בסדר, ועוצר לאישורכם בנקודות הרגישות. זו כבר חשיבה "סוכנית" — אתם מגדירים תהליך, לא פקודות.</p>
+
+  <h2>Pull Requests</h2>
+  <p>אם מותקן אצלכם <a href="https://cli.github.com" target="_blank" rel="noopener">GitHub CLI</a> (הפקודה <code>gh</code>) ואתם מחוברים, Claude יכול לפתוח PR בשבילכם:</p>
+  <pre><code>תדחוף את הענף ותפתח Pull Request. בתיאור תסביר מה השתנה, למה, ואיך בדקנו</code></pre>
+  <p>Claude יעבור על השינויים בענף, ינסח כותרת ותיאור שמסכמים אותם באמת (לא סתם "update code"), ויחזיר לכם קישור ל‑PR המוכן.</p>
+  <div class="callout tip">
+    <span class="co-title">✅ גם סקירה של PR</span>
+    עובד גם בכיוון ההפוך: <code dir="ltr">תסתכל על PR מספר 42 ותן לי סקירה — באגים אפשריים, בעיות אבטחה, והצעות שיפור</code>. מקבלים סוקר קוד צמוד, זמין 24/7.
+  </div>
+
+  <h2>שחזור מטעויות</h2>
+  <p>קרה משהו רע? קודם כול — לא לגעת, לשאול:</p>
+  <pre><code>עשיתי בלגן. תראה לי מה מצב ה-git עכשיו ומה האפשרויות שלי, בלי לשנות כלום</code></pre>
+  <p>ואז, לפי הצורך:</p>
+  <pre><code>תבטל את כל השינויים שלא נשמרו בקומיט וחזור למצב הנקי האחרון</code></pre>
+  <pre><code>הקומיט האחרון היה טעות - תבטל אותו אבל תשאיר את השינויים בקבצים</code></pre>
+  <div class="callout warn">
+    <span class="co-title">⚠️ פעולות מחיקה</span>
+    לפעולות הרסניות (מחיקת שינויים, reset קשיח) Claude תמיד יבקש אישור מפורש ויסביר מה יימחק. קראו את ההסבר לפני שמאשרים — זו בדיוק הנקודה שבה מצב ההרשאות "הרגיל" שווה זהב.
+  </div>
+
+  <h2>תרגילים</h2>
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 3.1</span> ריפו ראשון מנוהל</div>
+    <p>קחו את אחד הפרויקטים מהפרקים הקודמים ובקשו מ‑Claude: לאתחל ריפו git, ליצור קובץ <code>.gitignore</code> מתאים, ולעשות קומיט ראשון. אחר כך שנו משהו קטן ובקשו "תראה לי מה השתנה ותעשה קומיט".</p>
+    <details class="solution"><summary>מה אמור לקרות</summary>
+      <p>Claude יריץ <code dir="ltr">git init</code>, יזהה אילו קבצים לא שייכים לריפו (node_modules, קבצים זמניים) בשביל ה‑gitignore, ויכתוב הודעת קומיט שמתארת את התוכן. שימו לב שההודעה השנייה מתארת את <em>השינוי</em>, לא את הפרויקט.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 3.2</span> תרגול שחזור — בכוונה</div>
+    <p>בפרויקט מהתרגיל הקודם (אחרי קומיט!), בקשו מ‑Claude "תמחק חצי מהקוד בקובץ הראשי" (כן, באמת). ואז שחזרו: "חזור למצב של הקומיט האחרון". ודאו שהכול חזר.</p>
+    <details class="solution"><summary>למה התרגיל הזה חשוב</summary>
+      <p>מי שחווה פעם אחת שחזור מוצלח — מפסיק לפחד. הפחד "הסוכן יהרוס לי משהו" נעלם כשיודעים בביטחון שכל מה שאחרי קומיט הוא הפיך ב־10 שניות. זה משנה את כל צורת העבודה.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 3.3</span> פיצ'ר מקצה לקצה</div>
+    <p>צרו ריפו ב‑GitHub (או השתמשו בקיים), ובצעו את התהליך המלא בבקשה אחת: ענף חדש → שינוי אמיתי → קומיט → דחיפה → Pull Request עם תיאור מלא. דרוש: <code>gh</code> מותקן ומחובר (<code dir="ltr">gh auth login</code>).</p>
+    <details class="solution"><summary>הצצה לפתרון</summary>
+      <p>בקשה לדוגמה: <code>תפתח ענף fix/typos, תתקן שגיאות כתיב ב-README, קומיט, דחוף, ותפתח PR עם תיאור</code>. אם <code>gh</code> לא מחובר, Claude יגיד לכם ויסביר איך להתחבר — גם זו דרך ללמוד.</p>
+    </details>
+  </div>
+
+  <h2>סיכום הפרק</h2>
+  <ul class="checklist">
+    <li>קומיטים קטנים ותכופים = רשת ביטחון לעבודה עם סוכן</li>
+    <li>כל פעולות ה‑git בשפה חופשית: קומיט, ענפים, היסטוריה, PR</li>
+    <li>בתקלה: קודם "מה המצב ומה האפשרויות", רק אחר כך פעולה</li>
+    <li>Claude מנסח הודעות קומיט ותיאורי PR לפי התוכן האמיתי</li>
+  </ul>
+
+  <div class="complete-row"><button id="completeBtn" data-lesson="l03"></button></div>
+
+  <nav class="lesson-nav">
+    <a href="lesson-02.html"><span class="dir-label">→ הפרק הקודם</span>יסודות העבודה היומיומית</a>
+    <a href="lesson-04.html"><span class="dir-label">הפרק הבא ←</span>זיכרון והקשר: CLAUDE.md</a>
+  </nav>
+</main>
+
+<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a></footer>
+</body>
+</html>

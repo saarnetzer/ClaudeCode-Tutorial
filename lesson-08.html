@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרק 8 · Subagents — צוות של סוכני משנה</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> קורס Claude Code</a></div>
+  <nav><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">פרק 8 מתוך 10</span>
+  <h1>Subagents — צוות של סוכני משנה</h1>
+  <p class="lead">למה סוכן אחד כשאפשר צוות? Subagents הם סוכנים מתמחים — בודק קוד, כותב טסטים, חוקר — שהסוכן הראשי מפעיל בעצמו כשמשימה מתאימה להם. כל אחד עם ההנחיות שלו, הכלים שלו, וחלון הקשר נקי משלו.</p>
+
+  <h2>מה נלמד בפרק</h2>
+  <ul class="checklist">
+    <li>מה זה Subagent ולמה הקשר נפרד הוא יתרון ענק</li>
+    <li>יצירת Subagent ראשון: סוקר קוד</li>
+    <li>הגבלת כלים לכל סוכן — הרשאות לפי תפקיד</li>
+    <li>מתי subagents עוזרים ומתי הם מיותרים</li>
+  </ul>
+
+  <h2>הרעיון</h2>
+  <p>‏Subagent הוא "עובד" שהסוכן הראשי יכול להאציל לו משימה. שלוש תכונות הופכות אותו לחזק:</p>
+  <ul>
+    <li><strong>הקשר נפרד.</strong> ה‑subagent עובד בחלון הקשר נקי משלו. הוא יכול לקרוא חמישים קבצים ולהחזיר לסוכן הראשי רק את השורה התחתונה — וחלון ההקשר של השיחה הראשית נשאר נקי. זה פותר את בעיית "השיחה מתנפחת" מפרק 4.</li>
+    <li><strong>התמחות.</strong> לכל subagent יש system prompt משלו: הנחיות מפורטות לתפקיד אחד, בלי רעש.</li>
+    <li><strong>הרשאות משלו.</strong> אפשר לקבוע אילו כלים מותרים לו — סוקר קוד, למשל, מקבל קריאה בלבד.</li>
+  </ul>
+  <p>‏Subagent מוגדר כקובץ Markdown ב‑<code dir="ltr">.claude/agents/</code> (לפרויקט) או <code dir="ltr">~/.claude/agents/</code> (אישי). אפשר גם לנהל אותם עם הפקודה האינטראקטיבית <code>/agents</code>.</p>
+
+  <h2>Subagent ראשון: סוקר קוד</h2>
+  <pre><span class="pre-label">.claude/agents/code-reviewer.md</span><code>---
+name: code-reviewer
+description: סוקר קוד קפדני. יש להפעיל אותו יזום (proactively) אחרי
+  כל שינוי קוד משמעותי, ולפני כל קומיט.
+tools: Read, Grep, Glob, Bash
+---
+
+אתה סוקר קוד בכיר. כשאתה מקבל משימה:
+1. הרץ git diff כדי לראות מה השתנה
+2. עבור על כל קובץ ששונה ובדוק:
+   - באגים לוגיים ומקרי קצה שלא טופלו
+   - בעיות אבטחה (קלט לא מסונן, סודות בקוד, הרשאות)
+   - קוד כפול או מורכבות מיותרת
+   - עמידה בסגנון הקיים של הפרויקט
+3. דרג כל ממצא: קריטי / כדאי לתקן / קוסמטי
+
+החזר דוח מסודר עם ציון קובץ ושורה לכל ממצא.
+אל תערוך קבצים - אתה סוקר, לא מתקן.</code></pre>
+  <p>שימו לב לשלושה דברים:</p>
+  <ul>
+    <li>ה‑<code>description</code> אומר במפורש <em>מתי</em> להפעיל — כולל המילה "proactively", שמעודדת את הסוכן הראשי להפעיל אותו בלי שתבקשו.</li>
+    <li>שורת <code>tools</code> נותנת לו קריאה וחיפוש בלבד (ו‑Bash בשביל git diff) — אין לו Edit או Write. ההנחיה "אל תערוך" מגובה בהרשאות. זה עקרון ה‑Hooks מפרק 6 שוב: לא הבטחות, מנגנונים.</li>
+    <li>גוף הקובץ הוא ה‑system prompt המלא שלו — תהליך עבודה מפורט, צעד־צעד.</li>
+  </ul>
+  <p>אחרי שמירת הקובץ, אפשר להפעיל מפורשות ("תבקש מ‑code-reviewer לעבור על השינויים") — או פשוט לעבוד רגיל ולראות שהסוכן הראשי קורא לו לבד אחרי שינויים גדולים.</p>
+
+  <h2>עוד שני עובדים לצוות</h2>
+  <pre><span class="pre-label">.claude/agents/test-writer.md</span><code>---
+name: test-writer
+description: כותב טסטים. הפעל כשצריך להוסיף בדיקות לקוד חדש או קיים.
+---
+
+אתה מומחה לכתיבת טסטים. זהה את ה-framework הקיים בפרויקט
+והשתמש בו. לכל פונקציה כתוב: מקרה שמח, מקרי קצה, ומקרה כישלון.
+הרץ את הטסטים וודא שהם עוברים לפני שאתה מסיים.
+טסט שנכשל על קוד קיים = ממצא חשוב, דווח עליו ואל תסתיר.</code></pre>
+  <pre><span class="pre-label">.claude/agents/researcher.md</span><code>---
+name: researcher
+description: חוקר קוד לקריאה בלבד. הפעל לשאלות "איך עובד X" או
+  "איפה נמצא Y" בפרויקטים גדולים, כדי לחסוך הקשר בשיחה הראשית.
+tools: Read, Grep, Glob
+---
+
+אתה חוקר קוד. ענה על השאלה שקיבלת בצורה תמציתית:
+מנגנון, קבצים מרכזיים (עם נתיבים), וזרימת הנתונים.
+החזר תשובה קצרה וממוקדת - לא את כל מה שקראת.</code></pre>
+  <p>ה‑researcher מדגים את דפוס ה"הקשר הנקי" במיטבו: הוא קורא המון ומחזיר מעט. בפרויקטים גדולים זה חוסך אלפי טוקנים בשיחה הראשית.</p>
+
+  <div class="callout warn">
+    <span class="co-title">⚠️ מתי לא להשתמש</span>
+    ‏Subagent מתחיל כל משימה "קר" — בלי היסטוריית השיחה — ותקשורת איתו עולה זמן וטוקנים. למשימות קטנות בשיחה רציפה הוא סרבול מיותר. הכלל: משימה עצמאית, גדולה או כזו שדורשת התמחות — subagent; דיאלוג שוטף — הסוכן הראשי.
+  </div>
+
+  <h2>תרגילים</h2>
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 8.1</span> מקימים את הצוות</div>
+    <p>צרו את <code>code-reviewer</code> בפרויקט שלכם (העתיקו מהדוגמה והתאימו לכללים שלכם). עשו שינוי קוד עם באג קטן בכוונה (למשל תנאי הפוך), ובקשו סקירה. בדקו שהבאג נתפס ושמקבלים דוח מדורג.</p>
+    <details class="solution"><summary>מה אמור לקרות</summary>
+      <p>תראו בממשק שהמשימה נמסרת ל‑subagent (סימון נפרד), והדוח יחזור מובנה לפי ההנחיות. אם הסוקר "מפספס" את הבאג — חדדו את ה‑system prompt שלו. כתיבת הנחיות לסוכן היא מיומנות שמתאמנים עליה.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 8.2</span> שרשרת עבודה</div>
+    <p>צרו גם את <code>test-writer</code>, ואז תנו לסוכן הראשי משימה משולבת: "הוסף פונקציית חישוב הנחה לפי כמות, תן ל‑test-writer לכסות אותה בטסטים, ואז תן ל‑code-reviewer לסקור את הכול". צפו בניהול הצוות.</p>
+    <details class="solution"><summary>מה לחפש</summary>
+      <p>הסוכן הראשי מתפקד כמנהל: כותב את הקוד, מאציל את הטסטים, מאציל את הסקירה, ומאחד את התוצאות. אם הסקירה מעלה ממצא קריטי — בקשו ממנו לתקן ולהריץ סקירה חוזרת. קיבלתם pipeline איכות שלם בפקודה אחת.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 8.3</span> סוכן משלכם</div>
+    <p>חשבו על התמחות שחסרה <em>לכם</em> — מתעד API? בודק נגישות? מתרגם UI? — וכתבו לה subagent מלא: description שגורם לו להיקרא בזמן הנכון, כלים לפי הצורך האמיתי, ותהליך עבודה מפורט. הפעילו אותו על משימה אמיתית.</p>
+    <details class="solution"><summary>רעיון לדוגמה</summary>
+      <p>‏<code dir="ltr">a11y-checker</code>: כלים Read/Grep/Glob בלבד; בודק alt לתמונות, ניגודיות צבעים, תוויות לטפסים, ניווט מקלדת; מחזיר דוח עם חומרה ותיקון מוצע לכל ממצא. עובד מצוין בשילוב עם Playwright מפרק 7.</p>
+    </details>
+  </div>
+
+  <h2>סיכום הפרק</h2>
+  <ul class="checklist">
+    <li>‏Subagent = סוכן מתמחה עם הנחיות, כלים והקשר נפרדים משלו</li>
+    <li>מוגדר כ‑Markdown ב‑<code dir="ltr">.claude/agents/</code>; ה‑description קובע מתי ייקרא</li>
+    <li>הרשאות לפי תפקיד: סוקר לא כותב, חוקר לא עורך</li>
+    <li>הקשר נפרד = קורא הרבה, מחזיר מעט — השיחה הראשית נשארת נקייה</li>
+  </ul>
+
+  <div class="complete-row"><button id="completeBtn" data-lesson="l08"></button></div>
+
+  <nav class="lesson-nav">
+    <a href="lesson-07.html"><span class="dir-label">→ הפרק הקודם</span>MCP — מחברים את Claude לעולם</a>
+    <a href="lesson-09.html"><span class="dir-label">הפרק הבא ←</span>מצב Headless ואוטומציה ב‑CI</a>
+  </nav>
+</main>
+
+<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a></footer>
+</body>
+</html>

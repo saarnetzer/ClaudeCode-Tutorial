@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרק 6 · Hooks — אוטומציה של תהליך העבודה</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> קורס Claude Code</a></div>
+  <nav><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">פרק 6 מתוך 10</span>
+  <h1>Hooks — אוטומציה של תהליך העבודה</h1>
+  <p class="lead">עד עכשיו ביקשנו מ‑Claude לעשות דברים. Hooks הם ההפך: קוד <em>שלכם</em> שרץ אוטומטית סביב הפעולות של Claude — בלי לבקש, בלי לסמוך על זיכרון, במאה אחוז מהמקרים. זה ההבדל בין "בבקשה תריץ פורמט" לבין "פורמט רץ תמיד, נקודה".</p>
+
+  <h2>מה נלמד בפרק</h2>
+  <ul class="checklist">
+    <li>מה זה Hook ובאילו אירועים אפשר להתחבר</li>
+    <li>Hook ראשון: פורמט אוטומטי אחרי כל עריכה</li>
+    <li>Hooks כשומרי סף: חסימת פעולות מסוכנות</li>
+    <li>למה Hooks קריטיים לסוכנים אוטונומיים</li>
+  </ul>
+
+  <h2>הרעיון</h2>
+  <p>Hook הוא פקודת מערכת שמוגדרת בקובץ ההגדרות של Claude Code ורצה אוטומטית כשקורה אירוע מסוים. האירועים העיקריים:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>אירוע</th><th>מתי רץ</th><th>שימוש טיפוסי</th></tr>
+    <tr><td><code>PreToolUse</code></td><td>לפני שכלי מופעל (עריכה, פקודה...)</td><td>חסימת פעולות אסורות</td></tr>
+    <tr><td><code>PostToolUse</code></td><td>אחרי שכלי הופעל בהצלחה</td><td>פורמט, lint, בדיקות אוטומטיות</td></tr>
+    <tr><td><code>UserPromptSubmit</code></td><td>כששולחים הודעה</td><td>הזרקת הקשר, ולידציה של בקשות</td></tr>
+    <tr><td><code>Stop</code></td><td>כש‑Claude מסיים לענות</td><td>התראה, בדיקת "באמת סיימת?"</td></tr>
+    <tr><td><code>Notification</code></td><td>כש‑Claude ממתין לאישור</td><td>צליל/הודעה כשצריך אתכם</td></tr>
+  </table>
+  </div>
+  <p>ההגדרות יושבות ב‑<code dir="ltr">.claude/settings.json</code> (לפרויקט, משותף בצוות) או <code dir="ltr">~/.claude/settings.json</code> (אישי). הדרך הנוחה להתחיל: הפקודה <code>/hooks</code> בתוך Claude Code, שמדריכה אתכם אינטראקטיבית.</p>
+
+  <h2>דוגמה 1: פורמט אוטומטי אחרי כל עריכה</h2>
+  <pre><span class="pre-label">.claude/settings.json</span><code>{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx prettier --write \"$CLAUDE_FILE_PATHS\" 2&gt;/dev/null || true"
+          }
+        ]
+      }
+    ]
+  }
+}</code></pre>
+  <p>מה קורה כאן: בכל פעם ש‑Claude עורך או כותב קובץ (<code>matcher</code> תופס את הכלים Edit ו‑Write), רץ prettier על הקובץ שנגעו בו. מעכשיו אין "שכחתי לפרמט" — יש חוק טבע.</p>
+
+  <div class="callout info">
+    <span class="co-title">💡 למה לא פשוט לכתוב את זה ב‑CLAUDE.md?</span>
+    כי הוראה בזיכרון היא <em>בקשה</em> — המודל כמעט תמיד יכבד אותה, אבל "כמעט תמיד" זה לא "תמיד". Hook הוא <em>מנגנון</em> — הוא רץ בכל מקרה. כלל אצבע: העדפות → CLAUDE.md; חוקים שאסור להפר → Hooks.
+  </div>
+
+  <h2>דוגמה 2: שומר סף שחוסם פעולות מסוכנות</h2>
+  <p>‏Hook של <code>PreToolUse</code> מקבל ב‑stdin את פרטי הפעולה המתוכננת (JSON), ויכול <strong>לחסום אותה</strong>: יציאה עם קוד 2 אומרת ל‑Claude "אסור, והנה הסיבה" (מה שנכתב ל‑stderr חוזר אליו כהסבר).</p>
+  <pre><span class="pre-label">.claude/hooks/guard.py</span><code>#!/usr/bin/env python3
+import json, sys, re
+
+data = json.load(sys.stdin)
+if data.get("tool_name") == "Bash":
+    cmd = data.get("tool_input", {}).get("command", "")
+    banned = [r"rm\s+-rf\s+[/~]", r"git\s+push\s+--force", r"DROP\s+TABLE"]
+    for pattern in banned:
+        if re.search(pattern, cmd, re.IGNORECASE):
+            print(f"Blocked dangerous command: {cmd}", file=sys.stderr)
+            sys.exit(2)   # exit 2 = block + explain to Claude
+sys.exit(0)</code></pre>
+  <pre><span class="pre-label">.claude/settings.json (קטע)</span><code>{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "python3 .claude/hooks/guard.py" }
+        ]
+      }
+    ]
+  }
+}</code></pre>
+  <p>עכשיו גם אם Claude ינסה (או ישתכנע על ידי בקשה מבולבלת שלכם...) להריץ <code dir="ltr">rm -rf /</code> — הפעולה תיחסם ברמת המערכת, והוא יקבל הסבר ויחפש דרך אחרת.</p>
+
+  <h2>דוגמה 3: התראה כשצריך אתכם</h2>
+  <p>נתתם ל‑Claude משימה ארוכה והלכתם להכין קפה? שיודיע כשהוא צריך אישור:</p>
+  <pre><span class="pre-label">.claude/settings.json (קטע, macOS)</span><code>{
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          { "type": "command", "command": "afplay /System/Library/Sounds/Glass.aiff" }
+        ]
+      }
+    ]
+  }
+}</code></pre>
+  <p>בלינוקס אפשר <code dir="ltr">notify-send "Claude מחכה לך"</code>, ובווינדוס סקריפט PowerShell קצר.</p>
+
+  <h2>למה זה שער לאוטונומיה</h2>
+  <p>חשבו רגע מה בנינו: מערכת שבה לסוכן יש חופש פעולה, אבל <strong>גבולות שנאכפים בקוד, לא בהבטחות</strong>. פורמט ואיכות נאכפים אוטומטית (PostToolUse), פעולות הרסניות חסומות פיזית (PreToolUse), ובני האדם מקבלים התראה בנקודות ההכרעה (Notification). זו בדיוק התשתית שתאפשר לנו בפרקים 9–10 להוריד את הידיים מההגה בביטחון: ככל שהגבולות קשיחים יותר — אפשר לתת לסוכן יותר חופש בתוכם.</p>
+
+  <h2>תרגילים</h2>
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 6.1</span> Hook ראשון</div>
+    <p>הגדירו PostToolUse שרץ אחרי כל עריכת קובץ ומוסיף שורת לוג לקובץ <code dir="ltr">.claude/edits.log</code> (תאריך + נתיב). בקשו מ‑Claude לערוך משהו, ובדקו שהלוג מתעדכן. טיפ: אפשר לבקש מ‑Claude עצמו לכתוב את ההגדרה!</p>
+    <details class="solution"><summary>פתרון לדוגמה</summary>
+      <pre><code>{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"$(date '+%F %T') $CLAUDE_FILE_PATHS\" &gt;&gt; .claude/edits.log"
+          }
+        ]
+      }
+    ]
+  }
+}</code></pre>
+      <p>לוג כזה הוא דרך מצוינת "לראות" מה סוכן עשה בריצות ארוכות.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 6.2</span> שומר סף משלכם</div>
+    <p>כתבו PreToolUse (אפשר להתבסס על ה‑Python מלמעלה) שחוסם כל עריכה של קבצים בתיקייה <code>secrets/</code>. צרו תיקייה כזו עם קובץ דמה, ובקשו מ‑Claude במפורש לערוך אותו — וודאו שהוא נחסם ומסביר לכם למה.</p>
+    <details class="solution"><summary>כיוון לפתרון</summary>
+      <p>ב‑matcher תפסו <code>Edit|Write</code>. בסקריפט בדקו אם <code dir="ltr">tool_input.file_path</code> מכיל <code>secrets/</code> — ואם כן, exit 2 עם הסבר ב‑stderr. החוויה החשובה: לראות ש‑Claude מקבל את החסימה, מסביר לכם אותה, ולא מנסה לעקוף.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 6.3</span> "באמת סיימת?"</div>
+    <p>הגדירו Stop hook שמריץ את הטסטים של הפרויקט כש‑Claude מסיים לענות, וכותב את התוצאה לקובץ. שדרוג: חשבו (ובדקו בתיעוד של <code>/hooks</code>) איך Stop hook יכול להחזיר את Claude לעבודה אם הטסטים נכשלו.</p>
+    <details class="solution"><summary>כיוון לפתרון</summary>
+      <p>‏Stop hook שמסיים עם קוד 2 ומסביר ב‑stderr ("הטסטים נכשלו, תקן לפני שאתה מסיים") מחזיר את Claude לעבודה. זהירות ממעגל אינסופי — הגבילו את הבדיקה כך שלא תיכשל לנצח. הדפוס הזה, "לא סיימת עד שהבדיקות ירוקות", הוא אחד ממנועי האוטונומיה החזקים ביותר.</p>
+    </details>
+  </div>
+
+  <h2>סיכום הפרק</h2>
+  <ul class="checklist">
+    <li>Hooks = קוד שלכם שרץ אוטומטית סביב פעולות של Claude</li>
+    <li>PostToolUse לאכיפת איכות, PreToolUse לחסימת סכנות, Notification להתראות</li>
+    <li>exit code 2 + stderr = חסימה עם הסבר שחוזר ל‑Claude</li>
+    <li>העדפות → CLAUDE.md; חוקים מוחלטים → Hooks</li>
+  </ul>
+
+  <div class="complete-row"><button id="completeBtn" data-lesson="l06"></button></div>
+
+  <nav class="lesson-nav">
+    <a href="lesson-05.html"><span class="dir-label">→ הפרק הקודם</span>פקודות מותאמות ו‑Skills</a>
+    <a href="lesson-07.html"><span class="dir-label">הפרק הבא ←</span>MCP — מחברים את Claude לעולם</a>
+  </nav>
+</main>
+
+<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a></footer>
+</body>
+</html>

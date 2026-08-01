@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרק 7 · MCP — מחברים את Claude לעולם</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> קורס Claude Code</a></div>
+  <nav><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">פרק 7 מתוך 10</span>
+  <h1>MCP — מחברים את Claude לעולם</h1>
+  <p class="lead">מהקופסה, Claude Code יודע לעבוד עם קבצים וטרמינל. אבל מה עם דפדפן אמיתי? מסד נתונים? ה‑Slack של הצוות? פרוטוקול MCP הוא "שקע ה‑USB" שמחבר ל‑Claude כלים חדשים — ובפרק הזה נחבר כמה כאלה.</p>
+
+  <h2>מה נלמד בפרק</h2>
+  <ul class="checklist">
+    <li>מה זה MCP ולמה הוא נהיה סטנדרט עולמי</li>
+    <li>חיבור שרת MCP ראשון: שליטה בדפדפן</li>
+    <li>חיבור למסד נתונים ולשירותים חיצוניים</li>
+    <li>רמות תצורה (scopes) ושיקולי אבטחה</li>
+  </ul>
+
+  <h2>הרעיון</h2>
+  <p><strong>MCP‏ (Model Context Protocol)</strong> הוא פרוטוקול פתוח שמגדיר איך מודל AI מדבר עם כלים חיצוניים. שרת MCP הוא תוכנית קטנה שחושפת "כלים" (למשל: <code>open_page</code>,‏ <code>run_query</code>,‏ <code dir="ltr">send_message</code>), ו‑Claude — כשהוא מחובר לשרת — רואה את הכלים האלה ויכול להפעיל אותם בדיוק כמו שהוא מפעיל עריכת קבצים. יש היום אלפי שרתי MCP מוכנים: GitHub, Slack, Postgres, Playwright, Figma, Notion, Stripe ועוד.</p>
+  <div class="callout info">
+    <span class="co-title">💡 החיבור לתמונה הגדולה</span>
+    זוכרים את ההגדרה של סוכן — "מודל שמפעיל כלים בלולאה"? MCP פשוט מרחיב את ארגז הכלים. יותר כלים = הסוכן יכול לפעול על עוד חלקים של העולם. סוכן עם דפדפן יכול <em>לבדוק בעצמו</em> את האתר שהוא בנה. זה שינוי מהותי.
+  </div>
+
+  <h2>שרת ראשון: דפדפן עם Playwright</h2>
+  <p>נחבר שרת שנותן ל‑Claude דפדפן אמיתי:</p>
+  <pre><code>claude mcp add playwright -- npx @playwright/mcp@latest</code></pre>
+  <p>זהו. פתחו את Claude ונסו:</p>
+  <pre><code>פתח את הדפדפן על http://localhost:3000, מלא את טופס ההרשמה
+עם נתונים לדוגמה, שלח, וצלם מסך של התוצאה. אם משהו שבור - תקן את הקוד ובדוק שוב</code></pre>
+  <p>קראו שוב את סוף המשפט: <em>"אם משהו שבור — תקן ובדוק שוב"</em>. עכשיו ל‑Claude יש לולאת משוב מלאה על UI: הוא כותב קוד, <strong>רואה בעצמו</strong> את התוצאה בדפדפן, ומתקן. בדיוק כמו מפתח אנושי.</p>
+  <p>פקודות ניהול שימושיות:</p>
+  <pre><code>claude mcp list          # אילו שרתים מחוברים ומה מצבם
+claude mcp get playwright # פרטי שרת
+claude mcp remove playwright</code></pre>
+
+  <h2>שרת שני: מסד נתונים</h2>
+  <pre><code>claude mcp add db -- npx -y @modelcontextprotocol/server-postgres "postgresql://readonly_user:pass@localhost:5432/shop"</code></pre>
+  <p>ואז בשיחה:</p>
+  <pre><code>כמה הזמנות נפתחו החודש לעומת חודש שעבר, בפילוח לפי עיר?
+תציג טבלה ותסביר מה בולט</code></pre>
+  <p>‏Claude יכתוב את ה‑SQL, יריץ דרך השרת, ויפרש את התוצאות בעברית.</p>
+  <div class="callout danger">
+    <span class="co-title">🛑 כלל הזהב: הרשאות מינימום</span>
+    שימו לב שבדוגמה חיברנו משתמש <code dir="ltr">readonly_user</code>. לעולם אל תחברו סוכן למסד נתונים אמיתי עם הרשאות כתיבה "כי נוח". אותו עיקרון לכל שרת MCP: התקינו רק שרתים ממקור אמין, ותנו להם את ההרשאה המינימלית שמספיקה למשימה. כלי שהסוכן לא צריך — אל תחברו.
+  </div>
+
+  <h2>רמות תצורה (Scopes)</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Scope</th><th>איפה נשמר</th><th>למי</th></tr>
+    <tr><td><code>local</code> (ברירת מחדל)</td><td>הגדרות אישיות של הפרויקט</td><td>רק אתם, רק בפרויקט הזה</td></tr>
+    <tr><td><code>project</code></td><td>קובץ <code dir="ltr">.mcp.json</code> בשורש הריפו</td><td>כל הצוות (נכנס ל‑git)</td></tr>
+    <tr><td><code>user</code></td><td>הגדרות המשתמש שלכם</td><td>אתם, בכל הפרויקטים</td></tr>
+  </table>
+  </div>
+  <pre><code># שרת שכל הצוות יקבל אוטומטית:
+claude mcp add --scope project github -- npx -y @modelcontextprotocol/server-github</code></pre>
+  <p>קובץ <code dir="ltr">.mcp.json</code> בריפו הוא עוד לבנה בתשתית הצוותית: מי שמשכפל את הפרויקט מקבל לא רק קוד, אלא גם את כל הכלים שהסוכן צריך כדי לעבוד עליו.</p>
+
+  <h2>תרגילים</h2>
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 7.1</span> לולאת משוב ויזואלית</div>
+    <p>חברו את שרת Playwright. פתחו את אחד הפרויקטים מהקורס ובקשו: "פתח את הדף בדפדפן, צלם מסך, ותקן שלוש בעיות עיצוב שאתה מזהה — אחרי כל תיקון צלם שוב וודא שהשתפר". צפו בלולאה עובדת.</p>
+    <details class="solution"><summary>מה אמור לקרות</summary>
+      <p>‏Claude יפתח את הדף, יצלם, יזהה בעיות (יישור, צבעים, גלישת טקסט), יתקן בקוד ויצלם שוב להשוואה. אם הדף לא נטען — ודאו שהרצתם שרת מקומי או בקשו ממנו לפתוח את הקובץ ישירות (file://).</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 7.2</span> בדיקת קצה־לקצה אוטומטית</div>
+    <p>המשך לתרגיל הקודם: בקשו מ‑Claude לכתוב תרחיש בדיקה מלא לאפליקציה שלכם (למשל למחשבון: "לחץ 7, +, 3, = וודא שמוצג 10") ולהריץ אותו דרך הדפדפן. אחר כך שברו משהו בכוונה בקוד ובקשו להריץ שוב — וודאו שהבדיקה תופסת את השבירה.</p>
+    <details class="solution"><summary>למה זה חשוב</summary>
+      <p>בדיקות שהסוכן יכול להריץ בעצמו הן תנאי הכרחי לאוטונומיה: בלעדיהן אין לו דרך לדעת אם הצליח. "שברו ובדקו שנתפס" מוודא שהבדיקה אמיתית ולא תמיד־ירוקה.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 7.3</span> שרת לבחירתכם</div>
+    <p>בחרו שרת MCP אחד שרלוונטי לחיים שלכם (GitHub? Notion? מסד נתונים של פרויקט צד?), חברו אותו ב‑scope המתאים, ובצעו איתו משימה אמיתית אחת. שאלו קודם את Claude: "אילו כלים אתה מקבל מהשרת הזה?"</p>
+    <details class="solution"><summary>טיפ</summary>
+      <p>השאלה "אילו כלים יש לך עכשיו?" היא דרך מצוינת להבין כל שרת חדש. ואם משהו לא עובד — <code dir="ltr">claude mcp list</code> מראה אם השרת בכלל הצליח להתחבר.</p>
+    </details>
+  </div>
+
+  <h2>סיכום הפרק</h2>
+  <ul class="checklist">
+    <li>MCP = פרוטוקול סטנדרטי שמוסיף ל‑Claude כלים: דפדפן, DB, שירותי ענן</li>
+    <li>חיבור בפקודה אחת: <code dir="ltr">claude mcp add שם -- פקודה</code></li>
+    <li>‏scope‏ project + קובץ <code dir="ltr">.mcp.json</code> = כלים משותפים לכל הצוות</li>
+    <li>הרשאות מינימום תמיד: readonly כשאפשר, ורק שרתים ממקור אמין</li>
+  </ul>
+
+  <div class="complete-row"><button id="completeBtn" data-lesson="l07"></button></div>
+
+  <nav class="lesson-nav">
+    <a href="lesson-06.html"><span class="dir-label">→ הפרק הקודם</span>Hooks — אוטומציה</a>
+    <a href="lesson-08.html"><span class="dir-label">הפרק הבא ←</span>Subagents — צוות של סוכני משנה</a>
+  </nav>
+</main>
+
+<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a></footer>
+</body>
+</html>

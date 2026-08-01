@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרק 5 · פקודות מותאמות אישית ו‑Skills</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> קורס Claude Code</a></div>
+  <nav><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">פרק 5 מתוך 10</span>
+  <h1>פקודות מותאמות אישית ו‑Skills</h1>
+  <p class="lead">כל בקשה שמצאתם את עצמכם מקלידים בפעם השלישית — ראויה להפוך לפקודה של מילה אחת. בפרק הזה נבנה פקודות Slash משלנו, ואז נעלה שלב ל‑Skills: חבילות ידע ש‑Claude שולף בעצמו ברגע הנכון.</p>
+
+  <h2>מה נלמד בפרק</h2>
+  <ul class="checklist">
+    <li>יצירת פקודות Slash אישיות עם פרמטרים</li>
+    <li>ההבדל בין פקודה (אתם מפעילים) ל‑Skill (המודל מפעיל)</li>
+    <li>בניית Skill מלא עם קובצי עזר</li>
+    <li>ארגון ושיתוף עם הצוות</li>
+  </ul>
+
+  <h2>פקודות Slash מותאמות</h2>
+  <p>פקודה מותאמת היא פשוט <strong>קובץ Markdown</strong> בתיקייה <code dir="ltr">.claude/commands/</code> בפרויקט. שם הקובץ הוא שם הפקודה, והתוכן הוא הפרומפט שיישלח כשתקראו לה. ניצור אחת:</p>
+  <pre><span class="pre-label">.claude/commands/check.md</span><code>בצע בדיקת איכות מלאה על השינויים הנוכחיים:
+1. הרץ את הטסטים ואת ה-lint
+2. עבור על ה-diff וחפש: באגים, כפילויות קוד, שמות לא ברורים
+3. ודא שאין סודות (מפתחות, סיסמאות) בקוד
+4. סכם ממצאים בטבלה: חומרה, קובץ, בעיה, תיקון מוצע
+אל תתקן כלום בשלב הזה - רק דווח.</code></pre>
+  <p>זהו. מעכשיו בכל שיחה: <code>/check</code> — וכל התהליך רץ.</p>
+
+  <h3>פרמטרים עם $ARGUMENTS</h3>
+  <p>המחרוזת <code dir="ltr">$ARGUMENTS</code> בקובץ מוחלפת במה שנכתב אחרי שם הפקודה:</p>
+  <pre><span class="pre-label">.claude/commands/fix-issue.md</span><code>קרא את issue מספר $ARGUMENTS בעזרת gh issue view.
+הבן את הבעיה, מצא את הקוד הרלוונטי, תקן, הוסף טסט שמוכיח את התיקון,
+והצג לי סיכום לפני קומיט.</code></pre>
+  <p>שימוש: <code dir="ltr">/fix-issue 123</code>. ככה הופכים תהליך שלם — מקריאת התקלה ועד טסט — לפקודה אחת.</p>
+  <div class="callout tip">
+    <span class="co-title">✅ פקודות אישיות גלובליות</span>
+    פקודות ששמות ב‑<code dir="ltr">~/.claude/commands/</code> זמינות בכל הפרויקטים שלכם. פקודות ב‑<code dir="ltr">.claude/commands/</code> של הפרויקט נכנסות ל‑git ומשותפות לכל הצוות — ספריית תהליכים צוותית.
+  </div>
+
+  <h2>Skills — ידע שנשלף לבד</h2>
+  <p>פקודת Slash אתם מפעילים ידנית. <strong>Skill הוא ידע ש‑Claude מפעיל בעצמו</strong> כשהוא מזהה שהמשימה מתאימה. כל Skill הוא תיקייה עם קובץ <code>SKILL.md</code>, שמתחיל בכותרת מטא־נתונים:</p>
+  <pre><span class="pre-label">.claude/skills/hebrew-ui/SKILL.md</span><code>---
+name: hebrew-ui
+description: כללים לבניית ממשקים בעברית עם RTL תקין. השתמש בכל
+  פעם שנוצרים או נערכים רכיבי UI עם טקסט עברי.
+---
+
+# בניית UI בעברית
+
+## כללי חובה
+- על אלמנט השורש: dir="rtl" ו-lang="he"
+- להשתמש ב-margin-inline-start ולא ב-margin-left
+  (וכך לכל מאפייני צד: padding-inline, inset-inline, text-align: start)
+- מספרים וקוד נשארים LTR: לעטוף ב-dir="ltr"
+- אייקוני חצים "קדימה/אחורה" מתהפכים ב-RTL - לבדוק כיוון
+
+## בדיקות לפני סיום
+1. אין גלילה אופקית בעמוד
+2. סימני פיסוק בסוף משפט עברי מוצגים נכון
+3. שדות טלפון/אימייל מיושרים LTR בתוך טופס RTL</code></pre>
+  <p>איך זה עובד? בתחילת שיחה Claude רואה רק את ה‑<code>name</code> וה‑<code>description</code> של כל ה‑Skills. כשמגיעה משימת UI בעברית — הוא טוען את הקובץ המלא לבד. לכן <strong>ה‑description הוא הכול</strong>: הוא חייב לתאר בבירור <em>מתי</em> להשתמש ב‑Skill.</p>
+
+  <h3>Skill עם קבצים נלווים</h3>
+  <p>Skill יכול להכיל גם סקריפטים, תבניות וקובצי עזר לצד ה‑SKILL.md:</p>
+  <pre><code>.claude/skills/deploy-checklist/
+├── SKILL.md          ← ההוראות + מתי להפעיל
+├── checklist.md      ← רשימת בדיקות מפורטת
+└── verify.sh         ← סקריפט שה-Skill מנחה להריץ</code></pre>
+  <p>ב‑SKILL.md כותבים למשל: "לפני deploy הרץ את <code>verify.sh</code> ועבור על <code>checklist.md</code> סעיף־סעיף". כך אורזים תהליך שלם — ידע, אוטומציה ובקרה — בחבילה אחת שהמודל יודע להפעיל.</p>
+
+  <div class="callout info">
+    <span class="co-title">💡 מתי פקודה ומתי Skill?</span>
+    <strong>פקודה</strong> — כשאתם רוצים שליטה: "עכשיו תעשה X" (‏<code>/check</code>, <code dir="ltr">/fix-issue</code>).<br>
+    <strong>Skill</strong> — כשאתם רוצים שהידע יחול אוטומטית בכל פעם שהוא רלוונטי, בלי שתזכרו לבקש (כללי RTL, סטנדרטים של API, נהלי deploy).
+  </div>
+
+  <h2>תרגילים</h2>
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 5.1</span> הפקודה הראשונה שלכם</div>
+    <p>חשבו על בקשה שכבר כתבתם ל‑Claude יותר מפעם אחת, וצרו ממנה פקודה ב‑<code dir="ltr">.claude/commands/</code>. אין רעיון? צרו <code>/explain</code> — פקודה שמסבירה קובץ: מקבלת נתיב כ‑<code dir="ltr">$ARGUMENTS</code> ומחזירה הסבר מובנה: תפקיד, תלויות, ונקודות תורפה.</p>
+    <details class="solution"><summary>פתרון לדוגמה</summary>
+      <pre><span class="pre-label">.claude/commands/explain.md</span><code>קרא את הקובץ $ARGUMENTS והסבר:
+1. מה תפקידו במשפט אחד
+2. מה ה-API הציבורי שלו (פונקציות/מחלקות עיקריות)
+3. במי הוא תלוי ומי תלוי בו
+4. נקודת התורפה הכי מסוכנת בו
+כתוב בעברית, קצר וברור.</code></pre>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 5.2</span> Skill שנטען לבד</div>
+    <p>צרו Skill בשם <code>commit-style</code> שמגדיר סגנון הודעות קומיט (למשל: תבנית <code dir="ltr">type: summary</code>, גוף שמסביר "למה" ולא "מה"). ה‑description צריך לגרום לו להיטען בכל פעם שנוצר קומיט. בדקו: פתחו שיחה חדשה, עשו שינוי, בקשו קומיט — ובדקו שהסגנון נאכף בלי שהזכרתם אותו.</p>
+    <details class="solution"><summary>נקודת מפתח</summary>
+      <p>אם ה‑Skill לא נטען — הבעיה כמעט תמיד ב‑description. נסחו אותו כתשובה לשאלה "מתי להשתמש?": <code>Use when creating git commits or writing commit messages</code>. תיאור כללי מדי ("כללי סגנון") לא ייתן למודל סיבה לשלוף אותו.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 5.3</span> ספריית צוות</div>
+    <p>בנו "ערכת פרויקט" שלמה: לפחות שתי פקודות (<code>/check</code>, <code dir="ltr">/new-feature</code>) ו‑Skill אחד, הכניסו הכול ל‑git עם קומיט מסודר. בונוס: בקשו מ‑Claude עצמו לבנות את הפקודות — תארו לו את התהליך שלכם והוא ינסח את הקבצים.</p>
+    <details class="solution"><summary>למה זה שווה את המאמץ</summary>
+      <p>כש‑<code dir="ltr">.claude/</code> נמצא בריפו, כל חבר צוות (וכל סוכן אוטונומי שירוץ על הריפו בעתיד!) מקבל את אותם תהליכים בדיוק. זו תשתית שתשרת אתכם ישירות בפרקים 9–10.</p>
+    </details>
+  </div>
+
+  <h2>סיכום הפרק</h2>
+  <ul class="checklist">
+    <li>פקודה מותאמת = קובץ Markdown ב‑<code dir="ltr">.claude/commands/</code>, עם <code dir="ltr">$ARGUMENTS</code> לפרמטרים</li>
+    <li>Skill = תיקייה עם SKILL.md ש‑Claude טוען לבד לפי ה‑description</li>
+    <li>פקודה מפעילים אתם; Skill מפעיל המודל — לכל אחד תפקיד</li>
+    <li>הכול נכנס ל‑git ומשותף לצוות ולסוכנים עתידיים</li>
+  </ul>
+
+  <div class="complete-row"><button id="completeBtn" data-lesson="l05"></button></div>
+
+  <nav class="lesson-nav">
+    <a href="lesson-04.html"><span class="dir-label">→ הפרק הקודם</span>זיכרון והקשר: CLAUDE.md</a>
+    <a href="lesson-06.html"><span class="dir-label">הפרק הבא ←</span>Hooks — אוטומציה של תהליך העבודה</a>
+  </nav>
+</main>
+
+<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a></footer>
+</body>
+</html>

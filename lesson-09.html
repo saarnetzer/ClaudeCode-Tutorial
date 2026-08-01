@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרק 9 · מצב Headless ואוטומציה ב‑CI</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> קורס Claude Code</a></div>
+  <nav><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">פרק 9 מתוך 10</span>
+  <h1>מצב Headless ואוטומציה ב‑CI</h1>
+  <p class="lead">עד עכשיו ישבתם מול Claude. בפרק הזה קמים מהכיסא: נריץ אותו כפקודה בסקריפט, נשלב אותו ב‑GitHub Actions, ונלמד לתייג <code dir="ltr">@claude</code> ב‑Pull Request — כך שהוא עובד גם כשאתם ישנים. זה הצעד הראשון לאוטונומיה אמיתית.</p>
+
+  <h2>מה נלמד בפרק</h2>
+  <ul class="checklist">
+    <li>מצב headless: הרצת Claude כפקודה חד־פעמית</li>
+    <li>שליטה בהרשאות ובפורמט הפלט מהשורת פקודה</li>
+    <li>הרצה בטוחה ללא אישורים — בסביבה מבודדת</li>
+    <li>GitHub Actions ותיוג @claude</li>
+  </ul>
+
+  <h2>מצב Headless: הדגל ‎-p</h2>
+  <p>הדגל <code dir="ltr">-p</code> (או <code dir="ltr">--print</code>) מריץ את Claude ללא ממשק אינטראקטיבי: שאלה נכנסת, תשובה יוצאת, התוכנית מסתיימת:</p>
+  <pre><code>claude -p "כמה קבצי JS יש בפרויקט ומה הגדול ביותר?"</code></pre>
+  <p>ומרגע שזו פקודה רגילה — אפשר לשרשר אותה כמו כל כלי Unix:</p>
+  <pre><code># ניתוח לוג שגיאות
+cat error.log | claude -p "מהן 3 השגיאות הנפוצות וכיצד לתקנן? תמצית בעברית"
+
+# פלט מובנה לסקriptים
+claude -p "רשום את כל ה-TODO בקוד" --output-format json</code></pre>
+  <p>עם <code dir="ltr">--output-format json</code> מקבלים JSON עם התוצאה, עלות הריצה ומטא־נתונים — מושלם לעיבוד אוטומטי בהמשך ה‑pipeline.</p>
+
+  <h2>הרשאות בלי בן אדם ליד</h2>
+  <p>במצב headless אין מי שילחץ "אשר". שלוש רמות שליטה, מהעדינה לגסה:</p>
+  <pre><code># 1. לאשר מראש כלים ספציפיים בלבד:
+claude -p "הרץ את הטסטים וסכם כשלים" --allowedTools "Bash(npm test),Read"
+
+# 2. להגביל מספר צעדים (בלם בטיחות לכל ריצה אוטומטית):
+claude -p "..." --max-turns 15
+
+# 3. לבטל את כל האישורים - רק בסביבה מבודדת!
+claude -p "תקן את כל אזהרות ה-lint" --dangerously-skip-permissions</code></pre>
+  <div class="callout danger">
+    <span class="co-title">🛑 הכלל של הדגל המסוכן</span>
+    ‏<code dir="ltr">--dangerously-skip-permissions</code> לגיטימי <strong>רק</strong> כשמתקיימים שלושת התנאים: (1) סביבה מבודדת — קונטיינר או VM שאין בו כלום מעבר לפרויקט; (2) בלי גישה לסודות אמיתיים; (3) התוצר עובר דרך ביקורת (PR) לפני שהוא נוגע במשהו חשוב. בדיוק כך עובדות סביבות ה‑CI שנראה עכשיו — וכך גם Claude Code on the web של Anthropic, שמריץ כל משימה בסנדבוקס מבודד.
+  </div>
+
+  <h2>GitHub Actions: סוכן שמגיב לאירועים</h2>
+  <p>הדרך המהירה לחבר את Claude לריפו שלכם ב‑GitHub היא מתוך Claude Code:</p>
+  <pre><code>/install-github-app</code></pre>
+  <p>ההתקנה מוסיפה workflow שמבוסס על <code dir="ltr">anthropics/claude-code-action</code>. מרגע שהוא פעיל, אפשר לתייג את Claude בכל issue או PR:</p>
+  <pre><code># בתגובה ל-issue:
+@claude תממש את הפיצ'ר המתואר כאן ותפתח PR
+
+# בתגובה ל-PR:
+@claude יש כאן באג ב-race condition, תמצא ותקן
+
+# סקירה אוטומטית:
+@claude תעבור על השינויים ותעיר על בעיות אבטחה</code></pre>
+  <p>‏Claude ירוץ על שרתי ה‑CI של GitHub, יבצע את המשימה, וידחוף ענף או תגובה — הכול בלי המחשב שלכם.</p>
+
+  <h3>דוגמה: סקירה אוטומטית לכל PR חדש</h3>
+  <pre><span class="pre-label">.github/workflows/claude-review.yml</span><code>name: Claude Auto Review
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            סקור את ה-PR הזה: באגים אפשריים, בעיות אבטחה,
+            וטסטים חסרים. כתוב את הסקירה כתגובה ל-PR, בעברית,
+            מדורגת לפי חומרה.</code></pre>
+  <p>מוסיפים את מפתח ה‑API כ‑Secret בהגדרות הריפו (<code dir="ltr">ANTHROPIC_API_KEY</code>) — ומעכשיו כל PR מקבל סוקר אוטומטי תוך דקות מפתיחתו.</p>
+
+  <div class="callout tip">
+    <span class="co-title">✅ כל מה שבניתם עד עכשיו — עובד גם כאן</span>
+    ‏CLAUDE.md (פרק 4), פקודות ו‑Skills (פרק 5), Hooks (פרק 6), שרתי MCP בפרויקט (פרק 7) ו‑subagents (פרק 8) — כולם בתוך הריפו, ולכן הסוכן שרץ ב‑CI מקבל אותם אוטומטית. עכשיו ברור למה השקענו בתשתית: היא בדיוק מה שהופך סוכן מרוחק מ"זר" ל"חבר צוות שמכיר את הפרויקט".
+  </div>
+
+  <h2>תבנית לסקריפט אוטומציה מקומי</h2>
+  <p>דפוס שימושי לעבודות תחזוקה תקופתיות:</p>
+  <pre><span class="pre-label">nightly-deps.sh</span><code>#!/bin/bash
+set -e
+git checkout -b chore/deps-$(date +%F)
+
+claude -p "עדכן את התלויות המשניות (minor+patch בלבד),
+הרץ את הטסטים אחרי כל עדכון, ובטל כל עדכון ששובר אותם.
+סכם בקובץ DEPS_REPORT.md מה עודכן ומה נחסם ולמה" \
+  --allowedTools "Bash(npm *),Edit,Read,Write" \
+  --max-turns 40
+
+git add -A && git commit -m "chore: nightly dependency updates"
+git push -u origin HEAD
+gh pr create --fill</code></pre>
+  <p>שימו לב לעקרונות: ענף נפרד, כלים מוגבלים בדיוק לצורך, תקרת צעדים, והתוצר הוא PR — לא push ל‑main. אוטומציה עם חגורות בטיחות.</p>
+
+  <h2>תרגילים</h2>
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 9.1</span> headless ראשון</div>
+    <p>הריצו שלוש פקודות <code dir="ltr">claude -p</code> על פרויקט שלכם: אחת לשאלה על הקוד, אחת עם pipe של קובץ פנימה, ואחת עם <code dir="ltr">--output-format json</code>. הסתכלו על מבנה ה‑JSON שחוזר.</p>
+    <details class="solution"><summary>מה לחפש ב-JSON</summary>
+      <p>שדות כמו <code>result</code> (התשובה), עלות הריצה ומספר הסבבים. באוטומציה אמיתית כדאי לנטר את שדה העלות — כך שומרים על תקציב ומזהים ריצות שהשתוללו.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 9.2</span> סקריפט תחזוקה</div>
+    <p>כתבו סקריפט (אפשר לבקש מ‑Claude לכתוב אותו!) שרץ עם <code dir="ltr">claude -p</code> ומבצע משימת תחזוקה אמיתית בפרויקט שלכם: תיקון lint, עדכון README לפי הקוד, או הוספת JSDoc לפונקציות ציבוריות. הקפידו על <code dir="ltr">--allowedTools</code> מינימלי ו‑<code dir="ltr">--max-turns</code>.</p>
+    <details class="solution"><summary>נקודת בקרה</summary>
+      <p>לפני ההרצה עשו קומיט; אחרי — <code dir="ltr">git diff</code> לביקורת. אם הסקריפט נעצר על הרשאה חסרה, הוסיפו בדיוק את הכלי שנחסם ל‑allowedTools — לא הכול. כך בונים אוטומציה בהרשאות מינימום, איטרטיבית.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 9.3</span> ‏@claude בריפו אמיתי</div>
+    <p>בריפו GitHub שלכם, הריצו <code dir="ltr">/install-github-app</code> והשלימו את ההגדרה. פתחו issue עם תיאור פיצ'ר קטן ומדויק, ותייגו: <code dir="ltr">@claude תממש את זה ותפתח PR</code>. סקרו את ה‑PR שנוצר — בעין ביקורתית, כאילו כתב אותו מפתח חדש בצוות.</p>
+    <details class="solution"><summary>מה אמור לקרות</summary>
+      <p>תוך דקות תראו את Claude מגיב על ה‑issue עם checklist התקדמות, ובסוף — קישור ל‑PR מוכן. אם התוצאה לא מושלמת, המשיכו את הדיאלוג בתגובות ה‑PR עצמו: <code dir="ltr">@claude הכפתור צריך להיות גם במובייל</code>. זו העברת מקל מלאה לעבודה אסינכרונית.</p>
+    </details>
+  </div>
+
+  <h2>סיכום הפרק</h2>
+  <ul class="checklist">
+    <li><code dir="ltr">claude -p</code> הופך את Claude לכלי שורת פקודה שאפשר לשרשר ולתזמן</li>
+    <li>שליטה: <code dir="ltr">--allowedTools</code> להרשאות, <code dir="ltr">--max-turns</code> לבלם, JSON לפלט מובנה</li>
+    <li>ביטול אישורים — רק בסביבה מבודדת, ותמיד עם ביקורת אנושית על התוצר</li>
+    <li>‏GitHub Actions + ‏<code dir="ltr">@claude</code> = סוכן שעובד על הריפו בלי המחשב שלכם</li>
+  </ul>
+
+  <div class="complete-row"><button id="completeBtn" data-lesson="l09"></button></div>
+
+  <nav class="lesson-nav">
+    <a href="lesson-08.html"><span class="dir-label">→ הפרק הקודם</span>Subagents — צוות של סוכני משנה</a>
+    <a href="lesson-10.html"><span class="dir-label">הפרק הבא ←</span>סוכנים אוטונומיים לגמרי</a>
+  </nav>
+</main>
+
+<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a></footer>
+</body>
+</html>

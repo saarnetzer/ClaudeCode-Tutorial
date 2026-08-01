@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרק 4 · זיכרון והקשר: CLAUDE.md וניהול קונטקסט</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> קורס Claude Code</a></div>
+  <nav><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">פרק 4 מתוך 10</span>
+  <h1>זיכרון והקשר: CLAUDE.md וניהול קונטקסט</h1>
+  <p class="lead">ההבדל בין "Claude שעובד בסדר" ל"Claude שמרגיש כמו חבר צוות ותיק" הוא כמעט תמיד קובץ אחד קטן: CLAUDE.md. בפרק הזה נלמד ללמד את Claude את הפרויקט שלנו פעם אחת — ולשמור על השיחות חדות וממוקדות.</p>
+
+  <h2>מה נלמד בפרק</h2>
+  <ul class="checklist">
+    <li>מה זה חלון הקשר (Context) ולמה הוא המשאב היקר ביותר</li>
+    <li>קובץ CLAUDE.md: מה שמים בו ומה לא</li>
+    <li>שלוש רמות זיכרון: פרויקט, אישי וגלובלי</li>
+    <li>טכניקות לניהול שיחות ארוכות</li>
+  </ul>
+
+  <h2>קודם מושג: חלון ההקשר</h2>
+  <p>לכל שיחה עם Claude יש "זיכרון עבודה" מוגבל — <strong>חלון הקשר (Context Window)</strong>. כל מה שנאמר, כל קובץ שנקרא וכל פלט של פקודה תופסים בו מקום. כשהוא מתמלא, פרטים ישנים נדחסים או נשכחים. מכאן שני כללים מעשיים:</p>
+  <ul>
+    <li><strong>שיחה חדשה לכל משימה חדשה.</strong> סיימתם פיצ'ר? <code>/clear</code>. אין סיבה לגרור לתוך משימה חדשה אלפי שורות של הקשר ישן שרק מבלבל.</li>
+    <li><strong>מה שחשוב תמיד — שייכתב בקובץ, לא בשיחה.</strong> וזה בדיוק התפקיד של CLAUDE.md.</li>
+  </ul>
+
+  <h2>CLAUDE.md — תעודת הזהות של הפרויקט</h2>
+  <p>בתחילת כל שיחה, Claude קורא אוטומטית את הקובץ <code>CLAUDE.md</code> מתיקיית הפרויקט. כל מה שכתוב שם — הוא פשוט <em>יודע</em>, בלי שתצטרכו לחזור על זה. ליצירה אוטומטית של טיוטה ראשונה:</p>
+  <pre><code>/init</code></pre>
+  <p>Claude יסרוק את הפרויקט ויכתוב קובץ התחלתי. אבל הערך האמיתי מגיע מעריכה שלכם. הנה מבנה מומלץ:</p>
+  <pre><span class="pre-label">CLAUDE.md</span><code># MyShop — חנות אונליין
+
+## פקודות
+- הרצה מקומית: `npm run dev`
+- טסטים: `npm test` (חובה לפני כל קומיט)
+- בדיקת lint: `npm run lint`
+
+## ארכיטקטורה
+- Frontend: React + Vite בתיקיית `client/`
+- Backend: Express בתיקיית `server/`, ראוטים ב-`server/routes/`
+- DB: PostgreSQL דרך Prisma. הסכמה ב-`prisma/schema.prisma`
+
+## כללים חשובים
+- כל טקסט למשתמש — בעברית. שמות משתנים — באנגלית
+- אין לגעת בתיקיית `legacy/` בלי אישור מפורש
+- תאריכים תמיד ב-UTC בשרת, המרה לזמן ישראל רק בתצוגה
+- אחרי כל שינוי ב-schema להריץ `npx prisma generate`</code></pre>
+
+  <div class="callout tip">
+    <span class="co-title">✅ מבחן האיכות של CLAUDE.md</span>
+    שאלו את עצמכם: "אם היה מצטרף מחר מתכנת חדש לצוות, מה הייתי חייב להגיד לו ביום הראשון?" — זה בדיוק מה שצריך להיות בקובץ. קצר, עובדתי, בלי חפירות. קובץ ענק פוגע יותר משהוא עוזר, כי הוא נטען לכל שיחה.
+  </div>
+
+  <h3>עדכון תוך כדי עבודה</h3>
+  <p>מצאתם את עצמכם מסבירים ל‑Claude משהו בפעם השנייה? זה סימן שהוא שייך לזיכרון. התחילו הודעה בסולמית <code>#</code> — ו‑Claude יציע להוסיף אותה לקובץ הזיכרון:</p>
+  <pre><code># תמיד להשתמש ב-axios ולא ב-fetch בפרויקט הזה</code></pre>
+
+  <h3>שלוש רמות זיכרון</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>קובץ</th><th>תחולה</th><th>מתי</th></tr>
+    <tr><td><code dir="ltr">./CLAUDE.md</code></td><td>הפרויקט — משותף לכל הצוות (נכנס ל‑git)</td><td>פקודות, ארכיטקטורה, כללי צוות</td></tr>
+    <tr><td><code dir="ltr">./CLAUDE.local.md</code></td><td>הפרויקט — רק אצלכם (מחוץ ל‑git)</td><td>נתיבים מקומיים, העדפות אישיות לפרויקט</td></tr>
+    <tr><td><code dir="ltr">~/.claude/CLAUDE.md</code></td><td>כל הפרויקטים במחשב שלכם</td><td>"ענה בעברית", סגנון קוד אישי</td></tr>
+  </table>
+  </div>
+  <p>בפרויקט גדול אפשר גם לשים קובצי CLAUDE.md בתתי־תיקיות — Claude טוען אותם כשעובדים באזור הרלוונטי.</p>
+
+  <h2>ניהול שיחות ארוכות</h2>
+  <ul>
+    <li><strong><code>/compact</code></strong> — מכווץ את ההיסטוריה לסיכום. השתמשו בנקודת עצירה טבעית (אחרי קומיט, לפני תת־משימה חדשה).</li>
+    <li><strong><code>/clear</code></strong> — איפוס מלא. עדיף על compact כשעוברים למשימה שלא קשורה.</li>
+    <li><strong>סיכום ביניים יזום:</strong> לפני הפסקה ארוכה בקשו "סכם בקובץ PROGRESS.md מה עשינו, מה עובד ומה נשאר" — ובשיחה הבאה פתחו עם "קרא את PROGRESS.md ונמשיך".</li>
+  </ul>
+  <div class="callout info">
+    <span class="co-title">💡 העיקרון המסדר</span>
+    קונטקסט הוא משאב יקר: כל טוקן מיותר בו מקטין את המיקוד. סוכנים עובדים הכי טוב כשההקשר מכיל בדיוק את מה שרלוונטי — לא פחות, ולא יותר. תחשבו על עצמכם כמנהלי ההקשר של הסוכן.
+  </div>
+
+  <h2>תרגילים</h2>
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 4.1</span> CLAUDE.md ראשון</div>
+    <p>בפרויקט שעבדתם עליו בפרקים הקודמים, הריצו <code>/init</code>. קראו את הקובץ שנוצר, מחקו ממנו כל מה שמיותר, והוסיפו שני כללים אישיים שלכם (למשל: "טקסט למשתמש בעברית"). פתחו שיחה חדשה ובדקו שהכללים באמת חלים.</p>
+    <details class="solution"><summary>איך בודקים שזה עובד</summary>
+      <p>אחרי <code>/clear</code>, בקשו משהו שהכלל אמור להשפיע עליו — למשל "הוסף כפתור חדש" — ובדקו שהטקסט יצא בעברית בלי שביקשתם. אם כן: הזיכרון עובד.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 4.2</span> זיכרון גלובלי</div>
+    <p>צרו קובץ <code dir="ltr">~/.claude/CLAUDE.md</code> עם 2–3 העדפות שנכונות לכם תמיד (שפה, סגנון תשובות, כלים אהובים). פתחו את Claude בשתי תיקיות שונות וודאו שההעדפות חלות בשתיהן.</p>
+    <details class="solution"><summary>דוגמה לתוכן</summary>
+      <pre><code># העדפות אישיות
+- ענה לי בעברית, קוד באנגלית
+- לפני שינוי גדול - הצג תוכנית קצרה
+- עדיף פתרון פשוט על פתרון "חכם"</code></pre>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 4.3</span> העברת מקל בין שיחות</div>
+    <p>התחילו משימה בת כמה שלבים (למשל: הוספת עמוד "אודות" + ניווט + עיצוב). באמצע, בקשו מ‑Claude לכתוב סיכום התקדמות ל‑<code>PROGRESS.md</code>. הריצו <code>/clear</code>, ואז: "קרא את PROGRESS.md והמשך מאיפה שעצרנו". ודאו שהוא באמת ממשיך נכון.</p>
+    <details class="solution"><summary>למה זה חשוב</summary>
+      <p>הטכניקה הזאת — לשמור מצב בקבצים במקום בזיכרון השיחה — היא אבן יסוד של סוכנים אוטונומיים (פרק 10). סוכן שרץ שעות חייב "זיכרון חיצוני" ששורד איפוסי הקשר. עכשיו אתם כבר מתרגלים אותה ביד.</p>
+    </details>
+  </div>
+
+  <h2>סיכום הפרק</h2>
+  <ul class="checklist">
+    <li>חלון ההקשר מוגבל — נהלו אותו במודע: <code>/clear</code> בין משימות, <code>/compact</code> בנקודות עצירה</li>
+    <li>CLAUDE.md = מה שהייתם אומרים למתכנת חדש ביום הראשון</li>
+    <li>שלוש רמות: פרויקט (משותף), local (אישי לפרויקט), גלובלי (~/.claude)</li>
+    <li>ידע חשוב שומרים בקבצים — לא בזיכרון השיחה</li>
+  </ul>
+
+  <div class="complete-row"><button id="completeBtn" data-lesson="l04"></button></div>
+
+  <nav class="lesson-nav">
+    <a href="lesson-03.html"><span class="dir-label">→ הפרק הקודם</span>עבודה עם Git ו‑GitHub</a>
+    <a href="lesson-05.html"><span class="dir-label">הפרק הבא ←</span>פקודות מותאמות ו‑Skills</a>
+  </nav>
+</main>
+
+<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a></footer>
+</body>
+</html>

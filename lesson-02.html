@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרק 2 · יסודות העבודה היומיומית</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> קורס Claude Code</a></div>
+  <nav><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">פרק 2 מתוך 10</span>
+  <h1>יסודות העבודה היומיומית</h1>
+  <p class="lead">הפרק הזה הופך אתכם ממשתמשים מהוססים למשתמשים שוטפים: איך לנסח בקשות שמביאות תוצאות מעולות, איך לשלוט במה ש‑Claude מורשה לעשות, ואילו פקודות ומקשים חוסכים המון זמן.</p>
+
+  <h2>מה נלמד בפרק</h2>
+  <ul class="checklist">
+    <li>העיקרון החשוב ביותר בניסוח בקשות</li>
+    <li>שלושת מצבי ההרשאות, כולל Plan Mode</li>
+    <li>פקודות ה‑Slash המובנות שחייבים להכיר</li>
+    <li>איך Claude חוקר פרויקט קיים</li>
+  </ul>
+
+  <h2>איך מנסחים בקשה טובה</h2>
+  <p>הכלל החשוב ביותר: <strong>תנו הקשר ומטרה, לא רק פקודה.</strong> Claude מצוין בלמלא פערים, אבל ככל שהבקשה מדויקת יותר — התוצאה קרובה יותר למה שרציתם, בסיבוב אחד.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>בקשה חלשה 😕</th><th>בקשה חזקה 💪</th></tr>
+    <tr>
+      <td>"תתקן את הבאג"</td>
+      <td>"כשלוחצים על 'שלח' בטופס ההרשמה בלי אימייל, הדף קורס. תמצא את הסיבה ותתקן, ותוסיף בדיקת ולידציה עם הודעת שגיאה בעברית."</td>
+    </tr>
+    <tr>
+      <td>"תוסיף טסטים"</td>
+      <td>"תוסיף טסטים ל‑<code>utils/dates.js</code>, כולל מקרי קצה של שנה מעוברת ואזורי זמן. תשתמש ב‑framework שכבר קיים בפרויקט."</td>
+    </tr>
+    <tr>
+      <td>"תשפר את הקוד"</td>
+      <td>"הפונקציה <code>processOrders</code> איטית כשיש 10,000 הזמנות. תמדוד, תמצא את צוואר הבקבוק ותציע תיקון — לפני שאתה משנה משהו."</td>
+    </tr>
+  </table>
+  </div>
+  <p>שימו לב לדפוס בדוגמה האחרונה: <strong>"תציע לפני שאתה משנה"</strong>. זו גישה כל־כך שימושית שיש לה מצב מובנה שלם — Plan Mode, ומיד נגיע אליו.</p>
+
+  <div class="callout tip">
+    <span class="co-title">✅ הצבעה על קבצים</span>
+    כתיבת <code>@</code> ואחריה שם קובץ (למשל <code dir="ltr">@src/app.js</code>) מצרפת את הקובץ להקשר של הבקשה. זו הדרך המהירה להגיד "תסתכל בדיוק כאן".
+  </div>
+
+  <h2>מצבי הרשאות: מי מחליט מה מותר</h2>
+  <p>Claude Code בטוח כברירת מחדל: הוא מבקש אישור לפני עריכת קבצים והרצת פקודות. מקש <kbd>Shift+Tab</kbd> מחליף בין מצבים:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>מצב</th><th>מה קורה</th><th>מתי להשתמש</th></tr>
+    <tr><td><strong>רגיל (default)</strong></td><td>אישור ידני לכל עריכה ופקודה</td><td>פרויקט חדש, פעולות רגישות</td></tr>
+    <tr><td><strong>Auto-accept edits</strong></td><td>עריכות קבצים מאושרות אוטומטית; פקודות עדיין דורשות אישור</td><td>עבודה שוטפת בפרויקט מוכר</td></tr>
+    <tr><td><strong>Plan Mode</strong></td><td>Claude רק קורא וחוקר — אסור לו לשנות כלום. בסוף הוא מציג תוכנית לאישורכם</td><td>משימות גדולות/מסוכנות, למידת פרויקט</td></tr>
+  </table>
+  </div>
+  <p><strong>Plan Mode הוא הכלי הסודי של מקצוענים.</strong> במשימה מורכבת, התהליך הנכון הוא: להיכנס ל‑Plan Mode, לתת ל‑Claude לחקור ולהציג תוכנית, לתקן את התוכנית בדיאלוג — ורק אז לאשר ביצוע. תיקון של משפט בתוכנית זול פי מאה מתיקון של אלף שורות קוד שנכתבו בכיוון הלא נכון.</p>
+  <p>אפשר גם לאשר הרשאות באופן קבוע: הפקודה <code>/permissions</code> מציגה ומנהלת רשימת כללים — למשל לאשר לתמיד את <code dir="ltr">npm test</code> אבל לעולם לא את <code dir="ltr">rm -rf</code>.</p>
+
+  <div class="callout danger">
+    <span class="co-title">🛑 על הדגל המפחיד</span>
+    קיים דגל בשם <code dir="ltr">--dangerously-skip-permissions</code> שמבטל את כל שאלות האישור. אל תשתמשו בו על המחשב האישי שלכם. נדבר עליו בפרק 9 — בסביבות מבודדות (סנדבוקס/קונטיינר) יש לו מקום, ורק שם.
+  </div>
+
+  <h2>פקודות מובנות שכדאי לשנן</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>פקודה</th><th>מה היא עושה</th></tr>
+    <tr><td><code>/help</code></td><td>רשימת כל הפקודות הזמינות</td></tr>
+    <tr><td><code>/clear</code></td><td>מנקה את השיחה לגמרי — מתחילים נקי (בלי לאבד קבצים כמובן)</td></tr>
+    <tr><td><code>/compact</code></td><td>מכווץ את היסטוריית השיחה לסיכום — משחרר מקום בזיכרון העבודה</td></tr>
+    <tr><td><code>/model</code></td><td>החלפת מודל (חזק ואיטי ↔ מהיר וזול)</td></tr>
+    <tr><td><code>/init</code></td><td>יוצר קובץ CLAUDE.md לפרויקט — נלמד לעומק בפרק 4</td></tr>
+    <tr><td><code>/review</code></td><td>סקירת קוד על השינויים הנוכחיים</td></tr>
+    <tr><td><code>/config</code></td><td>הגדרות: ערכת נושא, התראות ועוד</td></tr>
+  </table>
+  </div>
+
+  <h2>עבודה על פרויקט קיים</h2>
+  <p>הקסם האמיתי מתגלה בפרויקט אמיתי. פתחו את Claude בתיקיית פרויקט שאתם מכירים ושאלו שאלות לפני שאתם משנים:</p>
+  <pre><code>מה עושה הפרויקט הזה? תן לי סקירה של המבנה, הטכנולוגיות, ואיפה נקודת הכניסה</code></pre>
+  <pre><code>איפה מטופלת ההתחברות של משתמשים? הסבר את הזרימה צעד-צעד עם שמות קבצים</code></pre>
+  <p>Claude ישתמש בכלי חיפוש וקריאה כדי לענות — וזה לגמרי בטוח, כי קריאה לא משנה כלום. ללמוד פרויקט חדש בעבודה? זו אחת הדרכים המהירות ביותר שקיימות היום.</p>
+
+  <h2>תרגילים</h2>
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 2.1</span> אותה משימה, שני ניסוחים</div>
+    <p>בתיקייה חדשה בקשו: "תבנה מחשבון". קבלו תוצאה. ואז הריצו <code>/clear</code> ובקשו: "תבנה מחשבון בדף HTML בודד: ארבע פעולות חשבון, עיצוב כהה מודרני, תמיכה במקלדת, וטיפול בחלוקה באפס עם הודעה ידידותית". השוו את שתי התוצאות.</p>
+    <details class="solution"><summary>מה אמור לקרות</summary>
+      <p>שתי התוצאות יעבדו, אבל השנייה תהיה קרובה בהרבה למה שדמיינתם — בלי סבבי תיקונים. המסקנה: פירוט דרישות מראש הוא ההשקעה הכי משתלמת בעבודה עם סוכנים.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 2.2</span> Plan Mode בפעולה</div>
+    <p>פתחו פרויקט קיים כלשהו (או שיבשו בכוונה את המחשבון מהתרגיל הקודם). עברו ל‑Plan Mode עם <kbd>Shift+Tab</kbd> (פעמיים), ובקשו: "אני רוצה להוסיף היסטוריית חישובים שנשמרת. תחקור את הקוד ותציג תוכנית". קראו את התוכנית, בקשו שינוי אחד בה ("תשמור רק 10 אחרונים"), ורק אז אשרו ביצוע.</p>
+    <details class="solution"><summary>מה אמור לקרות</summary>
+      <p>ב‑Plan Mode תראו ש‑Claude רק קורא — אין בקשות אישור לעריכה. התוכנית תוצג בסוף, והשינוי שביקשתם ייכנס אליה לפני שנכתבה שורת קוד אחת. זה בדיוק ה‑workflow למשימות רציניות.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 2.3</span> חקירת פרויקט זר</div>
+    <p>הורידו פרויקט קוד פתוח כלשהו (<code dir="ltr">git clone</code> של ספרייה שאתם סקרנים לגביה), פתחו בו את Claude ושאלו שלוש שאלות: מה המבנה, איך מוסיפים פיצ'ר X, ואיפה הטסטים. נסו להגיע להבנה של הפרויקט ב‑10 דקות.</p>
+    <details class="solution"><summary>טיפ</summary>
+      <p>שאלה טובה במיוחד לפרויקטים זרים: "אם הייתי צריך לתקן באג ב־[תחום], באילו 3 קבצים הייתי מתחיל לקרוא?" — התשובה ממפה לכם את הטריטוריה החשובה באמת.</p>
+    </details>
+  </div>
+
+  <h2>סיכום הפרק</h2>
+  <ul class="checklist">
+    <li>בקשה טובה = הקשר + מטרה + דרישות מפורשות</li>
+    <li><kbd>Shift+Tab</kbd> מחליף מצבי הרשאות; Plan Mode לחקירה ותכנון בטוחים</li>
+    <li><code>/clear</code> להתחלה נקייה, <code>/compact</code> לכיווץ, <code>@קובץ</code> להצבעה</li>
+    <li>על פרויקט קיים — קודם שואלים, אחר כך משנים</li>
+  </ul>
+
+  <div class="complete-row"><button id="completeBtn" data-lesson="l02"></button></div>
+
+  <nav class="lesson-nav">
+    <a href="lesson-01.html"><span class="dir-label">→ הפרק הקודם</span>התקנה והרצה ראשונה</a>
+    <a href="lesson-03.html"><span class="dir-label">הפרק הבא ←</span>עבודה עם Git ו‑GitHub</a>
+  </nav>
+</main>
+
+<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a></footer>
+</body>
+</html>
