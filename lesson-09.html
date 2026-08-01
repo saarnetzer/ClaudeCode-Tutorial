@@ -30,10 +30,13 @@
   <p>הדגל <code dir="ltr">-p</code> (או <code dir="ltr">--print</code>) מריץ את Claude ללא ממשק אינטראקטיבי: שאלה נכנסת, תשובה יוצאת, התוכנית מסתיימת:</p>
   <pre><code>claude -p "כמה קבצי JS יש בפרויקט ומה הגדול ביותר?"</code></pre>
   <p>ומרגע שזו פקודה רגילה — אפשר לשרשר אותה כמו כל כלי Unix:</p>
-  <pre><code># ניתוח לוג שגיאות
+  <pre><code># ניתוח לוג שגיאות (macOS / Linux)
 cat error.log | claude -p "מהן 3 השגיאות הנפוצות וכיצד לתקן אותן? תמצית בעברית"
 
-# פלט מובנה לסקריפטים
+# אותו ניתוח ב-Windows (PowerShell)
+Get-Content error.log | claude -p "מהן 3 השגיאות הנפוצות וכיצד לתקן אותן? תמצית בעברית"
+
+# פלט מובנה לסקריפטים (זהה בכל מערכות ההפעלה)
 claude -p "רשום את כל ה-TODO בקוד" --output-format json</code></pre>
   <p>עם <code dir="ltr">--output-format json</code> מקבלים JSON עם התוצאה, עלות הריצה ומטא־נתונים — מושלם לעיבוד אוטומטי בהמשך ה‑pipeline.</p>
 
@@ -110,6 +113,18 @@ claude -p "עדכן את התלויות המשניות (minor+patch בלבד),
   --max-turns 40
 
 git add -A && git commit -m "chore: nightly dependency updates"
+git push -u origin HEAD
+gh pr create --fill</code></pre>
+  <pre><span class="pre-label">nightly-deps.ps1 (Windows)</span><code>$ErrorActionPreference = "Stop"
+git checkout -b "chore/deps-$(Get-Date -Format 'yyyy-MM-dd')"
+
+claude -p "עדכן את התלויות המשניות (minor+patch בלבד),
+הרץ את הטסטים אחרי כל עדכון, ובטל כל עדכון ששובר אותם.
+סכם בקובץ DEPS_REPORT.md מה עודכן ומה נחסם ולמה" `
+  --allowedTools "Bash(npm *),Edit,Read,Write" `
+  --max-turns 40
+
+git add -A; git commit -m "chore: nightly dependency updates"
 git push -u origin HEAD
 gh pr create --fill</code></pre>
   <p>שימו לב לעקרונות: ענף נפרד, כלים מוגבלים בדיוק לצורך, תקרת צעדים, והתוצר הוא PR — לא push ל‑main. אוטומציה עם חגורות בטיחות.</p>

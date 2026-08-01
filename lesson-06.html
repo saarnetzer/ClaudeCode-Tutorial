@@ -104,7 +104,18 @@ sys.exit(0)</code></pre>
     ]
   }
 }</code></pre>
-  <p>בלינוקס אפשר <code dir="ltr">notify-send "Claude מחכה לך"</code>, ובווינדוס סקריפט PowerShell קצר.</p>
+  <pre><span class="pre-label">.claude/settings.json (קטע, Windows)</span><code>{
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          { "type": "command", "command": "powershell -c [console]::beep(800,300)" }
+        ]
+      }
+    ]
+  }
+}</code></pre>
+  <p>ובלינוקס: <code dir="ltr">notify-send "Claude מחכה לך"</code>.</p>
 
   <h2>למה זה שער לאוטונומיה</h2>
   <p>חשבו רגע מה בנינו: מערכת שבה לסוכן יש חופש פעולה, אבל <strong>גבולות שנאכפים בקוד, לא בהבטחות</strong>. פורמט ואיכות נאכפים אוטומטית (PostToolUse), פעולות הרסניות חסומות פיזית (PreToolUse), ובני האדם מקבלים התראה בנקודות ההכרעה (Notification). זו בדיוק התשתית שתאפשר לנו בפרקים 9–10 להרפות מההגה בביטחון: ככל שהגבולות קשיחים יותר — אפשר לתת לסוכן יותר חופש בתוכם.</p>
@@ -129,6 +140,7 @@ sys.exit(0)</code></pre>
     ]
   }
 }</code></pre>
+      <p>ב‑Windows החליפו את הפקודה ב: <code dir="ltr">powershell -c "Add-Content .claude/edits.log \"$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') $env:CLAUDE_FILE_PATHS\""</code></p>
       <p>לוג כזה הוא דרך מצוינת "לראות" מה סוכן עשה בריצות ארוכות.</p>
     </details>
   </div>
