@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מדריך עזר · הטרמינל למתחילים גמורים</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> קורס Claude Code</a></div>
+  <nav><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">מדריך עזר · לפני פרק 1</span>
+  <h1>הטרמינל למתחילים גמורים — צעד אחר צעד</h1>
+  <p class="lead">אף פעם לא פתחתם טרמינל? מצוין, התחלתם במקום הנכון. בעמוד הזה תלמדו מה זה בכלל טרמינל, איך פותחים אותו במחשב שלכם, ואת חמש הפקודות היחידות שצריך בשביל הקורס. רבע שעה — ואתם מוכנים לפרק 1.</p>
+
+  <h2>מה זה בכלל טרמינל?</h2>
+  <p>טרמינל (נקרא גם "שורת פקודה" או Command Line) הוא דרך לדבר עם המחשב <strong>בטקסט</strong> במקום בעכבר: כותבים פקודה, לוחצים <kbd>Enter</kbd>, והמחשב מבצע ומדפיס תשובה. זה נראה ככה:</p>
+  <pre><code>$ echo שלום
+שלום</code></pre>
+  <p>הסימן <code>$</code> (או <code>&gt;</code> ב‑Windows) הוא ה"פרומפט" — סימן שהטרמינל מחכה לפקודה שלכם. <strong>אתם לא מקלידים אותו</strong> — רק את מה שאחריו.</p>
+  <div class="callout info">
+    <span class="co-title">💡 למה בכלל צריך את זה?</span>
+    Claude Code רץ בתוך הטרמינל. אבל אל דאגה — אתם צריכים לדעת רק לפתוח אותו, להגיע לתיקייה ולהריץ פקודה. את כל השאר Claude יעשה בשבילכם.
+  </div>
+
+  <h2>שלב 1: פותחים את הטרמינל</h2>
+
+  <h3>🪟 Windows</h3>
+  <ol>
+    <li>לחצו על מקש <kbd>⊞ Win</kbd> (מקש החלונות במקלדת).</li>
+    <li>הקלידו <code>terminal</code> ולחצו <kbd>Enter</kbd>.</li>
+    <li>נפתח חלון בשם <strong>Windows Terminal</strong> (או PowerShell) — זה הטרמינל שלכם.</li>
+  </ol>
+  <p>אין לכם Windows Terminal (ב‑Windows 10 ישן למשל)? התקינו אותו בחינם מ‑<a href="https://aka.ms/terminal" target="_blank" rel="noopener">חנות Microsoft (aka.ms/terminal)</a>, או הקלידו <code>powershell</code> במקום — גם זה עובד מצוין.</p>
+
+  <h3>🍎 macOS (מק)</h3>
+  <ol>
+    <li>לחצו <kbd>Cmd</kbd>+<kbd>רווח</kbd> לפתיחת חיפוש Spotlight.</li>
+    <li>הקלידו <code>terminal</code> ולחצו <kbd>Enter</kbd>.</li>
+    <li>נפתח חלון לבן/שחור עם שורת טקסט — זהו.</li>
+  </ol>
+  <p>אפשר גם דרך Finder: יישומים ← כלי עזר ← Terminal. המדריך הרשמי של Apple נמצא <a href="https://support.apple.com/he-il/guide/terminal/welcome/mac" target="_blank" rel="noopener">כאן</a>.</p>
+
+  <h3>🐧 Linux</h3>
+  <ol>
+    <li>ברוב ההפצות (Ubuntu, Fedora...): קיצור <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd>.</li>
+    <li>או חפשו <code>terminal</code> בתפריט היישומים.</li>
+  </ol>
+  <p>מדריך מתחילים מצוין באנגלית יש באתר של <a href="https://ubuntu.com/tutorials/command-line-for-beginners" target="_blank" rel="noopener">Ubuntu</a>.</p>
+
+  <div class="callout tip">
+    <span class="co-title">✅ בדיקה שהכול עובד</span>
+    בטרמינל שפתחתם, הקלידו <code>echo hello</code> ולחצו <kbd>Enter</kbd>. אם המחשב הדפיס בחזרה <code>hello</code> — הטרמינל שלכם עובד ואתם רשמית משתמשי שורת פקודה.
+  </div>
+
+  <h2>שלב 2: חמש הפקודות שבאמת צריך</h2>
+  <p>הטרמינל תמיד "עומד" בתוך תיקייה כלשהי במחשב — כמו חלון סייר קבצים, רק בטקסט. הפקודות האלה מזיזות אתכם בין תיקיות:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>פקודה</th><th>מה היא עושה</th><th>דוגמה</th></tr>
+    <tr><td><code>pwd</code></td><td>מציגה באיזו תיקייה אתם עכשיו (ב‑Windows: החלון מציג את זה בפרומפט)</td><td><code>pwd</code></td></tr>
+    <tr><td><code>ls</code> <span style="opacity:.6">(ב‑Windows גם</span> <code>dir</code><span style="opacity:.6">)</span></td><td>מציגה מה יש בתיקייה הנוכחית</td><td><code>ls</code></td></tr>
+    <tr><td><code>cd</code></td><td>עוברת לתיקייה אחרת (change directory)</td><td><code dir="ltr">cd Documents</code></td></tr>
+    <tr><td><code dir="ltr">cd ..</code></td><td>עולה תיקייה אחת אחורה</td><td><code dir="ltr">cd ..</code></td></tr>
+    <tr><td><code>mkdir</code></td><td>יוצרת תיקייה חדשה</td><td><code dir="ltr">mkdir my-project</code></td></tr>
+  </table>
+  </div>
+  <p>נסו את זה ברצף — צרו תיקייה לקורס והיכנסו אליה:</p>
+  <pre><code>mkdir claude-course
+cd claude-course
+pwd</code></pre>
+  <p>אם <code>pwd</code> (או הפרומפט) מראה נתיב שמסתיים ב‑<code>claude-course</code> — עשיתם הכול נכון.</p>
+
+  <h2>שלב 3: טריקים שחוסכים חיים</h2>
+  <ul>
+    <li><kbd>Tab</kbd> — <strong>השלמה אוטומטית.</strong> הקלידו את תחילת שם תיקייה ולחצו Tab, והטרמינל ישלים לבד. משתמשים בזה כל הזמן.</li>
+    <li><kbd>↑</kbd> (חץ למעלה) — מחזיר את הפקודה הקודמת. אין צורך להקליד שוב.</li>
+    <li><kbd>Ctrl</kbd>+<kbd>C</kbd> — עוצר פקודה שנתקעה או רצה יותר מדי זמן. כפתור החירום שלכם.</li>
+    <li><code>clear</code> (ב‑Windows גם <code>cls</code>) — מנקה את המסך כשנהיה עמוס.</li>
+    <li><strong>הדבקה:</strong> ב‑Windows וב‑Linux לרוב <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> (או קליק ימני), במק <kbd>Cmd</kbd>+<kbd>V</kbd> כרגיל.</li>
+  </ul>
+
+  <div class="callout warn">
+    <span class="co-title">⚠️ קיבלתם הודעת שגיאה?</span>
+    זה קורה לכולם, כל יום. שגיאות בטרמינל הן טקסט שנועד לעזור — קראו אותן. הנפוצה ביותר: <code dir="ltr">command not found</code> = שגיאת הקלדה או שהתוכנה לא מותקנת. ו‑<code dir="ltr">No such file or directory</code> = שם תיקייה שגוי (בדקו עם <code>ls</code> מה יש באמת).
+  </div>
+
+  <h2>זהו — אתם מוכנים</h2>
+  <p>ברצינות, זה כל מה שצריך. אתם יודעים לפתוח טרמינל, לנווט לתיקייה, ולהריץ פקודה. את ההתקנה של Claude Code עצמו נעשה יחד, פקודה אחת, בתחילת <a href="lesson-01.html">פרק 1</a>.</p>
+
+  <h2>רוצים להעמיק? (רשות לגמרי)</h2>
+  <ul>
+    <li><a href="https://aka.ms/terminal" target="_blank" rel="noopener">Windows Terminal — התקנה מחנות Microsoft</a></li>
+    <li><a href="https://learn.microsoft.com/he-il/training/modules/introduction-to-powershell/" target="_blank" rel="noopener">מבוא ל‑PowerShell — מדריך רשמי של Microsoft</a></li>
+    <li><a href="https://support.apple.com/he-il/guide/terminal/welcome/mac" target="_blank" rel="noopener">המדריך הרשמי של Apple ל‑Terminal במק</a></li>
+    <li><a href="https://ubuntu.com/tutorials/command-line-for-beginners" target="_blank" rel="noopener">The Linux command line for beginners — Ubuntu</a></li>
+  </ul>
+
+  <nav class="lesson-nav">
+    <a href="index.html"><span class="dir-label">→ חזרה</span>לתוכן הקורס</a>
+    <a href="lesson-01.html"><span class="dir-label">מוכנים? ←</span>פרק 1: התקנה והרצה ראשונה</a>
+  </nav>
+</main>
+
+<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a></footer>
+</body>
+</html>
