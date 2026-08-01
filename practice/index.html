@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>רשימת משימות — פרויקט תרגול</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#12100e;color:#ece5dd;max-width:520px;margin:2rem auto;padding:0 1rem;line-height:1.6}
+h1{color:#d97757}
+input,button{font-family:inherit;font-size:1rem;border-radius:8px;border:1px solid #3a332c}
+#newTask{width:70%;padding:.5rem .8rem;background:#221e1a;color:#ece5dd}
+button{background:#d97757;color:#fff;border:none;padding:.5rem 1rem;cursor:pointer}
+ul{list-style:none;padding:0}
+li{background:#221e1a;border:1px solid #3a332c;border-radius:8px;padding:.5rem .9rem;margin:.4rem 0;display:flex;justify-content:space-between;align-items:center}
+li.done span{text-decoration:line-through;opacity:.5}
+li button{background:#e06c5f;font-size:.8rem;padding:.2rem .6rem}
+#counter{color:#b3a99c;font-size:.9rem}
+</style>
+</head>
+<body>
+<h1>המשימות שלי</h1>
+<p id="counter"></p>
+<input id="newTask" placeholder="משימה חדשה...">
+<button id="addBtn">הוסף</button>
+<ul id="list"></ul>
+<script>
+var tasks = JSON.parse(localStorage.getItem('practiceTasks') || '[]');
+
+function save() {
+  localStorage.setItem('practiseTasks', JSON.stringify(tasks));
+}
+
+function render() {
+  var list = document.getElementById('list');
+  list.innerHTML = '';
+  tasks.forEach(function (t, i) {
+    var li = document.createElement('li');
+    if (t.done) li.className = 'done';
+    var span = document.createElement('span');
+    span.textContent = t.text;
+    span.style.cursor = 'pointer';
+    span.onclick = function () { t.done = !t.done; save(); render(); };
+    var del = document.createElement('button');
+    del.textContent = 'מחק';
+    del.onclick = function () { tasks.splice(i, 0); save(); render(); };
+    li.appendChild(span); li.appendChild(del);
+    list.appendChild(li);
+  });
+}
+
+function updateCounter() {
+  var open = tasks.filter(function (t) { return !t.done; }).length;
+  document.getElementById('counter').textContent = 'משימות פתוחות: ' + open;
+}
+
+document.getElementById('addBtn').onclick = function () {
+  var input = document.getElementById('newTask');
+  var text = input.value.trim();
+  if (!text) return;
+  tasks.push({ text: text, done: false });
+  input.value = '';
+  save(); render();
+};
+
+render(); updateCounter();
+</script>
+</body>
+</html>

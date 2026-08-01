@@ -4,15 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>קורס Claude Code — מאפס ועד סוכנים אוטונומיים</title>
+<meta name="description" content="קורס מעשי חינמי בעברית ללימוד Claude Code: 12 פרקים, 40+ תרגילים, 100 סוכנים מוכנים להורדה — מההתקנה הראשונה ועד צוותי סוכנים אוטונומיים.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="קורס Claude Code — מאפס ועד סוכנים אוטונומיים">
+<meta property="og:description" content="קורס מעשי חינמי בעברית ללימוד Claude Code: 12 פרקים, 40+ תרגילים, 100 סוכנים מוכנים להורדה — מההתקנה הראשונה ועד צוותי סוכנים אוטונומיים.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
+<meta property="og:locale" content="he_IL">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="style.css">
 <script src="app.js" defer></script>
 </head>
 <body>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span> קורס Claude Code</a></div>
-  <nav>
-    <button id="themeBtn" class="hbtn">🌓 ערכת נושא</button>
-  </nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
 </header>
 
 <main class="wrap">
@@ -24,6 +32,14 @@
       <span class="badge">🏋️ 30+ תרגילים עם פתרונות</span>
       <span class="badge">🇮🇱 עברית פשוטה וברורה</span>
       <span class="badge">🤖 בלי ידע מוקדם ב‑AI</span>
+    </div>
+    <p style="margin-top:.8rem;font-size:.9rem"><a href="cheatsheet.html">📋 צ'יט-שיט</a> · <a href="glossary.html">📖 מילון מונחים</a> · <a href="terminal-basics.html">🖥️ מדריך הטרמינל</a></p>
+  </section>
+
+  <section>
+    <div class="search-wrap">
+      <input id="searchInput" type="search" placeholder="🔍 חיפוש בקורס — למשל: hooks, קומיט, הרשאות, MCP..." autocomplete="off">
+      <div id="searchResults"></div>
     </div>
   </section>
 
@@ -153,11 +169,15 @@
       <li><strong>פתרון רק אחרי ניסיון.</strong> לכל תרגיל מצורף פתרון מוסתר — הציצו בו רק אחרי שניסיתם לבד.</li>
       <li><strong>סמנו התקדמות.</strong> בסוף כל פרק יש כפתור "הושלם" — הוא שומר את ההתקדמות בדפדפן שלכם.</li>
     </ol>
+    <div class="callout tip">
+      <span class="co-title">🧪 פרויקט תרגול מוכן</span>
+      רוצים נקודת פתיחה אחידה לתרגילים? הורידו את <a href="practice/claude-practice-project.zip" download><strong>פרויקט התרגול</strong></a> — אפליקציית משימות קטנה עם שלושה באגים מוטמנים, שמלווה את התרגילים מפרק 2 והלאה. יש גם <a href="practice/index.html" target="_blank" rel="noopener">גרסה חיה להצצה</a>.
+    </div>
   </section>
 </main>
 
 <footer class="site">
-  קורס קהילתי ללימוד Claude Code · לא אתר רשמי של Anthropic · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a>
+  קורס קהילתי ללימוד Claude Code · לא אתר רשמי של Anthropic · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="https://github.com/saarnetzer/ClaudeCode-Tutorial/issues" target="_blank" rel="noopener">מצאתם טעות? פתחו issue</a>
   <br>© 2026 סער נצר (<a href="https://github.com/saarnetzer" target="_blank" rel="noopener">Saar Netzer</a>) · כל הזכויות שמורות · נבנה באמצעות Claude Code
 </footer>
 </body>

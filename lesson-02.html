@@ -4,13 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>פרק 2 · יסודות העבודה היומיומית</title>
+<meta name="description" content="פרק 2: איך מנסחים בקשות שמביאות תוצאות, מצבי הרשאות, Plan Mode, והפקודות שחייבים להכיר.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/lesson-02.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="פרק 2 · יסודות העבודה היומיומית">
+<meta property="og:description" content="פרק 2: איך מנסחים בקשות שמביאות תוצאות, מצבי הרשאות, Plan Mode, והפקודות שחייבים להכיר.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/lesson-02.html">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
+<meta property="og:locale" content="he_IL">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="style.css">
 <script src="app.js" defer></script>
 </head>
 <body>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span> קורס Claude Code</a></div>
-  <nav><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
 </header>
 
 <main class="wrap">
@@ -63,6 +73,23 @@
   </table>
   </div>
   <p><strong>Plan Mode הוא הכלי הסודי של מקצוענים.</strong> במשימה מורכבת, התהליך הנכון הוא: להיכנס ל‑Plan Mode, לתת ל‑Claude לחקור ולהציג תוכנית, לתקן את התוכנית בדיאלוג — ורק אז לאשר ביצוע. תיקון של משפט בתוכנית זול פי מאה מתיקון של אלף שורות קוד שנכתבו בכיוון הלא נכון.</p>
+  <p>כך זה נראה בפעולה (הדגמה):</p>
+  <div class="termdemo">
+    <div class="td-bar"><span class="td-dot"></span><span class="td-dot"></span><span class="td-dot"></span><span class="td-title">demo: plan-mode</span><button class="td-replay">↺ הפעלה מחדש</button></div>
+    <pre class="td-screen"></pre>
+    <script type="application/json" class="td-script">[
+["out","(Plan Mode \u2014 Shift+Tab pressed twice)"],
+["cmd","add a saved calculation history to the calculator"],
+["claude","\u25cf Reading app.js, index.html, style.css..."],
+["pause",""],
+["claude","\u25cf Plan:"],
+["out","  1. history array persisted to localStorage"],
+["out","  2. side panel rendering the last results"],
+["out","  3. clear-history button + empty state"],
+["out",""],
+["claude","? Approve plan \u00b7 Edit \u00b7 Cancel \u2014 no files were touched"]]</script>
+  </div>
+
   <p>אפשר גם לאשר הרשאות באופן קבוע: הפקודה <code>/permissions</code> מציגה ומנהלת רשימת כללים — למשל לאשר לתמיד את <code dir="ltr">npm test</code> אבל לעולם לא את <code dir="ltr">rm -rf</code>.</p>
 
   <div class="callout danger">
@@ -123,6 +150,31 @@
     <li>על פרויקט קיים — קודם שואלים, אחר כך משנים</li>
   </ul>
 
+  <h2>בוחן עצמי</h2>
+  <section class="quiz">
+    <div class="q" data-a="0">
+      <p class="q-text">1. מה Claude מורשה לעשות ב-Plan Mode?</p>
+      <button class="opt">לקרוא ולחקור בלבד, ואז להציג תוכנית</button>
+      <button class="opt">לערוך קבצים אבל לא להריץ פקודות</button>
+      <button class="opt">הכול, אבל לאט יותר</button>
+      <p class="q-fb"></p>
+    </div>
+    <div class="q" data-a="1">
+      <p class="q-text">2. איך מצרפים קובץ ספציפי להקשר של הבקשה?</p>
+      <button class="opt">מעתיקים את כל תוכן הקובץ להודעה</button>
+      <button class="opt">כותבים @ ואת נתיב הקובץ</button>
+      <button class="opt">אי אפשר — Claude בוחר לבד</button>
+      <p class="q-fb"></p>
+    </div>
+    <div class="q" data-a="2">
+      <p class="q-text">3. מה הופך בקשה לחזקה?</p>
+      <button class="opt">שהיא קצרה ככל האפשר</button>
+      <button class="opt">שהיא באנגלית בלבד</button>
+      <button class="opt">הקשר + מטרה + דרישות מפורשות</button>
+      <p class="q-fb"></p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
   <div class="complete-row"><button id="completeBtn" data-lesson="l02"></button></div>
 
   <nav class="lesson-nav">
@@ -131,6 +183,6 @@
   </nav>
 </main>
 
-<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a><br>© 2026 סער נצר (<a href="https://github.com/saarnetzer" target="_blank" rel="noopener">Saar Netzer</a>) · כל הזכויות שמורות · נבנה באמצעות Claude Code</footer>
+<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="https://github.com/saarnetzer/ClaudeCode-Tutorial/issues" target="_blank" rel="noopener">מצאתם טעות? פתחו issue</a><br>© 2026 סער נצר (<a href="https://github.com/saarnetzer" target="_blank" rel="noopener">Saar Netzer</a>) · כל הזכויות שמורות · נבנה באמצעות Claude Code</footer>
 </body>
 </html>
