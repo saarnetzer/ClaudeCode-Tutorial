@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>מדריך עזר · הטרמינל למתחילים גמורים</title>
+<title>מדריך עזר · הטרמינל צעד אחר צעד למתחילים</title>
 <link rel="stylesheet" href="style.css">
 <script src="app.js" defer></script>
 </head>
@@ -15,11 +15,11 @@
 
 <main class="wrap">
   <span class="kicker">מדריך עזר · לפני פרק 1</span>
-  <h1>הטרמינל למתחילים גמורים — צעד אחר צעד</h1>
-  <p class="lead">אף פעם לא פתחתם טרמינל? מצוין, התחלתם במקום הנכון. בעמוד הזה תלמדו מה זה בכלל טרמינל, איך פותחים אותו במחשב שלכם, ואת חמש הפקודות היחידות שצריך בשביל הקורס. רבע שעה — ואתם מוכנים לפרק 1.</p>
+  <h1>הטרמינל צעד אחר צעד — למי שמתחיל מאפס</h1>
+  <p class="lead">מעולם לא פתחתם טרמינל? הגעתם למקום הנכון. בעמוד הזה תלמדו מה זה בכלל טרמינל, איך פותחים אותו במחשב שלכם, ואת חמש הפקודות היחידות הדרושות לקורס. רבע שעה — ואתם מוכנים לפרק 1.</p>
 
   <h2>מה זה בכלל טרמינל?</h2>
-  <p>טרמינל (נקרא גם "שורת פקודה" או Command Line) הוא דרך לדבר עם המחשב <strong>בטקסט</strong> במקום בעכבר: כותבים פקודה, לוחצים <kbd>Enter</kbd>, והמחשב מבצע ומדפיס תשובה. זה נראה ככה:</p>
+  <p>טרמינל (נקרא גם "שורת פקודה" או Command Line) הוא דרך לדבר עם המחשב <strong>בטקסט</strong> במקום בעכבר: כותבים פקודה, לוחצים <kbd>Enter</kbd>, והמחשב מבצע ומדפיס תשובה. כך זה נראה:</p>
   <pre><code>$ echo שלום
 שלום</code></pre>
   <p>הסימן <code>$</code> (או <code>&gt;</code> ב‑Windows) הוא ה"פרומפט" — סימן שהטרמינל מחכה לפקודה שלכם. <strong>אתם לא מקלידים אותו</strong> — רק את מה שאחריו.</p>
@@ -55,7 +55,7 @@
 
   <div class="callout tip">
     <span class="co-title">✅ בדיקה שהכול עובד</span>
-    בטרמינל שפתחתם, הקלידו <code>echo hello</code> ולחצו <kbd>Enter</kbd>. אם המחשב הדפיס בחזרה <code>hello</code> — הטרמינל שלכם עובד ואתם רשמית משתמשי שורת פקודה.
+    בטרמינל שפתחתם, הקלידו <code>echo hello</code> ולחצו <kbd>Enter</kbd>. אם המחשב הדפיס בחזרה <code>hello</code> — הטרמינל שלכם עובד, ואתם כבר משתמשי שורת פקודה לכל דבר.
   </div>
 
   <h2>שלב 2: חמש הפקודות שבאמת צריך</h2>
@@ -76,12 +76,12 @@ cd claude-course
 pwd</code></pre>
   <p>אם <code>pwd</code> (או הפרומפט) מראה נתיב שמסתיים ב‑<code>claude-course</code> — עשיתם הכול נכון.</p>
 
-  <h2>שלב 3: טריקים שחוסכים חיים</h2>
+  <h2>שלב 3: קיצורי דרך שחוסכים זמן</h2>
   <ul>
     <li><kbd>Tab</kbd> — <strong>השלמה אוטומטית.</strong> הקלידו את תחילת שם תיקייה ולחצו Tab, והטרמינל ישלים לבד. משתמשים בזה כל הזמן.</li>
     <li><kbd>↑</kbd> (חץ למעלה) — מחזיר את הפקודה הקודמת. אין צורך להקליד שוב.</li>
-    <li><kbd>Ctrl</kbd>+<kbd>C</kbd> — עוצר פקודה שנתקעה או רצה יותר מדי זמן. כפתור החירום שלכם.</li>
-    <li><code>clear</code> (ב‑Windows גם <code>cls</code>) — מנקה את המסך כשנהיה עמוס.</li>
+    <li><kbd>Ctrl</kbd>+<kbd>C</kbd> — עוצר פקודה שנתקעה או שרצה זמן רב מדי. מקש החירום שלכם.</li>
+    <li><code>clear</code> (ב‑Windows גם <code>cls</code>) — מנקה את המסך כשהוא מתמלא.</li>
     <li><strong>הדבקה:</strong> ב‑Windows וב‑Linux לרוב <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> (או קליק ימני), במק <kbd>Cmd</kbd>+<kbd>V</kbd> כרגיל.</li>
   </ul>
 
@@ -91,9 +91,9 @@ pwd</code></pre>
   </div>
 
   <h2>זהו — אתם מוכנים</h2>
-  <p>ברצינות, זה כל מה שצריך. אתם יודעים לפתוח טרמינל, לנווט לתיקייה, ולהריץ פקודה. את ההתקנה של Claude Code עצמו נעשה יחד, פקודה אחת, בתחילת <a href="lesson-01.html">פרק 1</a>.</p>
+  <p>זה באמת כל מה שצריך. אתם יודעים לפתוח טרמינל, לנווט לתיקייה, ולהריץ פקודה. את ההתקנה של Claude Code עצמו נעשה יחד, פקודה אחת, בתחילת <a href="lesson-01.html">פרק 1</a>.</p>
 
-  <h2>רוצים להעמיק? (רשות לגמרי)</h2>
+  <h2>רוצים להעמיק? (לא חובה)</h2>
   <ul>
     <li><a href="https://aka.ms/terminal" target="_blank" rel="noopener">Windows Terminal — התקנה מחנות Microsoft</a></li>
     <li><a href="https://learn.microsoft.com/he-il/training/modules/introduction-to-powershell/" target="_blank" rel="noopener">מבוא ל‑PowerShell — מדריך רשמי של Microsoft</a></li>
