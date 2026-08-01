@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרק 11 · יצירת צוות סוכנים — עקרונות, תבניות ותשתית</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> קורס Claude Code</a></div>
+  <nav><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">פרק 11 מתוך 12</span>
+  <h1>יצירת צוות סוכנים — עקרונות, תבניות ותשתית</h1>
+  <p class="lead">בפרק 8 פגשתם subagents — עוזרים שסוכן אחד מפעיל. עכשיו נעלה מדרגה: <strong>צוות סוכנים (Agent Squad)</strong> — קבוצת סוכנים עם תפקידים מוגדרים, חלוקת עבודה ותוצר משותף. כמו ההבדל בין עובד מוכשר אחד לבין מחלקה שלמה שעובדת בשבילכם.</p>
+
+  <h2>מה נלמד בפרק</h2>
+  <ul class="checklist">
+    <li>מתי סוכן אחד מפסיק להספיק — ומתי צוות הוא טעות</li>
+    <li>אנטומיה של צוות: תפקידים, מתאם, זיכרון משותף וחוזה תוצרים</li>
+    <li>שלוש תבניות ארגון: פס ייצור, מנהל־ועובדים, עבודה במקביל</li>
+    <li>בנייה בפועל: ב‑Claude Code וב‑Agent SDK</li>
+  </ul>
+
+  <h2>למה בכלל צוות?</h2>
+  <p>לסוכן בודד, חזק ככל שיהיה, יש שלוש מגבלות מבניות:</p>
+  <ul>
+    <li><strong>חלון הקשר אחד.</strong> משימה גדולה באמת (מחקר + תכנון + ביצוע + בדיקה + תיעוד) מנפחת את ההקשר עד שהאיכות יורדת. פגשנו את זה בפרק 4.</li>
+    <li><strong>כובע אחד בכל רגע.</strong> מי שכתב את הקוד מתקשה לבקר אותו באובייקטיביות — נכון לבני אדם, נכון גם לסוכנים. מבקר עם הנחיות נפרדות והקשר נקי מוצא בעיות שהכותב מפספס.</li>
+    <li><strong>ריצה טורית.</strong> חמש משימות בלתי תלויות אצל סוכן אחד ירוצו בזו אחר זו. חמישה סוכנים יסיימו אותן בחמישית מהזמן.</li>
+  </ul>
+  <div class="callout warn">
+    <span class="co-title">⚠️ אבל אל תתלהבו מהר מדי</span>
+    צוות עולה יותר (טוקנים), מסובך יותר לתחזק, וקשה יותר לנפות בו תקלות. הכלל: מתחילים תמיד מסוכן אחד, ומפצלים לצוות רק כשנתקלים באחת משלוש המגבלות שלמעלה בפועל. צוות הוא פתרון לבעיה — לא קישוט.
+  </div>
+
+  <h2>אנטומיה של צוות סוכנים</h2>
+  <p>כל צוות מוצלח, בכל תחום, בנוי מאותם ארבעה רכיבים:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>רכיב</th><th>מה זה</th><th>איך מממשים</th></tr>
+    <tr><td><strong>מתאם (Orchestrator)</strong></td><td>מי שמפרק את המטרה למשימות, מאציל ומאחד</td><td>השיחה הראשית של Claude Code, או סקריפט SDK</td></tr>
+    <tr><td><strong>מומחים (Specialists)</strong></td><td>סוכן לכל תפקיד: הנחיות, כלים והרשאות משלו</td><td>קבצים ב‑<code dir="ltr">.claude/agents/</code> (פרק 8)</td></tr>
+    <tr><td><strong>זיכרון משותף</strong></td><td>המקום שבו הצוות מחליף מידע ותוצרים</td><td>קבצים בריפו: <code>SPEC.md</code>, <code dir="ltr">PROGRESS.md</code>, תיקיית <code dir="ltr">artifacts/</code></td></tr>
+    <tr><td><strong>חוזה תוצרים</strong></td><td>הגדרה מדויקת של מה כל תפקיד מקבל ומה הוא מחזיר</td><td>סעיף "קלט/פלט" ב‑system prompt של כל סוכן</td></tr>
+  </table>
+  </div>
+  <div class="callout info">
+    <span class="co-title">💡 העיקרון החשוב מכולם: חוזה תוצרים</span>
+    צוותי סוכנים נכשלים כמעט תמיד באותה נקודה — סוכן א' מחזיר תוצר מעורפל, וסוכן ב' לא יודע מה לעשות איתו. הפתרון: כל סוכן מסיים בתוצר <em>מוגדר</em> — "קובץ PLAN.md עם רשימת צעדים ממוספרת", "דוח ממצאים בטבלה עם חומרה לכל שורה". תוצר מוגדר = מסירה נקייה.
+  </div>
+
+  <h2>שלוש תבניות ארגון</h2>
+
+  <h3>1. פס ייצור (Pipeline)</h3>
+  <p>הסוכנים עובדים <strong>בזה אחר זה</strong>, כל אחד מקבל את תוצר קודמו: מתכנן ← מבצע ← בודק ← מתעד. פשוטה, צפויה, וקלה לניפוי תקלות — כשמשהו נשבר, ברור באיזו תחנה.</p>
+  <pre><code>מתכנן ──► מבצע ──► בודק ──► מתעד
+ SPEC.md   קוד     דוח      README</code></pre>
+  <p><em>מתאימה כשיש סדר טבעי לעבודה, וכל שלב תלוי בקודמו.</em></p>
+
+  <h3>2. מנהל ועובדים (Orchestrator–Workers)</h3>
+  <p>סוכן מתאם מחזיק את התמונה הגדולה, מפרק את המשימה, ומאציל לכל מומחה את החלק שלו — לפי הצורך, לאו דווקא בסדר קבוע. המתאם מחליט בזמן אמת: "הממצא של החוקר מחייב עוד בדיקה? אשלח את הבודק שוב".</p>
+  <pre><code>            ┌──► חוקר
+  מתאם ──────┼──► מבצע
+  (מחליט)    └──► מבקר
+       ▲______________│ (תוצרים חוזרים אליו)</code></pre>
+  <p><em>מתאימה כשהמשימה דורשת שיקול דעת על "מה עכשיו" — לא תסריט קבוע.</em></p>
+
+  <h3>3. עבודה במקביל (Parallel–Merge)</h3>
+  <p>מפצלים משימה לחלקים בלתי תלויים, כל סוכן עובד על חלק <strong>בו־זמנית</strong>, ובסוף שלב איחוד. הדרך הנקייה לעשות זאת בקוד: <strong>git worktrees</strong> — עותק עבודה נפרד לכל סוכן, כך שהם לא דורכים זה על זה:</p>
+  <pre><span class="pre-label">macOS / Linux</span><code># עותק עבודה נפרד לכל סוכן, כל אחד על ענף משלו
+git worktree add ../shop-payments feature/payments
+git worktree add ../shop-search  feature/search
+
+# טרמינל 1:
+cd ../shop-payments &amp;&amp; claude
+# טרמינל 2:
+cd ../shop-search &amp;&amp; claude</code></pre>
+  <pre><span class="pre-label">Windows (PowerShell)</span><code>git worktree add ..\shop-payments feature/payments
+git worktree add ..\shop-search feature/search
+
+# חלון טרמינל לכל סוכן:
+cd ..\shop-payments; claude
+cd ..\shop-search; claude</code></pre>
+  <p><em>מתאימה כשיש חלקים שבאמת לא תלויים זה בזה. האיחוד (merge) הוא המקום שבו משלמים את המחיר — תכננו אותו מראש.</em></p>
+
+  <div class="table-scroll">
+  <table>
+    <tr><th>תבנית</th><th>מתי לבחור בה</th><th>נקודת התורפה</th></tr>
+    <tr><td>פס ייצור</td><td>תהליך עם סדר ברור וקבוע</td><td>איטית — הכול טורי</td></tr>
+    <tr><td>מנהל ועובדים</td><td>נדרש שיקול דעת דינמי על סדר העבודה</td><td>המתאם הוא צוואר בקבוק ונקודת כשל</td></tr>
+    <tr><td>במקביל</td><td>חלקים בלתי תלויים + לוח זמנים לחוץ</td><td>קונפליקטים בשלב האיחוד</td></tr>
+  </table>
+  </div>
+
+  <h2>בנייה בפועל, דרך 1: הכול בתוך Claude Code</h2>
+  <p>הצוות מוגדר כקבוצת קבצים ב‑<code dir="ltr">.claude/agents/</code> (בדיוק כמו בפרק 8), והשיחה הראשית משמשת מתאם. את תסריט העבודה אורזים בפקודה מותאמת — והצוות כולו מופעל במילה אחת:</p>
+  <pre><span class="pre-label">.claude/commands/build-feature.md</span><code>אתה מתאם צוות. בנה את הפיצ'ר: $ARGUMENTS
+תהליך העבודה, שלב אחר שלב:
+1. שלח את planner לכתוב SPEC.md עם תוכנית מפורטת
+2. הצג לי את התוכנית ועצור לאישור
+3. אחרי אישור - שלח את coder לממש לפי ה-SPEC
+4. שלח את test-writer לכסות את הקוד החדש בטסטים
+5. שלח את code-reviewer לסקירה; ממצא קריטי חוזר ל-coder
+6. סכם: מה נבנה, מה נבדק, ומה נשאר פתוח</code></pre>
+  <p>שימו לב לשלב 2: <strong>עצירה לאישור אנושי</strong> בנקודת ההכרעה — עיקרון 5 מפרק 10, עכשיו ברמת הצוות.</p>
+
+  <h2>בנייה בפועל, דרך 2: צוות בקוד עם ה‑Agent SDK</h2>
+  <p>ב‑SDK מגדירים את חברי הצוות בתוך האפשרויות, והמודל מאציל להם בדיוק כמו ל‑subagents:</p>
+  <pre><span class="pre-label">squad.ts</span><code>import { query } from "@anthropic-ai/claude-agent-sdk";
+
+const result = query({
+  prompt: "בנה עמוד 'צור קשר' מלא: תכנון, מימוש, טסטים וסקירה",
+  options: {
+    agents: {
+      planner: {
+        description: "מתכנן. הפעל ראשון לכל פיצ'ר חדש.",
+        prompt: "כתוב תוכנית מימוש קצרה וממוספרת ל-SPEC.md. אל תכתוב קוד.",
+        tools: ["Read", "Grep", "Glob", "Write"],
+      },
+      coder: {
+        description: "מממש לפי SPEC.md קיים.",
+        prompt: "ממש את הצעדים מ-SPEC.md אחד-אחד. עדכן PROGRESS.md אחרי כל צעד.",
+      },
+      reviewer: {
+        description: "סוקר קוד. הפעל אחרי כל מימוש.",
+        prompt: "סקור את ה-diff. החזר טבלת ממצאים עם חומרה. אל תערוך קבצים.",
+        tools: ["Read", "Grep", "Bash"],
+      },
+    },
+    maxTurns: 60,
+  },
+});
+
+for await (const message of result) {
+  if (message.type === "result") console.log(message.result);
+}</code></pre>
+  <p>אותם עקרונות בדיוק: תפקיד, חוזה תוצרים (SPEC.md,‏ PROGRESS.md, טבלת ממצאים), והרשאות לפי צורך — הסוקר לא מקבל Edit.</p>
+
+  <h2>כללי אצבע לצוות בריא</h2>
+  <ul>
+    <li><strong>3–5 תפקידים לרוב מספיקים.</strong> צוות של עשרה סוכנים הוא כמעט תמיד סימן לפירוק לא נכון של הבעיה.</li>
+    <li><strong>תפקיד אחד = אחריות אחת.</strong> אם קשה לכתוב לסוכן description במשפט, התפקיד רחב מדי.</li>
+    <li><strong>מבקר אחד לפחות.</strong> צוות בלי תפקיד ביקורת (סוקר, בודק, עורך) הוא פס ייצור של טעויות מהירות.</li>
+    <li><strong>הכול דרך הזיכרון המשותף.</strong> תוצר שלא נכתב לקובץ — לא קרה. זה מה שמאפשר לעצור, להמשיך מחר, ולנפות תקלות.</li>
+  </ul>
+
+  <h2>תרגילים</h2>
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 11.1</span> פס הייצור הראשון שלכם</div>
+    <p>צרו בפרויקט שלכם צוות מינימלי של שלושה: planner,‏ coder,‏ reviewer (אפשר להתבסס על הסוכנים מפרק 8). כתבו את הפקודה <code dir="ltr">/build-feature</code> מהדוגמה, והפעילו אותה על פיצ'ר קטן אמיתי. עקבו אחרי המסירות בין הסוכנים.</p>
+    <details class="solution"><summary>מה לבדוק</summary>
+      <p>שלוש נקודות המסירה: SPEC.md נוצר ומפורט? הקוד באמת עוקב אחרי ה‑SPEC? דוח הסקירה מדורג ומצביע על קבצים? אם מסירה "דלפה" (סוכן התעלם מתוצר קודמו) — חדדו את חוזה התוצרים ב‑system prompt של המקבל: "קרא קודם את SPEC.md ופעל רק לפיו".</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 11.2</span> שני סוכנים במקביל</div>
+    <p>בחרו שתי משימות בלתי תלויות בפרויקט (למשל: שיפור עמוד א' ושיפור עמוד ב'). צרו שני worktrees, הריצו Claude בכל אחד במקביל, ובסוף מזגו את שני הענפים. תעדו: כמה זמן חסכתם, וכמה עלה לכם האיחוד?</p>
+    <details class="solution"><summary>לקח מרכזי</summary>
+      <p>אם המיזוג עבר חלק — המשימות באמת היו בלתי תלויות, וזה הרווח האמיתי של התבנית. אם היו קונפליקטים — למדתם משהו חשוב יותר: הגבול בין המשימות עבר במקום הלא נכון. פיצול טוב הוא לאורך קווי התפר הטבעיים של הפרויקט (קבצים/תיקיות שונים), לא לרוחבם.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">תרגיל 11.3</span> מהנדס הצוות</div>
+    <p>קחו את הצוות מתרגיל 11.1 ושברו אותו בכוונה: תנו ל‑planner לכתוב תוכנית מעורפלת בת שורה אחת ("תבנה את זה טוב"). הריצו את השרשרת וראו איך הטעות מתגלגלת במורד פס הייצור. אחר כך תקנו — הוסיפו ל‑planner דרישת מבנה (צעדים ממוספרים, קבצים מושפעים, קריטריון הצלחה) והריצו שוב.</p>
+    <details class="solution"><summary>למה התרגיל הזה חשוב</summary>
+      <p>בצוות סוכנים, איכות התוצר נקבעת בחוליה החלשה — וכמעט תמיד זו איכות המסירה, לא איכות הסוכן. ההשוואה בין שתי הריצות מלמדת יותר מכל תיאוריה: תוכנית טובה בתחילת השרשרת שווה יותר מסוכן גאוני בסופה.</p>
+    </details>
+  </div>
+
+  <h2>סיכום הפרק</h2>
+  <ul class="checklist">
+    <li>צוות = תפקידים מוגדרים + מתאם + זיכרון משותף + חוזה תוצרים</li>
+    <li>שלוש תבניות: פס ייצור (סדר קבוע), מנהל־ועובדים (שיקול דעת), במקביל (מהירות)</li>
+    <li>מתחילים מסוכן אחד; מפצלים רק כשנתקלים במגבלה אמיתית</li>
+    <li>תוצר שלא נכתב לקובץ — לא קרה; מבקר אחד לפחות בכל צוות</li>
+  </ul>
+
+  <div class="complete-row"><button id="completeBtn" data-lesson="l11"></button></div>
+
+  <nav class="lesson-nav">
+    <a href="lesson-10.html"><span class="dir-label">→ הפרק הקודם</span>סוכנים אוטונומיים לגמרי</a>
+    <a href="lesson-12.html"><span class="dir-label">הפרק הבא ←</span>צוותי סוכנים מעולמות שונים</a>
+  </nav>
+</main>
+
+<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a><br>© 2026 סער נצר (<a href="https://github.com/saarnetzer" target="_blank" rel="noopener">Saar Netzer</a>) · כל הזכויות שמורות · נבנה באמצעות Claude Code</footer>
+</body>
+</html>

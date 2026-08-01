@@ -2,7 +2,7 @@
 (function () {
   var STORE_KEY = 'ccCourseDone';
   var THEME_KEY = 'ccCourseTheme';
-  var TOTAL_LESSONS = 10;
+  var TOTAL_LESSONS = 12;
 
   /* ---------- theme ---------- */
   function applyTheme(t) {
