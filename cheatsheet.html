@@ -152,6 +152,21 @@ tools: Read, Grep, Glob
   </div>
 
   <div class="cheat-card">
+    <h3>🔒 אבטחה: allow / deny</h3>
+    <pre><span class="pre-label">.claude/settings.json</span><code>{
+  "permissions": {
+    "allow": ["Bash(npm test)"],
+    "deny": [
+      "Read(./.env)",
+      "Read(./secrets/**)",
+      "Bash(rm -rf:*)"
+    ]
+  }
+}</code></pre>
+    <p style="font-size:.85rem">‏deny גובר על allow. <a href="security-guide.html">מדריך האבטחה המלא</a></p>
+  </div>
+
+  <div class="cheat-card">
     <h3>🛡️ חמשת עקרונות האוטונומיה</h3>
     <ol style="font-size:.9rem">
       <li>לולאת משוב שהסוכן מריץ בעצמו</li>

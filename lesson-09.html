@@ -64,7 +64,7 @@ claude -p "..." --max-turns 15
 claude -p "תקן את כל אזהרות ה-lint" --dangerously-skip-permissions</code></pre>
   <div class="callout danger">
     <span class="co-title">🛑 הכלל של הדגל המסוכן</span>
-    ‏<code dir="ltr">--dangerously-skip-permissions</code> לגיטימי <strong>רק</strong> כשמתקיימים שלושת התנאים: (1) סביבה מבודדת — קונטיינר או VM שאין בו כלום מעבר לפרויקט; (2) בלי גישה לסודות אמיתיים; (3) התוצר עובר דרך ביקורת (PR) לפני שהוא נוגע במשהו חשוב. בדיוק כך עובדות סביבות ה‑CI שנראה עכשיו — וכך גם Claude Code on the web של Anthropic, שמריץ כל משימה בסנדבוקס מבודד.
+    ‏<code dir="ltr">--dangerously-skip-permissions</code> לגיטימי <strong>רק</strong> כשמתקיימים שלושת התנאים: (1) סביבה מבודדת — קונטיינר או VM שאין בו כלום מעבר לפרויקט; (2) בלי גישה לסודות אמיתיים; (3) התוצר עובר דרך ביקורת (PR) לפני שהוא נוגע במשהו חשוב. בדיוק כך עובדות סביבות ה‑CI שנראה עכשיו — וכך גם Claude Code on the web של Anthropic, שמריץ כל משימה בסנדבוקס מבודד. סיכום כל שכבות ההגנה — ב<a href="security-guide.html">מדריך האבטחה</a>.
   </div>
 
   <h2>GitHub Actions: סוכן שמגיב לאירועים</h2>
