@@ -239,3 +239,63 @@
     }
   });
 })();
+
+/* ===== versioning: footer badge, what's-new box, changelog page ===== */
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+    var log = window.COURSE_CHANGELOG;
+    if (!log || !log.length) return;
+    var latest = log[0];
+    function heDate(iso) {
+      var p = iso.split('-');
+      return p[2].replace(/^0/, '') + '.' + p[1].replace(/^0/, '') + '.' + p[0];
+    }
+
+    /* footer version badge on every page */
+    var footer = document.querySelector('footer.site');
+    if (footer) {
+      var sep = document.createTextNode(' · ');
+      var a = document.createElement('a');
+      a.href = 'changelog.html';
+      a.textContent = 'גרסה ' + latest.version;
+      footer.appendChild(sep);
+      footer.appendChild(a);
+    }
+
+    /* what's-new box on the home page */
+    var box = document.getElementById('whatsNew');
+    if (box) {
+      var h = '<div class="callout info"><span class="co-title">🆕 מה חדש בגרסה ' + latest.version +
+              ' <span style="font-weight:400;opacity:.7">(' + heDate(latest.date) + ')</span></span><ul style="margin:.4rem 0">';
+      latest.changes.forEach(function (c) { h += '<li></li>'; });
+      h += '</ul><p style="margin:.4rem 0 0;font-size:.9rem"><a href="changelog.html">כל היסטוריית הגרסאות</a> · <a href="feedback.html">שלחו משוב</a></p></div>';
+      box.innerHTML = h;
+      var lis = box.querySelectorAll('li');
+      latest.changes.forEach(function (c, i) { lis[i].textContent = c; });
+    }
+
+    /* full changelog page */
+    var list = document.getElementById('changelogList');
+    if (list) {
+      log.forEach(function (rel) {
+        var div = document.createElement('div');
+        div.className = 'exercise';
+        var head = document.createElement('div');
+        head.className = 'ex-head';
+        head.innerHTML = '<span class="ex-badge"></span><span></span><span style="margin-inline-start:auto;font-weight:400;color:var(--text3);font-size:.85rem"></span>';
+        head.children[0].textContent = 'גרסה ' + rel.version;
+        head.children[1].textContent = rel.title;
+        head.children[2].textContent = heDate(rel.date);
+        var ul = document.createElement('ul');
+        rel.changes.forEach(function (c) {
+          var li = document.createElement('li');
+          li.textContent = c;
+          ul.appendChild(li);
+        });
+        div.appendChild(head);
+        div.appendChild(ul);
+        list.appendChild(div);
+      });
+    }
+  });
+})();

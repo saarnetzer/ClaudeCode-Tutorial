@@ -8,3 +8,7 @@
 **להפעלה מקומית:** פתחו את `index.html` בדפדפן — אין צורך בשרת או בהתקנות.
 
 האתר מתפרסם אוטומטית ל‑GitHub Pages בכל push ל‑`main` (ראו `.github/workflows/deploy-pages.yml`).
+
+**גרסה נוכחית:** ראו את [היסטוריית הגרסאות](https://saarnetzer.github.io/ClaudeCode-Tutorial/changelog.html) (מנוהלת ב-`changelog.js`).
+
+**משוב:** [דיווח בעיות והצעות](https://saarnetzer.github.io/ClaudeCode-Tutorial/feedback.html) · תיקונים ב-Pull Request יתקבלו בשמחה.
