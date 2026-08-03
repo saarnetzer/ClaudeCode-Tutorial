@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>פרק 11 · יצירת צוות סוכנים — עקרונות, תבניות ותשתית</title>
-<meta name="description" content="פרק 11: יצירת צוות סוכנים — תפקידים, חוזי תוצרים, ושלוש תבניות ארגון: פס ייצור, מנהל-ועובדים ועבודה במקביל.">
+<title>פרק 11 · סוכנים אוטונומיים לגמרי — Agent SDK ועקרונות עבודה</title>
+<meta name="description" content="פרק 11: בניית סוכן אוטונומי עם ה-Claude Agent SDK, וחמשת עקרונות האוטונומיה הבטוחה.">
 <link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/lesson-11.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta property="og:type" content="website">
-<meta property="og:title" content="פרק 11 · יצירת צוות סוכנים — עקרונות, תבניות ותשתית">
-<meta property="og:description" content="פרק 11: יצירת צוות סוכנים — תפקידים, חוזי תוצרים, ושלוש תבניות ארגון: פס ייצור, מנהל-ועובדים ועבודה במקביל.">
+<meta property="og:title" content="פרק 11 · סוכנים אוטונומיים לגמרי — Agent SDK ועקרונות עבודה">
+<meta property="og:description" content="פרק 11: בניית סוכן אוטונומי עם ה-Claude Agent SDK, וחמשת עקרונות האוטונומיה הבטוחה.">
 <meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/lesson-11.html">
 <meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
 <meta property="og:locale" content="he_IL">
@@ -26,204 +26,173 @@
 </header>
 
 <main class="wrap">
-  <span class="kicker">פרק 11 מתוך 12</span>
-  <h1>יצירת צוות סוכנים — עקרונות, תבניות ותשתית</h1>
-  <p class="lead">בפרק 8 פגשתם subagents — עוזרים שסוכן אחד מפעיל. עכשיו נעלה מדרגה: <strong>צוות סוכנים (Agent Squad)</strong> — קבוצת סוכנים עם תפקידים מוגדרים, חלוקת עבודה ותוצר משותף. כמו ההבדל בין עובד מוכשר אחד לבין מחלקה שלמה שעובדת בשבילכם.</p>
+  <span class="kicker">פרק 11 מתוך 13</span>
+  <h1>סוכנים אוטונומיים לגמרי — Agent SDK ועקרונות עבודה</h1>
+  <p class="lead">בפרק הזה נבנה סוכן משלנו בקוד עם ה‑Claude Agent SDK — אותו מנוע שמריץ את Claude Code עצמו — ונלמד את חמשת העקרונות שמבדילים בין סוכן אוטונומי שמייצר ערך לבין כזה שמייצר בלגן.</p>
 
   <h2>מה נלמד בפרק</h2>
   <ul class="checklist">
-    <li>מתי סוכן אחד מפסיק להספיק — ומתי צוות הוא טעות</li>
-    <li>אנטומיה של צוות: תפקידים, מתאם, זיכרון משותף וחוזה תוצרים</li>
-    <li>שלוש תבניות ארגון: פס ייצור, מנהל־ועובדים, עבודה במקביל</li>
-    <li>בנייה בפועל: ב‑Claude Code וב‑Agent SDK</li>
+    <li>מה זה ה‑Claude Agent SDK ולמה הוא נקודת הזינוק הטובה ביותר</li>
+    <li>סוכן ראשון ב‑TypeScript וב‑Python</li>
+    <li>הוספת כלים מותאמים והרשאות מתוכנתות</li>
+    <li>חמשת עקרונות האוטונומיה הבטוחה</li>
+    <li>לאן ממשיכים מכאן</li>
   </ul>
 
-  <h2>למה בכלל צוות?</h2>
-  <p>לסוכן בודד, חזק ככל שיהיה, יש שלוש מגבלות מבניות:</p>
-  <ul>
-    <li><strong>חלון הקשר אחד.</strong> משימה גדולה באמת (מחקר + תכנון + ביצוע + בדיקה + תיעוד) מנפחת את ההקשר עד שהאיכות יורדת. פגשנו את זה בפרק 4.</li>
-    <li><strong>כובע אחד בכל רגע.</strong> מי שכתב את הקוד מתקשה לבקר אותו באובייקטיביות — נכון לבני אדם, נכון גם לסוכנים. מבקר עם הנחיות נפרדות והקשר נקי מוצא בעיות שהכותב מפספס.</li>
-    <li><strong>ריצה טורית.</strong> חמש משימות בלתי תלויות אצל סוכן אחד ירוצו בזו אחר זו. חמישה סוכנים יסיימו אותן בחמישית מהזמן.</li>
-  </ul>
-  <div class="callout warn">
-    <span class="co-title">⚠️ אבל אל תתלהבו מהר מדי</span>
-    צוות עולה יותר (טוקנים), מסובך יותר לתחזק, וקשה יותר לנפות בו תקלות. הכלל: מתחילים תמיד מסוכן אחד, ומפצלים לצוות רק כשנתקלים באחת משלוש המגבלות שלמעלה בפועל. צוות הוא פתרון לבעיה — לא קישוט.
-  </div>
+  <h2>מה זה ה‑Agent SDK</h2>
+  <p>ה‑<strong>Claude Agent SDK</strong> הוא ספרייה (ל‑TypeScript ול‑Python) שנותנת לכם בקוד את כל מה שמניע את Claude Code: הלולאה הסוכנית (חשיבה → כלי → תוצאה → חשיבה...), כלי הקבצים והטרמינל, מערכת ההרשאות, subagents,‏ hooks ו‑MCP. במקום לבנות תשתית סוכנים מאפס — אתם מקבלים את התשתית המוכחת ומרכיבים עליה את הסוכן <em>שלכם</em>: הלוגיקה, הגבולות, וההשתלבות במערכת שלכם.</p>
+  <pre><code># TypeScript
+npm install @anthropic-ai/claude-agent-sdk
 
-  <h2>אנטומיה של צוות סוכנים</h2>
-  <p>כל צוות מוצלח, בכל תחום, בנוי מאותם ארבעה רכיבים:</p>
-  <div class="table-scroll">
-  <table>
-    <tr><th>רכיב</th><th>מה זה</th><th>איך מממשים</th></tr>
-    <tr><td><strong>מתאם (Orchestrator)</strong></td><td>מי שמפרק את המטרה למשימות, מאציל ומאחד</td><td>השיחה הראשית של Claude Code, או סקריפט SDK</td></tr>
-    <tr><td><strong>מומחים (Specialists)</strong></td><td>סוכן לכל תפקיד: הנחיות, כלים והרשאות משלו</td><td>קבצים ב‑<code dir="ltr">.claude/agents/</code> (פרק 8)</td></tr>
-    <tr><td><strong>זיכרון משותף</strong></td><td>המקום שבו הצוות מחליף מידע ותוצרים</td><td>קבצים בריפו: <code>SPEC.md</code>, <code dir="ltr">PROGRESS.md</code>, תיקיית <code dir="ltr">artifacts/</code></td></tr>
-    <tr><td><strong>חוזה תוצרים</strong></td><td>הגדרה מדויקת של מה כל תפקיד מקבל ומה הוא מחזיר</td><td>סעיף "קלט/פלט" ב‑system prompt של כל סוכן</td></tr>
-  </table>
-  </div>
-  <div class="callout info">
-    <span class="co-title">💡 העיקרון החשוב מכולם: חוזה תוצרים</span>
-    צוותי סוכנים נכשלים כמעט תמיד באותה נקודה — סוכן א' מחזיר תוצר מעורפל, וסוכן ב' לא יודע מה לעשות איתו. הפתרון: כל סוכן מסיים בתוצר <em>מוגדר</em> — "קובץ PLAN.md עם רשימת צעדים ממוספרת", "דוח ממצאים בטבלה עם חומרה לכל שורה". תוצר מוגדר = מסירה נקייה.
-  </div>
+# Python
+pip install claude-agent-sdk</code></pre>
 
-  <h2>שלוש תבניות ארגון</h2>
-
-  <h3>1. פס ייצור (Pipeline)</h3>
-  <p>הסוכנים עובדים <strong>בזה אחר זה</strong>, כל אחד מקבל את תוצר קודמו: מתכנן ← מבצע ← בודק ← מתעד. פשוטה, צפויה, וקלה לניפוי תקלות — כשמשהו נשבר, ברור באיזו תחנה.</p>
-  <pre><code>מתכנן ──► מבצע ──► בודק ──► מתעד
- SPEC.md   קוד     דוח      README</code></pre>
-  <p><em>מתאימה כשיש סדר טבעי לעבודה, וכל שלב תלוי בקודמו.</em></p>
-
-  <h3>2. מנהל ועובדים (Orchestrator–Workers)</h3>
-  <p>סוכן מתאם מחזיק את התמונה הגדולה, מפרק את המשימה, ומאציל לכל מומחה את החלק שלו — לפי הצורך, לאו דווקא בסדר קבוע. המתאם מחליט בזמן אמת: "הממצא של החוקר מחייב עוד בדיקה? אשלח את הבודק שוב".</p>
-  <pre><code>            ┌──► חוקר
-  מתאם ──────┼──► מבצע
-  (מחליט)    └──► מבקר
-       ▲______________│ (תוצרים חוזרים אליו)</code></pre>
-  <p><em>מתאימה כשהמשימה דורשת שיקול דעת על "מה עכשיו" — לא תסריט קבוע.</em></p>
-
-  <h3>3. עבודה במקביל (Parallel–Merge)</h3>
-  <p>מפצלים משימה לחלקים בלתי תלויים, כל סוכן עובד על חלק <strong>בו־זמנית</strong>, ובסוף שלב איחוד. הדרך הנקייה לעשות זאת בקוד: <strong>git worktrees</strong> — עותק עבודה נפרד לכל סוכן, כך שהם לא דורכים זה על זה:</p>
-  <pre><span class="pre-label">macOS / Linux</span><code># עותק עבודה נפרד לכל סוכן, כל אחד על ענף משלו
-git worktree add ../shop-payments feature/payments
-git worktree add ../shop-search  feature/search
-
-# טרמינל 1:
-cd ../shop-payments &amp;&amp; claude
-# טרמינל 2:
-cd ../shop-search &amp;&amp; claude</code></pre>
-  <pre><span class="pre-label">Windows (PowerShell)</span><code>git worktree add ..\shop-payments feature/payments
-git worktree add ..\shop-search feature/search
-
-# חלון טרמינל לכל סוכן:
-cd ..\shop-payments; claude
-cd ..\shop-search; claude</code></pre>
-  <p><em>מתאימה כשיש חלקים שבאמת לא תלויים זה בזה. האיחוד (merge) הוא המקום שבו משלמים את המחיר — תכננו אותו מראש.</em></p>
-
-  <div class="table-scroll">
-  <table>
-    <tr><th>תבנית</th><th>מתי לבחור בה</th><th>נקודת התורפה</th></tr>
-    <tr><td>פס ייצור</td><td>תהליך עם סדר ברור וקבוע</td><td>איטית — הכול טורי</td></tr>
-    <tr><td>מנהל ועובדים</td><td>נדרש שיקול דעת דינמי על סדר העבודה</td><td>המתאם הוא צוואר בקבוק ונקודת כשל</td></tr>
-    <tr><td>במקביל</td><td>חלקים בלתי תלויים + לוח זמנים לחוץ</td><td>קונפליקטים בשלב האיחוד</td></tr>
-  </table>
-  </div>
-
-  <h2>בנייה בפועל, דרך 1: הכול בתוך Claude Code</h2>
-  <p>הצוות מוגדר כקבוצת קבצים ב‑<code dir="ltr">.claude/agents/</code> (בדיוק כמו בפרק 8), והשיחה הראשית משמשת מתאם. את תסריט העבודה אורזים בפקודה מותאמת — והצוות כולו מופעל במילה אחת:</p>
-  <pre><span class="pre-label">.claude/commands/build-feature.md</span><code>אתה מתאם צוות. בנה את הפיצ'ר: $ARGUMENTS
-תהליך העבודה, שלב אחר שלב:
-1. שלח את planner לכתוב SPEC.md עם תוכנית מפורטת
-2. הצג לי את התוכנית ועצור לאישור
-3. אחרי אישור - שלח את coder לממש לפי ה-SPEC
-4. שלח את test-writer לכסות את הקוד החדש בטסטים
-5. שלח את code-reviewer לסקירה; ממצא קריטי חוזר ל-coder
-6. סכם: מה נבנה, מה נבדק, ומה נשאר פתוח</code></pre>
-  <p>שימו לב לשלב 2: <strong>עצירה לאישור אנושי</strong> בנקודת ההכרעה — עיקרון 5 מפרק 10, עכשיו ברמת הצוות.</p>
-
-  <h2>בנייה בפועל, דרך 2: צוות בקוד עם ה‑Agent SDK</h2>
-  <p>ב‑SDK מגדירים את חברי הצוות בתוך האפשרויות, והמודל מאציל להם בדיוק כמו ל‑subagents:</p>
-  <pre><span class="pre-label">squad.ts</span><code>import { query } from "@anthropic-ai/claude-agent-sdk";
+  <h2>סוכן ראשון: 20 שורות</h2>
+  <h3>TypeScript</h3>
+  <pre><span class="pre-label">agent.ts</span><code>import { query } from "@anthropic-ai/claude-agent-sdk";
 
 const result = query({
-  prompt: "בנה עמוד 'צור קשר' מלא: תכנון, מימוש, טסטים וסקירה",
+  prompt: "מצא את כל קבצי ה-TODO בפרויקט וסכם אותם בקובץ TODO_REPORT.md",
   options: {
-    agents: {
-      planner: {
-        description: "מתכנן. הפעל ראשון לכל פיצ'ר חדש.",
-        prompt: "כתוב תוכנית מימוש קצרה וממוספרת ל-SPEC.md. אל תכתוב קוד.",
-        tools: ["Read", "Grep", "Glob", "Write"],
-      },
-      coder: {
-        description: "מממש לפי SPEC.md קיים.",
-        prompt: "ממש את הצעדים מ-SPEC.md אחד-אחד. עדכן PROGRESS.md אחרי כל צעד.",
-      },
-      reviewer: {
-        description: "סוקר קוד. הפעל אחרי כל מימוש.",
-        prompt: "סקור את ה-diff. החזר טבלת ממצאים עם חומרה. אל תערוך קבצים.",
-        tools: ["Read", "Grep", "Bash"],
-      },
-    },
-    maxTurns: 60,
+    cwd: "/path/to/project",
+    allowedTools: ["Read", "Grep", "Glob", "Write"],
+    maxTurns: 20,
   },
 });
 
 for await (const message of result) {
-  if (message.type === "result") console.log(message.result);
+  if (message.type === "assistant") {
+    console.log(message.message.content);   // לראות את הסוכן "חושב"
+  }
+  if (message.type === "result") {
+    console.log("סיכום:", message.result);
+    console.log("עלות ($):", message.total_cost_usd);
+  }
 }</code></pre>
-  <p>אותם עקרונות בדיוק: תפקיד, חוזה תוצרים (SPEC.md,‏ PROGRESS.md, טבלת ממצאים), והרשאות לפי צורך — הסוקר לא מקבל Edit.</p>
+  <h3>Python</h3>
+  <pre><span class="pre-label">agent.py</span><code>import anyio
+from claude_agent_sdk import query, ClaudeAgentOptions
 
-  <h2>כללי אצבע לצוות בריא</h2>
-  <ul>
-    <li><strong>3–5 תפקידים לרוב מספיקים.</strong> צוות של עשרה סוכנים הוא כמעט תמיד סימן לפירוק לא נכון של הבעיה.</li>
-    <li><strong>תפקיד אחד = אחריות אחת.</strong> אם קשה לכתוב לסוכן description במשפט, התפקיד רחב מדי.</li>
-    <li><strong>מבקר אחד לפחות.</strong> צוות בלי תפקיד ביקורת (סוקר, בודק, עורך) הוא פס ייצור של טעויות מהירות.</li>
-    <li><strong>הכול דרך הזיכרון המשותף.</strong> תוצר שלא נכתב לקובץ — לא קרה. זה מה שמאפשר לעצור, להמשיך מחר, ולנפות תקלות.</li>
-  </ul>
+async def main():
+    async for message in query(
+        prompt="מצא את כל קבצי ה-TODO בפרויקט וסכם אותם בקובץ TODO_REPORT.md",
+        options=ClaudeAgentOptions(
+            cwd="/path/to/project",
+            allowed_tools=["Read", "Grep", "Glob", "Write"],
+            max_turns=20,
+        ),
+    ):
+        print(message)
+
+anyio.run(main)</code></pre>
+  <p>הריצו — ותראו בפלט את הסוכן עובד: מחפש, קורא, כותב, ומחזיר תוצאה סופית עם עלות. <strong>זה סוכן אוטונומי אמיתי</strong>: נתתם מטרה, והוא בחר לבד את הצעדים.</p>
+
+  <h2>כלי מותאם אישית</h2>
+  <p>הכוח האמיתי: לתת לסוכן כלים מהעולם <em>שלכם</em>. כלים מותאמים מוגדרים כשרת MCP פנימי בתוך התהליך:</p>
+  <pre><span class="pre-label">tools.ts</span><code>import { tool, createSdkMcpServer, query } from "@anthropic-ai/claude-agent-sdk";
+import { z } from "zod";
+
+const sendAlert = tool(
+  "send_alert",
+  "שולח התראה לצוות התפעול. השתמש רק לתקלות ברמת חומרה גבוהה.",
+  { message: z.string(), severity: z.enum(["low", "high"]) },
+  async (args) => {
+    await notifyOps(args.message, args.severity);   // הלוגיקה שלכם
+    return { content: [{ type: "text", text: "ההתראה נשלחה" }] };
+  }
+);
+
+const opsServer = createSdkMcpServer({
+  name: "ops-tools",
+  tools: [sendAlert],
+});
+
+const result = query({
+  prompt: "בדוק את הלוגים של הלילה. אם יש תקלה חמורה - שלח התראה",
+  options: {
+    mcpServers: { "ops-tools": opsServer },
+    allowedTools: ["Read", "Grep", "mcp__ops-tools__send_alert"],
+    maxTurns: 30,
+  },
+});</code></pre>
+  <p>שימו לב לתיאור הכלי — "השתמש רק לתקלות חמורות". כמו ב‑Skills וב‑subagents, התיאור הוא הממשק בין הכוונה שלכם לשיקול הדעת של הסוכן. ואם רוצים שליטה קשיחה יותר: ה‑SDK תומך גם ב‑hooks וב‑<code>canUseTool</code> — פונקציה שלכם שמאשרת או דוחה כל קריאת כלי בזמן אמת, בקוד.</p>
+
+  <h2>חמשת עקרונות האוטונומיה הבטוחה</h2>
+  <p>כל מה שלמדתם בקורס מתנקז לחמישה עקרונות. סוכן שעומד בכולם — אפשר באמת לשחרר:</p>
+  <h3>1. לולאת משוב שהסוכן מריץ בעצמו</h3>
+  <p>אוטונומיה בלי דרך לבדוק הצלחה היא ניחוש. טסטים (פרק 3), דפדפן (פרק 7), קומפילציה, lint — הסוכן חייב כלי שאומר לו "הצלחת/נכשלת" בלי בן אדם. נסחו כל משימה עם קריטריון בדיקה: <em>"...וסיימת רק כשכל הטסטים ירוקים"</em>.</p>
+  <h3>2. גבולות בקוד, לא בהבטחות</h3>
+  <p>הרשאות מינימום (<code dir="ltr">allowedTools</code>), ‏hooks חוסמים (פרק 6), משתמשי readonly (פרק 7), סביבה מבודדת (פרק 10). מה שאסור — שיהיה <em>בלתי אפשרי</em>, לא רק "לא מומלץ".</p>
+  <h3>3. בלמים כמותיים</h3>
+  <p>‏<code dir="ltr">maxTurns</code> לכל ריצה, ניטור עלות מה‑JSON שחוזר, ו‑timeout חיצוני. סוכן שתקוע בלולאה צריך להיעצר מעצמו — לא כשתשימו לב לחשבון.</p>
+  <h3>4. זיכרון חיצוני ועבודה בפרוסות</h3>
+  <p>משימות ארוכות מפרקים לשלבים שכל אחד נגמר בקומיט ובעדכון קובץ מצב (PROGRESS.md — פרק 4). ריצה שנקטעת ממשיכה מהקובץ, לא מאפס. git הוא עמוד השדרה: כל שלב הפיך.</p>
+  <h3>5. אדם בנקודות ההכרעה</h3>
+  <p>אוטונומיה "לגמרי" לא אומרת "בלי בני אדם" — אלא שהאדם עובר מהלולאה הפנימית לנקודות הביקורת: הסוכן עובד לבד שעות, אבל התוצר הוא PR שאתם מאשרים, והתראות (Notification hooks, ‏send_alert) מזעיקות אתכם כשמשהו חריג. אתם מנהלים, לא מלווים צמוד.</p>
+
+  <div class="callout tip">
+    <span class="co-title">✅ המבחן הסופי</span>
+    לפני שמשחררים סוכן לרוץ לבד, שאלו: "מה הדבר הכי גרוע שיכול לקרות בריצה הזו?" אם התשובה היא "ענף git מבולגן שאמחק" — קדימה. אם התשובה כוללת מסד נתונים אמיתי, כסף או לקוחות — חסר עיקרון 2. חזרו לחזק גבולות.
+  </div>
 
   <h2>תרגילים</h2>
   <div class="exercise">
-    <div class="ex-head"><span class="ex-badge">תרגיל 11.1</span> פס הייצור הראשון שלכם</div>
-    <p>צרו בפרויקט שלכם צוות מינימלי של שלושה: planner,‏ coder,‏ reviewer (אפשר להתבסס על הסוכנים מפרק 8). כתבו את הפקודה <code dir="ltr">/build-feature</code> מהדוגמה, והפעילו אותה על פיצ'ר קטן אמיתי. עקבו אחרי המסירות בין הסוכנים.</p>
-    <details class="solution"><summary>מה לבדוק</summary>
-      <p>שלוש נקודות המסירה: SPEC.md נוצר ומפורט? הקוד באמת עוקב אחרי ה‑SPEC? דוח הסקירה מדורג ומצביע על קבצים? אם מסירה "דלפה" (סוכן התעלם מתוצר קודמו) — חדדו את חוזה התוצרים ב‑system prompt של המקבל: "קרא קודם את SPEC.md ופעל רק לפיו".</p>
+    <div class="ex-head"><span class="ex-badge">תרגיל 10.1</span> הסוכן הראשון שלכם בקוד</div>
+    <p>הריצו את סוכן ה‑TODO מהדוגמה (בשפה שנוחה לכם) על פרויקט אמיתי. אחר כך שנו את המשימה למשהו שלכם: יצירת דוח תיעוד, איתור קוד מת, בדיקת עקביות תרגומים. עקבו בפלט אחרי הצעדים שהוא בוחר.</p>
+    <details class="solution"><summary>אם משהו נתקע</summary>
+      <p>ודאו שמשתנה הסביבה <code dir="ltr">ANTHROPIC_API_KEY</code> מוגדר, ושה‑allowedTools כוללים את מה שהמשימה באמת דורשת (כתיבת דוח = צריך Write). שגיאת "כלי לא מורשה" בפלט היא רמז מדויק למה שחסר.</p>
     </details>
   </div>
 
   <div class="exercise">
-    <div class="ex-head"><span class="ex-badge">תרגיל 11.2</span> שני סוכנים במקביל</div>
-    <p>בחרו שתי משימות בלתי תלויות בפרויקט (למשל: שיפור עמוד א' ושיפור עמוד ב'). צרו שני worktrees, הריצו Claude בכל אחד במקביל, ובסוף מזגו את שני הענפים. תעדו: כמה זמן חסכתם, וכמה עלה לכם האיחוד?</p>
-    <details class="solution"><summary>לקח מרכזי</summary>
-      <p>אם המיזוג עבר חלק — המשימות באמת היו בלתי תלויות, וזה הרווח האמיתי של התבנית. אם היו קונפליקטים — למדתם משהו חשוב יותר: הגבול בין המשימות עבר במקום הלא נכון. פיצול טוב הוא לאורך קווי התפר הטבעיים של הפרויקט (קבצים/תיקיות שונים), לא לרוחבם.</p>
+    <div class="ex-head"><span class="ex-badge">תרגיל 10.2</span> כלי מותאם + שיקול דעת</div>
+    <p>בנו סוכן "בודק בריאות פרויקט" עם כלי מותאם אחד: <code dir="ltr">report_status(status, details)</code> שכותב לקובץ JSON (או שולח הודעה אמיתית — טלגרם/סלאק אם תרצו). המשימה: "הרץ טסטים ו‑lint; דווח ok אם הכול תקין, ו‑failed עם פירוט אם לא". הריצו פעם על פרויקט תקין ופעם על שבור.</p>
+    <details class="solution"><summary>מה בודקים כאן</summary>
+      <p>שהסוכן מפעיל את הכלי שלכם <em>נכון</em>: פעם אחת עם ok, פעם עם failed + פירוט אמיתי של הכשל. אם הוא מדווח ok על פרויקט שבור — חדדו את הפרומפט ("הרץ בפועל וקרא את הפלט; אל תניח"). ברוכים הבאים להנדסת סוכנים.</p>
     </details>
   </div>
 
   <div class="exercise">
-    <div class="ex-head"><span class="ex-badge">תרגיל 11.3</span> מהנדס הצוות</div>
-    <p>קחו את הצוות מתרגיל 11.1 ושברו אותו בכוונה: תנו ל‑planner לכתוב תוכנית מעורפלת בת שורה אחת ("תבנה את זה טוב"). הריצו את השרשרת וראו איך הטעות מתגלגלת במורד פס הייצור. אחר כך תקנו — הוסיפו ל‑planner דרישת מבנה (צעדים ממוספרים, קבצים מושפעים, קריטריון הצלחה) והריצו שוב.</p>
-    <details class="solution"><summary>למה התרגיל הזה חשוב</summary>
-      <p>בצוות סוכנים, איכות התוצר נקבעת בחוליה החלשה — וכמעט תמיד זו איכות המסירה, לא איכות הסוכן. ההשוואה בין שתי הריצות מלמדת יותר מכל תיאוריה: תוכנית טובה בתחילת השרשרת שווה יותר מסוכן גאוני בסופה.</p>
+    <div class="ex-head"><span class="ex-badge">תרגיל 10.3</span> פרויקט גמר: הסוכן הלילי</div>
+    <p>חברו הכול: בנו סוכן שרץ מתוזמן (cron או GitHub Actions מתוזמן) פעם ביום על ריפו שלכם, ומבצע משימת תחזוקה לבחירתכם מקצה לקצה — על ענף נפרד, עם טסטים כלולאת משוב, maxTurns, קובץ מצב, ו‑PR כתוצר. תנו לו לרוץ שלושה לילות וסקרו את התוצרים.</p>
+    <details class="solution"><summary>מסגרת מומלצת</summary>
+      <p>קחו את <code dir="ltr">nightly-deps.sh</code> מפרק 10 כשלד, והחליפו את המשימה: ניקוי קוד מת, שיפור כיסוי טסטים ("הוסף טסט אחד לקובץ הכי פחות מכוסה"), או עדכון תיעוד. עברו על חמשת העקרונות כ‑checklist לפני ההרצה הראשונה. אחרי שלושה לילות תדעו בדיוק מה לחזק — וזו בדיוק המיומנות של מהנדס סוכנים.</p>
     </details>
   </div>
 
-  <h2>סיכום הפרק</h2>
-  <ul class="checklist">
-    <li>צוות = תפקידים מוגדרים + מתאם + זיכרון משותף + חוזה תוצרים</li>
-    <li>שלוש תבניות: פס ייצור (סדר קבוע), מנהל־ועובדים (שיקול דעת), במקביל (מהירות)</li>
-    <li>מתחילים מסוכן אחד; מפצלים רק כשנתקלים במגבלה אמיתית</li>
-    <li>תוצר שלא נכתב לקובץ — לא קרה; מבקר אחד לפחות בכל צוות</li>
-  </ul>
+  <h2>השלמתם את מסלול הסוכן הבודד 🎉</h2>
+  <p>התחלתם מהתקנה של כלי טרמינל, ועכשיו אתם יודעים לתכנן, לבנות ולשחרר סוכן אוטונומי — עם גבולות נכונים, לולאות משוב ובקרה אנושית. נשארה מדרגה אחת: בשני הפרקים הבאים נעבור מסוכן בודד ל<strong>צוות סוכנים שלם</strong> — קודם העקרונות והתבניות, ואחר כך דוגמאות מחמישה עולמות שונים.</p>
 
   <h2>בוחן עצמי</h2>
   <section class="quiz">
     <div class="q" data-a="0">
-      <p class="q-text">1. מתי נכון לפצל סוכן בודד לצוות?</p>
-      <button class="opt">רק כשנתקלים בפועל במגבלה: הקשר מתנפח, צריך מבקר נפרד, או צריך מקביליות</button>
-      <button class="opt">תמיד — צוות תמיד עדיף</button>
-      <button class="opt">כשיש תקציב גדול</button>
+      <p class="q-text">1. מה זה ה-Agent SDK?</p>
+      <button class="opt">המנוע של Claude Code כספרייה לבניית סוכנים משלכם</button>
+      <button class="opt">כלי להתקנת Claude Code</button>
+      <button class="opt">מערכת הפעלה לסוכנים</button>
       <p class="q-fb"></p>
     </div>
     <div class="q" data-a="1">
-      <p class="q-text">2. מהו "חוזה תוצרים"?</p>
-      <button class="opt">הסכם משפטי עם Anthropic</button>
-      <button class="opt">הגדרה מדויקת של מה כל סוכן מקבל ומה הוא מחזיר</button>
-      <button class="opt">רשימת המחירים של המודלים</button>
+      <p class="q-text">2. בלי מה "אוטונומיה היא ניחוש"?</p>
+      <button class="opt">בלי GPU חזק</button>
+      <button class="opt">בלי לולאת משוב שהסוכן מריץ בעצמו (טסטים, דפדפן)</button>
+      <button class="opt">בלי חיבור לאינטרנט</button>
       <p class="q-fb"></p>
     </div>
     <div class="q" data-a="2">
-      <p class="q-text">3. איך שני סוכנים עובדים על אותו ריפו במקביל בלי לדרוך זה על זה?</p>
-      <button class="opt">עובדים בתורות</button>
-      <button class="opt">אחד עובד והשני צופה</button>
-      <button class="opt">git worktree — עותק עבודה נפרד לכל אחד</button>
+      <p class="q-text">3. מה "המבחן הסופי" לפני שמשחררים סוכן לרוץ לבד?</p>
+      <button class="opt">האם הוא עבר 100 ריצות</button>
+      <button class="opt">האם הקוד שלו קצר</button>
+      <button class="opt">"מה הדבר הכי גרוע שיכול לקרות בריצה הזו?"</button>
       <p class="q-fb"></p>
     </div>
     <p class="quiz-score"></p>
   </section>
-  <div class="complete-row"><button id="completeBtn" data-lesson="l11"></button></div>
+  <div class="complete-row"><button id="completeBtn" data-lesson="l10"></button></div>
 
   <nav class="lesson-nav">
-    <a href="lesson-10.html"><span class="dir-label">→ הפרק הקודם</span>סוכנים אוטונומיים לגמרי</a>
-    <a href="lesson-12.html"><span class="dir-label">הפרק הבא ←</span>צוותי סוכנים מעולמות שונים</a>
+    <a href="lesson-10.html"><span class="dir-label">→ הפרק הקודם</span>מצב Headless ואוטומציה ב‑CI</a>
+    <a href="lesson-12.html"><span class="dir-label">הפרק הבא ←</span>יצירת צוות סוכנים</a>
   </nav>
 </main>
 

@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>פרק 12 · צוותי סוכנים מעולמות שונים — חמש דוגמאות מהחיים</title>
-<meta name="description" content="פרק 12: צוותי סוכנים מחמישה עולמות — פיתוח, שיווק, נתונים, תפעול ומסחר — עם 100 קובצי סוכנים מוכנים להורדה.">
+<title>פרק 12 · יצירת צוות סוכנים — עקרונות, תבניות ותשתית</title>
+<meta name="description" content="פרק 12: יצירת צוות סוכנים — תפקידים, חוזי תוצרים, ושלוש תבניות ארגון: פס ייצור, מנהל-ועובדים ועבודה במקביל.">
 <link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/lesson-12.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta property="og:type" content="website">
-<meta property="og:title" content="פרק 12 · צוותי סוכנים מעולמות שונים — חמש דוגמאות מהחיים">
-<meta property="og:description" content="פרק 12: צוותי סוכנים מחמישה עולמות — פיתוח, שיווק, נתונים, תפעול ומסחר — עם 100 קובצי סוכנים מוכנים להורדה.">
+<meta property="og:title" content="פרק 12 · יצירת צוות סוכנים — עקרונות, תבניות ותשתית">
+<meta property="og:description" content="פרק 12: יצירת צוות סוכנים — תפקידים, חוזי תוצרים, ושלוש תבניות ארגון: פס ייצור, מנהל-ועובדים ועבודה במקביל.">
 <meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/lesson-12.html">
 <meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
 <meta property="og:locale" content="he_IL">
@@ -26,247 +26,204 @@
 </header>
 
 <main class="wrap">
-  <span class="kicker">פרק 12 מתוך 12 · הפסגה</span>
-  <h1>צוותי סוכנים מעולמות שונים — חמש דוגמאות מהחיים</h1>
-  <p class="lead">התבניות מפרק 11 הן שלד — עכשיו נלביש עליו בשר. חמישה צוותים מחמישה עולמות שונים: פיתוח, תוכן ושיווק, ניתוח נתונים, תפעול ושירות לקוחות. לכל אחד: הרכב התפקידים, התבנית שנבחרה ולמה, וקובץ סוכן אחד מלא שאפשר להעתיק ולהתאים.</p>
+  <span class="kicker">פרק 12 מתוך 13</span>
+  <h1>יצירת צוות סוכנים — עקרונות, תבניות ותשתית</h1>
+  <p class="lead">בפרק 8 פגשתם subagents — עוזרים שסוכן אחד מפעיל. עכשיו נעלה מדרגה: <strong>צוות סוכנים (Agent Squad)</strong> — קבוצת סוכנים עם תפקידים מוגדרים, חלוקת עבודה ותוצר משותף. כמו ההבדל בין עובד מוכשר אחד לבין מחלקה שלמה שעובדת בשבילכם.</p>
 
   <h2>מה נלמד בפרק</h2>
   <ul class="checklist">
-    <li>איך מתרגמים בעיה מכל תחום להרכב צוות</li>
-    <li>חמישה צוותים מפורטים, מחמישה עולמות</li>
-    <li>העקרונות שחוזרים בכולם — בלי קשר לתחום</li>
-    <li>פרויקט הגמר: צוות לעולם שלכם</li>
+    <li>מתי סוכן אחד מפסיק להספיק — ומתי צוות הוא טעות</li>
+    <li>אנטומיה של צוות: תפקידים, מתאם, זיכרון משותף וחוזה תוצרים</li>
+    <li>שלוש תבניות ארגון: פס ייצור, מנהל־ועובדים, עבודה במקביל</li>
+    <li>בנייה בפועל: ב‑Claude Code וב‑Agent SDK</li>
   </ul>
 
-  <div class="callout tip">
-    <span class="co-title">⬇️ כל הסוכנים — להורדה</span>
-    כל סוכן שמופיע בטבלאות בפרק הזה הוא קישור לקובץ agent מוכן להורדה: שמרו אותו ב‑<code dir="ltr">.claude/agents/</code> בפרויקט שלכם והוא פעיל. אפשר גם להוריד את <a href="agents/claude-agents-pack.zip" download><strong>כל 100 הסוכנים בחבילה אחת (zip)</strong></a>. הקבצים הם נקודת פתיחה — התאימו את ההנחיות לפרויקט ולכללים שלכם.
+  <h2>למה בכלל צוות?</h2>
+  <p>לסוכן בודד, חזק ככל שיהיה, יש שלוש מגבלות מבניות:</p>
+  <ul>
+    <li><strong>חלון הקשר אחד.</strong> משימה גדולה באמת (מחקר + תכנון + ביצוע + בדיקה + תיעוד) מנפחת את ההקשר עד שהאיכות יורדת. פגשנו את זה בפרק 4.</li>
+    <li><strong>כובע אחד בכל רגע.</strong> מי שכתב את הקוד מתקשה לבקר אותו באובייקטיביות — נכון לבני אדם, נכון גם לסוכנים. מבקר עם הנחיות נפרדות והקשר נקי מוצא בעיות שהכותב מפספס.</li>
+    <li><strong>ריצה טורית.</strong> חמש משימות בלתי תלויות אצל סוכן אחד ירוצו בזו אחר זו. חמישה סוכנים יסיימו אותן בחמישית מהזמן.</li>
+  </ul>
+  <div class="callout warn">
+    <span class="co-title">⚠️ אבל אל תתלהבו מהר מדי</span>
+    צוות עולה יותר (טוקנים), מסובך יותר לתחזק, וקשה יותר לנפות בו תקלות. הכלל: מתחילים תמיד מסוכן אחד, ומפצלים לצוות רק כשנתקלים באחת משלוש המגבלות שלמעלה בפועל. צוות הוא פתרון לבעיה — לא קישוט.
   </div>
 
-  <h2>1. עולם הפיתוח: "צוות הפיצ'ר" 🛠️</h2>
-  <p><strong>הבעיה:</strong> פיצ'ר בינוני־וגדול דורש תכנון, מימוש, בדיקות וסקירה — ואצל סוכן אחד זה מסתיים בהקשר מנופח ובאיכות יורדת.</p>
-  <p><strong>התבנית:</strong> פס ייצור עם עצירה לאישור אנושי אחרי התכנון (בדיוק כמו שבנינו בפרק 11).</p>
+  <h2>אנטומיה של צוות סוכנים</h2>
+  <p>כל צוות מוצלח, בכל תחום, בנוי מאותם ארבעה רכיבים:</p>
   <div class="table-scroll">
   <table>
-    <tr><th>תפקיד</th><th>כלים</th><th>תוצר (החוזה)</th></tr>
-    <tr><td><a href="agents/dev/planner.md" download><code dir="ltr">planner</code></a> — מתכנן</td><td>קריאה וחיפוש בלבד + Write ל‑SPEC</td><td><code>SPEC.md</code>: צעדים ממוספרים + קריטריון הצלחה</td></tr>
-    <tr><td><a href="agents/dev/coder.md" download><code dir="ltr">coder</code></a> — מממש</td><td>מלאים</td><td>קוד + עדכון <code dir="ltr">PROGRESS.md</code> אחרי כל צעד</td></tr>
-    <tr><td><a href="agents/dev/test-writer.md" download><code dir="ltr">test-writer</code></a> — בודק</td><td>מלאים</td><td>טסטים עוברים לקוד החדש</td></tr>
-    <tr><td><a href="agents/dev/code-reviewer.md" download><code dir="ltr">code-reviewer</code></a> — סוקר</td><td>קריאה בלבד + git diff</td><td>טבלת ממצאים מדורגת</td></tr>
+    <tr><th>רכיב</th><th>מה זה</th><th>איך מממשים</th></tr>
+    <tr><td><strong>מתאם (Orchestrator)</strong></td><td>מי שמפרק את המטרה למשימות, מאציל ומאחד</td><td>השיחה הראשית של Claude Code, או סקריפט SDK</td></tr>
+    <tr><td><strong>מומחים (Specialists)</strong></td><td>סוכן לכל תפקיד: הנחיות, כלים והרשאות משלו</td><td>קבצים ב‑<code dir="ltr">.claude/agents/</code> (פרק 8)</td></tr>
+    <tr><td><strong>זיכרון משותף</strong></td><td>המקום שבו הצוות מחליף מידע ותוצרים</td><td>קבצים בריפו: <code>SPEC.md</code>, <code dir="ltr">PROGRESS.md</code>, תיקיית <code dir="ltr">artifacts/</code></td></tr>
+    <tr><td><strong>חוזה תוצרים</strong></td><td>הגדרה מדויקת של מה כל תפקיד מקבל ומה הוא מחזיר</td><td>סעיף "קלט/פלט" ב‑system prompt של כל סוכן</td></tr>
   </table>
   </div>
-  <p><strong>הלקח מהעולם הזה:</strong> המבקר חייב להיות נפרד מהמבצע — ובלי הרשאות כתיבה, כדי שהביקורת תישאר ביקורת.</p>
+  <div class="callout info">
+    <span class="co-title">💡 העיקרון החשוב מכולם: חוזה תוצרים</span>
+    צוותי סוכנים נכשלים כמעט תמיד באותה נקודה — סוכן א' מחזיר תוצר מעורפל, וסוכן ב' לא יודע מה לעשות איתו. הפתרון: כל סוכן מסיים בתוצר <em>מוגדר</em> — "קובץ PLAN.md עם רשימת צעדים ממוספרת", "דוח ממצאים בטבלה עם חומרה לכל שורה". תוצר מוגדר = מסירה נקייה.
+  </div>
 
-  <h3>מרחיבים: ארגון הפיתוח המלא</h3>
-  <p>צוות הפיצ'ר הוא הליבה, אבל ארגון פיתוח שלם מפעיל צוותים נוספים לצידו — כל אחד עם הסוכנים שלו:</p>
+  <h2>שלוש תבניות ארגון</h2>
+
+  <h3>1. פס ייצור (Pipeline)</h3>
+  <p>הסוכנים עובדים <strong>בזה אחר זה</strong>, כל אחד מקבל את תוצר קודמו: מתכנן ← מבצע ← בודק ← מתעד. פשוטה, צפויה, וקלה לניפוי תקלות — כשמשהו נשבר, ברור באיזו תחנה.</p>
+  <pre><code>מתכנן ──► מבצע ──► בודק ──► מתעד
+ SPEC.md   קוד     דוח      README</code></pre>
+  <p><em>מתאימה כשיש סדר טבעי לעבודה, וכל שלב תלוי בקודמו.</em></p>
+
+  <h3>2. מנהל ועובדים (Orchestrator–Workers)</h3>
+  <p>סוכן מתאם מחזיק את התמונה הגדולה, מפרק את המשימה, ומאציל לכל מומחה את החלק שלו — לפי הצורך, לאו דווקא בסדר קבוע. המתאם מחליט בזמן אמת: "הממצא של החוקר מחייב עוד בדיקה? אשלח את הבודק שוב".</p>
+  <pre><code>            ┌──► חוקר
+  מתאם ──────┼──► מבצע
+  (מחליט)    └──► מבקר
+       ▲______________│ (תוצרים חוזרים אליו)</code></pre>
+  <p><em>מתאימה כשהמשימה דורשת שיקול דעת על "מה עכשיו" — לא תסריט קבוע.</em></p>
+
+  <h3>3. עבודה במקביל (Parallel–Merge)</h3>
+  <p>מפצלים משימה לחלקים בלתי תלויים, כל סוכן עובד על חלק <strong>בו־זמנית</strong>, ובסוף שלב איחוד. הדרך הנקייה לעשות זאת בקוד: <strong>git worktrees</strong> — עותק עבודה נפרד לכל סוכן, כך שהם לא דורכים זה על זה:</p>
+  <pre><span class="pre-label">macOS / Linux</span><code># עותק עבודה נפרד לכל סוכן, כל אחד על ענף משלו
+git worktree add ../shop-payments feature/payments
+git worktree add ../shop-search  feature/search
+
+# טרמינל 1:
+cd ../shop-payments &amp;&amp; claude
+# טרמינל 2:
+cd ../shop-search &amp;&amp; claude</code></pre>
+  <pre><span class="pre-label">Windows (PowerShell)</span><code>git worktree add ..\shop-payments feature/payments
+git worktree add ..\shop-search feature/search
+
+# חלון טרמינל לכל סוכן:
+cd ..\shop-payments; claude
+cd ..\shop-search; claude</code></pre>
+  <p><em>מתאימה כשיש חלקים שבאמת לא תלויים זה בזה. האיחוד (merge) הוא המקום שבו משלמים את המחיר — תכננו אותו מראש.</em></p>
+
   <div class="table-scroll">
   <table>
-    <tr><th>צוות</th><th>הסוכנים ותפקידם</th></tr>
-    <tr><td><strong>צוות אבטחה (Security)</strong><br><span style="opacity:.7">מבקר כל שינוי ותלות לפני שהם מגיעים לפרודקשן</span></td><td><a href="agents/dev/threat-modeler.md" download><code dir="ltr">threat-modeler</code></a> — מנתח סיכונים לכל פיצ׳ר חדש עוד בשלב ה־SPEC<br><a href="agents/dev/secrets-scanner.md" download><code dir="ltr">secrets-scanner</code></a> — סורק סודות ומפתחות בקוד ובהיסטוריית git<br><a href="agents/dev/dependency-auditor.md" download><code dir="ltr">dependency-auditor</code></a> — בודק חולשות ידועות בתלויות ומתעדף תיקון<br><a href="agents/dev/authz-reviewer.md" download><code dir="ltr">authz-reviewer</code></a> — בודק הרשאות וגישה בכל נקודת קצה חדשה<br><a href="agents/dev/security-reporter.md" download><code dir="ltr">security-reporter</code></a> — מרכז את הממצאים לדוח מדורג אחד</td></tr>
-    <tr><td><strong>צוות תשתיות (DevOps)</strong><br><span style="opacity:.7">הדרך מהקוד לשרתים — מהירה, זולה והפיכה</span></td><td><a href="agents/dev/iac-writer.md" download><code dir="ltr">iac-writer</code></a> — כותב ומעדכן תשתית־כקוד (Terraform, K8s)<br><a href="agents/dev/ci-doctor.md" download><code dir="ltr">ci-doctor</code></a> — מאבחן כשלי CI ומתקן או מדווח<br><a href="agents/dev/cost-watcher.md" download><code dir="ltr">cost-watcher</code></a> — מנטר עלויות ענן ומתריע על חריגות<br><a href="agents/dev/capacity-planner.md" download><code dir="ltr">capacity-planner</code></a> — מתכנן משאבים לפי מגמות עומס<br><a href="agents/dev/rollback-guardian.md" download><code dir="ltr">rollback-guardian</code></a> — מוודא שלכל שינוי יש דרך חזרה מוכנה</td></tr>
-    <tr><td><strong>צוות איכות (QA)</strong><br><span style="opacity:.7">שכבת בדיקות שמעבר לטסטים של צוות הפיצ׳ר</span></td><td><a href="agents/dev/e2e-writer.md" download><code dir="ltr">e2e-writer</code></a> — תרחישי קצה־לקצה בדפדפן אמיתי (פרק 7)<br><a href="agents/dev/perf-tester.md" download><code dir="ltr">perf-tester</code></a> — מודד ביצועים ותופס רגרסיות איטיות<br><a href="agents/dev/a11y-checker.md" download><code dir="ltr">a11y-checker</code></a> — בודק נגישות: ניגודיות, מקלדת, קוראי מסך<br><a href="agents/dev/regression-hunter.md" download><code dir="ltr">regression-hunter</code></a> — הופך כל באג ישן לטסט שימנע את חזרתו</td></tr>
-    <tr><td><strong>צוות תחזוקה ותיעוד</strong><br><span style="opacity:.7">העבודה השקטה שמחזיקה את הפרויקט בריא</span></td><td><a href="agents/dev/dep-updater.md" download><code dir="ltr">dep-updater</code></a> — עדכוני תלויות ליליים על ענף נפרד (פרק 9)<br><a href="agents/dev/dead-code-cleaner.md" download><code dir="ltr">dead-code-cleaner</code></a> — מאתר ומסיר קוד שאין לו קוראים<br><a href="agents/dev/api-doc-writer.md" download><code dir="ltr">api-doc-writer</code></a> — מסנכרן את התיעוד עם הקוד בכל שינוי<br><a href="agents/dev/changelog-writer.md" download><code dir="ltr">changelog-writer</code></a> — מנסח את רשימת השינויים לכל גרסה</td></tr>
+    <tr><th>תבנית</th><th>מתי לבחור בה</th><th>נקודת התורפה</th></tr>
+    <tr><td>פס ייצור</td><td>תהליך עם סדר ברור וקבוע</td><td>איטית — הכול טורי</td></tr>
+    <tr><td>מנהל ועובדים</td><td>נדרש שיקול דעת דינמי על סדר העבודה</td><td>המתאם הוא צוואר בקבוק ונקודת כשל</td></tr>
+    <tr><td>במקביל</td><td>חלקים בלתי תלויים + לוח זמנים לחוץ</td><td>קונפליקטים בשלב האיחוד</td></tr>
   </table>
   </div>
-  <p><strong>איך הצוותים נפגשים:</strong> ב‑Pull Request. צוות הפיצ'ר מייצר, אבטחה ואיכות מבקרים כל PR, תשתיות מספקת את המסלול לפרודקשן — ותחזוקה עוברת ברקע על כל היתר.</p>
 
-  <h2>2. עולם התוכן והשיווק: "מערכת המגזין" ✍️</h2>
-  <p><strong>הבעיה:</strong> פוסט לבלוג של חברה דורש מחקר, כתיבה, עריכה לשונית והתאמה לקידום במנועי חיפוש — ארבע מיומנויות שונות שכותב אחד ממהר עושה בינוני.</p>
-  <p><strong>התבנית:</strong> פס ייצור, עם העורך כשומר סף שרשאי להחזיר טיוטה אחורה.</p>
-  <div class="table-scroll">
-  <table>
-    <tr><th>תפקיד</th><th>כלים</th><th>תוצר (החוזה)</th></tr>
-    <tr><td><a href="agents/content/researcher.md" download><code dir="ltr">researcher</code></a> — חוקר</td><td>WebSearch, Read, Write</td><td><code dir="ltr">research.md</code>: עובדות + מקור לכל טענה</td></tr>
-    <tr><td><a href="agents/content/copywriter.md" download><code dir="ltr">copywriter</code></a> — כותב</td><td>Read, Write</td><td>טיוטה לפי research.md בלבד — בלי להמציא עובדות</td></tr>
-    <tr><td><a href="agents/content/editor.md" download><code dir="ltr">editor</code></a> — עורך</td><td>Read, Edit</td><td>גרסה ערוכה + הערות; רשאי להחזיר ל‑copywriter</td></tr>
-    <tr><td><a href="agents/content/seo-checker.md" download><code dir="ltr">seo-checker</code></a> — בודק קידום</td><td>Read, Write</td><td>דוח: כותרות, תיאור, מילות מפתח, קישורים פנימיים</td></tr>
-  </table>
-  </div>
-  <pre><span class="pre-label">.claude/agents/editor.md</span><code>---
-name: editor
-description: עורך לשוני קפדני לתוכן שיווקי בעברית. הפעל על כל
-  טיוטה לפני פרסום.
-tools: Read, Edit
----
+  <h2>בנייה בפועל, דרך 1: הכול בתוך Claude Code</h2>
+  <p>הצוות מוגדר כקבוצת קבצים ב‑<code dir="ltr">.claude/agents/</code> (בדיוק כמו בפרק 8), והשיחה הראשית משמשת מתאם. את תסריט העבודה אורזים בפקודה מותאמת — והצוות כולו מופעל במילה אחת:</p>
+  <pre><span class="pre-label">.claude/commands/build-feature.md</span><code>אתה מתאם צוות. בנה את הפיצ'ר: $ARGUMENTS
+תהליך העבודה, שלב אחר שלב:
+1. שלח את planner לכתוב SPEC.md עם תוכנית מפורטת
+2. הצג לי את התוכנית ועצור לאישור
+3. אחרי אישור - שלח את coder לממש לפי ה-SPEC
+4. שלח את test-writer לכסות את הקוד החדש בטסטים
+5. שלח את code-reviewer לסקירה; ממצא קריטי חוזר ל-coder
+6. סכם: מה נבנה, מה נבדק, ומה נשאר פתוח</code></pre>
+  <p>שימו לב לשלב 2: <strong>עצירה לאישור אנושי</strong> בנקודת ההכרעה — עיקרון 5 מפרק 11, עכשיו ברמת הצוות.</p>
 
-אתה עורך לשוני של מגזין. קבל טיוטה וערוך אותה:
-1. עברית תקינה - בלי תרגומים מילוליים מאנגלית ובלי סלנג
-2. משפט ארוך מ-20 מילים - פצל; פסקה ארוכה מ-5 שורות - קצר
-3. כל טענה עובדתית חייבת מקור ב-research.md. אין מקור? סמן
-   [דרוש מקור] והחזר את הטיוטה לכותב
-4. פתיח שלא עונה תוך שתי שורות על "למה לקרוא?" - שכתב
+  <h2>בנייה בפועל, דרך 2: צוות בקוד עם ה‑Agent SDK</h2>
+  <p>ב‑SDK מגדירים את חברי הצוות בתוך האפשרויות, והמודל מאציל להם בדיוק כמו ל‑subagents:</p>
+  <pre><span class="pre-label">squad.ts</span><code>import { query } from "@anthropic-ai/claude-agent-sdk";
 
-החזר: הטקסט הערוך + רשימת השינויים המהותיים ונימוקם.</code></pre>
-  <p><strong>הלקח מהעולם הזה:</strong> חוזה התוצרים של החוקר ("מקור לכל טענה") הוא מה שמונע מהצוות כולו להמציא עובדות. אמינות נבנית בתחילת השרשרת.</p>
+const result = query({
+  prompt: "בנה עמוד 'צור קשר' מלא: תכנון, מימוש, טסטים וסקירה",
+  options: {
+    agents: {
+      planner: {
+        description: "מתכנן. הפעל ראשון לכל פיצ'ר חדש.",
+        prompt: "כתוב תוכנית מימוש קצרה וממוספרת ל-SPEC.md. אל תכתוב קוד.",
+        tools: ["Read", "Grep", "Glob", "Write"],
+      },
+      coder: {
+        description: "מממש לפי SPEC.md קיים.",
+        prompt: "ממש את הצעדים מ-SPEC.md אחד-אחד. עדכן PROGRESS.md אחרי כל צעד.",
+      },
+      reviewer: {
+        description: "סוקר קוד. הפעל אחרי כל מימוש.",
+        prompt: "סקור את ה-diff. החזר טבלת ממצאים עם חומרה. אל תערוך קבצים.",
+        tools: ["Read", "Grep", "Bash"],
+      },
+    },
+    maxTurns: 60,
+  },
+});
 
-  <h3>מרחיבים: מחלקת השיווק המלאה</h3>
-  <p>מערכת המגזין מייצרת את תוכן הליבה — ומסביבה פועלת מחלקה שלמה:</p>
-  <div class="table-scroll">
-  <table>
-    <tr><th>צוות</th><th>הסוכנים ותפקידם</th></tr>
-    <tr><td><strong>צוות סושיאל</strong><br><span style="opacity:.7">מפיץ ומתאים את התוכן לכל פלטפורמה</span></td><td><a href="agents/content/trend-scout.md" download><code dir="ltr">trend-scout</code></a> — מזהה נושאים חמים בתחום לפני כולם<br><a href="agents/content/post-writer.md" download><code dir="ltr">post-writer</code></a> — ממיר כל מאמר לגרסאות לכל רשת חברתית<br><a href="agents/content/engagement-analyst.md" download><code dir="ltr">engagement-analyst</code></a> — מנתח מה עבד, מה לא, ולמה<br><a href="agents/content/calendar-planner.md" download><code dir="ltr">calendar-planner</code></a> — בונה לוח פרסום שבועי מאוזן</td></tr>
-    <tr><td><strong>צוות קמפיינים</strong><br><span style="opacity:.7">פרסום ממומן שנמדד בכל שקל</span></td><td><a href="agents/content/audience-profiler.md" download><code dir="ltr">audience-profiler</code></a> — מגדיר קהלי יעד ומסר לכל קהל<br><a href="agents/content/ad-copywriter.md" download><code dir="ltr">ad-copywriter</code></a> — כותב גרסאות מודעה מותאמות לכל קהל<br><a href="agents/content/ab-test-designer.md" download><code dir="ltr">ab-test-designer</code></a> — מתכנן ניסויי A/B עם מדדי הצלחה ברורים<br><a href="agents/content/budget-monitor.md" download><code dir="ltr">budget-monitor</code></a> — עוקב אחרי עלות־המרה ומתריע על בזבוז</td></tr>
-    <tr><td><strong>צוות SEO</strong><br><span style="opacity:.7">מרחיב את בדיקת ה־SEO הבסיסית לאסטרטגיה</span></td><td><a href="agents/content/keyword-researcher.md" download><code dir="ltr">keyword-researcher</code></a> — חוקר ביטויי חיפוש ורמת תחרות<br><a href="agents/content/content-gap-analyst.md" download><code dir="ltr">content-gap-analyst</code></a> — מאתר נושאים שהמתחרים מכסים ואתם לא<br><a href="agents/content/internal-linker.md" download><code dir="ltr">internal-linker</code></a> — מציע קישורים פנימיים בין תכנים קיימים<br><a href="agents/content/rank-tracker.md" download><code dir="ltr">rank-tracker</code></a> — עוקב אחרי דירוגים ומדווח על שינויים</td></tr>
-    <tr><td><strong>צוות מיתוג</strong><br><span style="opacity:.7">שומר שכל התוכן נשמע כמו אותו ארגון</span></td><td><a href="agents/content/brand-guardian.md" download><code dir="ltr">brand-guardian</code></a> — אוכף טון, מסרים ומינוח אחידים בכל תוצר<br><a href="agents/content/visual-brief-writer.md" download><code dir="ltr">visual-brief-writer</code></a> — כותב בריפים מדויקים למעצבים<br><a href="agents/content/consistency-checker.md" download><code dir="ltr">consistency-checker</code></a> — סורק אתר וחומרים ומאתר סתירות במסרים</td></tr>
-  </table>
-  </div>
-  <p><strong>איך הצוותים נפגשים:</strong> המגזין מייצר, סושיאל וקמפיינים מפיצים, SEO מכוון את הנושאים הבאים — וה‑brand-guardian מבקר את כולם לפני פרסום.</p>
+for await (const message of result) {
+  if (message.type === "result") console.log(message.result);
+}</code></pre>
+  <p>אותם עקרונות בדיוק: תפקיד, חוזה תוצרים (SPEC.md,‏ PROGRESS.md, טבלת ממצאים), והרשאות לפי צורך — הסוקר לא מקבל Edit.</p>
 
-  <h2>3. עולם הנתונים: "צוות הדוח השבועי" 📊</h2>
-  <p><strong>הבעיה:</strong> כל שבוע צריך לענות על אותה שאלה עסקית ("מה קרה במכירות ולמה") מתוך נתונים גולמיים — תהליך של איסוף, ניקוי, ניתוח והצגה.</p>
-  <p><strong>התבנית:</strong> מנהל־ועובדים. למה לא פס ייצור? כי הניתוח מכתיב את ההמשך: ממצא חריג דורש צלילה נוספת, שבוע רגיל לא. המתאם מחליט.</p>
-  <div class="table-scroll">
-  <table>
-    <tr><th>תפקיד</th><th>כלים</th><th>תוצר (החוזה)</th></tr>
-    <tr><td><a href="agents/data/collector.md" download><code dir="ltr">collector</code></a> — אוסף</td><td>MCP למסד נתונים (readonly!)</td><td><code dir="ltr">data/raw_week.csv</code> + תיעוד השאילתות</td></tr>
-    <tr><td><a href="agents/data/cleaner.md" download><code dir="ltr">cleaner</code></a> — מנקה</td><td>Read, Write, Bash (python)</td><td><code dir="ltr">data/clean_week.csv</code> + יומן: מה תוקן ולמה</td></tr>
-    <tr><td><a href="agents/data/analyst.md" download><code dir="ltr">analyst</code></a> — אנליסט</td><td>Read, Write, Bash (python)</td><td><code dir="ltr">findings.md</code>: 3–5 ממצאים + עוצמת ביטחון לכל אחד</td></tr>
-    <tr><td><a href="agents/data/visualizer.md" download><code dir="ltr">visualizer</code></a> — ממחיש</td><td>Read, Write</td><td>גרפים + עמוד HTML של הדוח</td></tr>
-  </table>
-  </div>
-  <p><strong>הלקח מהעולם הזה:</strong> שני דברים. האחד — הרשאות readonly למסד הנתונים (פרק 7) הן מה שמאפשר לתת לצוות לרוץ בלי פיקוח. השני — "עוצמת ביטחון לכל ממצא" בחוזה של האנליסט מונעת מהדוח להציג ניחוש כעובדה.</p>
-
-  <h3>מרחיבים: ארגון הנתונים המלא</h3>
-  <p>הדוח השבועי הוא התוצר הנראה — מתחתיו עובדים עוד צוותים:</p>
-  <div class="table-scroll">
-  <table>
-    <tr><th>צוות</th><th>הסוכנים ותפקידם</th></tr>
-    <tr><td><strong>צוות הנדסת נתונים</strong><br><span style="opacity:.7">הצינורות שמזינים את כל השאר</span></td><td><a href="agents/data/pipeline-builder.md" download><code dir="ltr">pipeline-builder</code></a> — בונה ומתחזק צינורות איסוף ועיבוד (ETL)<br><a href="agents/data/schema-guardian.md" download><code dir="ltr">schema-guardian</code></a> — שומר על מבנה הנתונים ותאימות לאחור<br><a href="agents/data/quality-monitor.md" download><code dir="ltr">quality-monitor</code></a> — בודק כל לילה שלמות, טריות וכפילויות<br><a href="agents/data/backfill-runner.md" download><code dir="ltr">backfill-runner</code></a> — משלים נתונים היסטוריים בזהירות וביומן מלא</td></tr>
-    <tr><td><strong>צוות מחקר</strong><br><span style="opacity:.7">מהשערה לניסוי מבוקר</span></td><td><a href="agents/data/hypothesis-designer.md" download><code dir="ltr">hypothesis-designer</code></a> — מנסח השערות עם קריטריון הפרכה ברור<br><a href="agents/data/experiment-runner.md" download><code dir="ltr">experiment-runner</code></a> — מריץ ניסויים ושומר תוצאות גולמיות<br><a href="agents/data/evaluator.md" download><code dir="ltr">evaluator</code></a> — בוחן תוצאות מול מדדים שהוגדרו מראש<br><a href="agents/data/experiment-logger.md" download><code dir="ltr">experiment-logger</code></a> — מתעד הכול כך שכל ניסוי ניתן לשחזור</td></tr>
-    <tr><td><strong>צוות BI</strong><br><span style="opacity:.7">מהנתונים להחלטות עסקיות</span></td><td><a href="agents/data/metric-definer.md" download><code dir="ltr">metric-definer</code></a> — מגדיר מדדים אחידים — הגדרה אחת לכל הארגון<br><a href="agents/data/dashboard-builder.md" download><code dir="ltr">dashboard-builder</code></a> — בונה ומעדכן לוחות מחוונים<br><a href="agents/data/anomaly-explainer.md" download><code dir="ltr">anomaly-explainer</code></a> — מסביר כל חריגה במדד: אמיתית או רעש<br><a href="agents/data/stakeholder-reporter.md" download><code dir="ltr">stakeholder-reporter</code></a> — מתרגם ממצאים לשפה עסקית להנהלה</td></tr>
-    <tr><td><strong>צוות פרטיות וגברנס</strong><br><span style="opacity:.7">הגבולות החוקיים והאתיים של הנתונים</span></td><td><a href="agents/data/pii-scanner.md" download><code dir="ltr">pii-scanner</code></a> — מאתר מידע אישי מזהה בכל מאגר חדש<br><a href="agents/data/access-reviewer.md" download><code dir="ltr">access-reviewer</code></a> — סוקר תקופתית מי ניגש למה ולמה<br><a href="agents/data/retention-auditor.md" download><code dir="ltr">retention-auditor</code></a> — אוכף מדיניות שמירה ומחיקת נתונים</td></tr>
-  </table>
-  </div>
-  <p><strong>איך הצוותים נפגשים:</strong> הנדסת הנתונים מזינה את כולם; צוות הפרטיות מבקר כל צינור ומאגר חדש לפני עלייה לאוויר; BI והמחקר צורכים — והדוח השבועי הוא רק החלון הקטן שרואה ההנהלה.</p>
-
-  <h2>4. עולם התפעול: "משמרת הלילה" 🌙</h2>
-  <p><strong>הבעיה:</strong> תקלות לא מחכות לשעות העבודה. צריך מישהו שמנטר, מאבחן, מתקן את מה שבטוח לתקן — ומעיר בני אדם רק כשבאמת צריך.</p>
-  <p><strong>התבנית:</strong> מנהל־ועובדים מופעל־אירועים: רץ מתוזמן (פרק 9), והמתאם מסלים לפי חומרה.</p>
-  <div class="table-scroll">
-  <table>
-    <tr><th>תפקיד</th><th>כלים</th><th>תוצר (החוזה)</th></tr>
-    <tr><td><a href="agents/ops/watcher.md" download><code dir="ltr">watcher</code></a> — צופה</td><td>Read, Grep (לוגים), MCP לניטור</td><td>רשימת חריגות עם חומרה: info / warn / critical</td></tr>
-    <tr><td><a href="agents/ops/diagnoser.md" download><code dir="ltr">diagnoser</code></a> — מאבחן</td><td>קריאה בלבד + Bash מוגבל</td><td>אבחנה: סיבה משוערת + ראיות + "בטוח לתיקון אוטומטי? כן/לא"</td></tr>
-    <tr><td><a href="agents/ops/fixer.md" download><code dir="ltr">fixer</code></a> — מתקן</td><td>מוגבלים לרשימת תיקונים מאושרת</td><td>תיקון + קומיט על ענף + אימות שהתקלה נעלמה</td></tr>
-    <tr><td><a href="agents/ops/reporter.md" download><code dir="ltr">reporter</code></a> — מדווח</td><td>כלי mcp‏ send_alert (פרק 10)</td><td>critical ← התראה מיידית; השאר ← סיכום בוקר</td></tr>
-  </table>
-  </div>
-  <p><strong>הלקח מהעולם הזה:</strong> שדה "בטוח לתיקון אוטומטי?" בחוזה של המאבחן הוא נקודת ההכרעה כולה: fixer מטפל רק ב"כן", וכל "לא" עולה לבן אדם. הצוות אוטונומי בדיוק עד גבול הסיכון — ולא צעד אחד מעבר.</p>
-
-  <h3>מרחיבים: ארגון התפעול המלא</h3>
-  <p>משמרת הלילה מגיבה לתקלות — סביבה פועלים צוותים שמונעים אותן מראש:</p>
-  <div class="table-scroll">
-  <table>
-    <tr><th>צוות</th><th>הסוכנים ותפקידם</th></tr>
-    <tr><td><strong>צוות SecOps</strong><br><span style="opacity:.7">אבטחה תפעולית שוטפת</span></td><td><a href="agents/ops/log-forensic.md" download><code dir="ltr">log-forensic</code></a> — חוקר אירועים חשודים לעומק בלוגים<br><a href="agents/ops/ioc-scanner.md" download><code dir="ltr">ioc-scanner</code></a> — מצליב אינדיקטורים מוכרים של תקיפה<br><a href="agents/ops/patch-prioritizer.md" download><code dir="ltr">patch-prioritizer</code></a> — מתעדף עדכוני אבטחה לפי חשיפה בפועל<br><a href="agents/ops/access-anomaly-watcher.md" download><code dir="ltr">access-anomaly-watcher</code></a> — מזהה דפוסי גישה חריגים לחשבונות</td></tr>
-    <tr><td><strong>צוות FinOps</strong><br><span style="opacity:.7">העלות כאזעקה תפעולית</span></td><td><a href="agents/ops/cost-watcher.md" download><code dir="ltr">cost-watcher</code></a> — מנטר הוצאות ענן ברמה יומית<br><a href="agents/ops/waste-hunter.md" download><code dir="ltr">waste-hunter</code></a> — מאתר משאבים רדומים ששוכחים לכבות<br><a href="agents/ops/rightsizing-advisor.md" download><code dir="ltr">rightsizing-advisor</code></a> — ממליץ על התאמת גדלי שרתים לעומס אמיתי<br><a href="agents/ops/forecast-reporter.md" download><code dir="ltr">forecast-reporter</code></a> — חוזה חריגות תקציב לפני סוף החודש</td></tr>
-    <tr><td><strong>צוות אמינות (SRE)</strong><br><span style="opacity:.7">לומד מכל תקלה כדי שלא תחזור</span></td><td><a href="agents/ops/slo-tracker.md" download><code dir="ltr">slo-tracker</code></a> — עוקב אחרי יעדי זמינות מול המציאות<br><a href="agents/ops/postmortem-writer.md" download><code dir="ltr">postmortem-writer</code></a> — כותב תחקיר ללא־האשמה אחרי כל אירוע<br><a href="agents/ops/runbook-maintainer.md" download><code dir="ltr">runbook-maintainer</code></a> — מעדכן את ספרי הנהלים לפי לקחי התחקירים<br><a href="agents/ops/chaos-planner.md" download><code dir="ltr">chaos-planner</code></a> — מתכנן תרגילי כשל מבוקרים לחיזוק המערכת</td></tr>
-    <tr><td><strong>צוות שדרוגים</strong><br><span style="opacity:.7">שינויים גדולים בלי לילות לבנים</span></td><td><a href="agents/ops/migration-planner.md" download><code dir="ltr">migration-planner</code></a> — מפרק מעברי גרסה לשלבים הפיכים<br><a href="agents/ops/canary-watcher.md" download><code dir="ltr">canary-watcher</code></a> — מנטר פריסות הדרגתיות ועוצר בסימן ראשון<br><a href="agents/ops/dep-updater.md" download><code dir="ltr">dep-updater</code></a> — מריץ עדכוני תלויות שוטפים על ענף נפרד<br><a href="agents/ops/rollback-guardian.md" download><code dir="ltr">rollback-guardian</code></a> — שומר שלכל שלב יש נסיגה מוכנה ובדוקה</td></tr>
-  </table>
-  </div>
-  <p><strong>איך הצוותים נפגשים:</strong> משמרת הלילה מגיבה; ה‑SRE הופך כל אירוע שלה לתחקיר ולנוהל מעודכן; SecOps ו‑FinOps מנטרים כל אחד את הציר שלו; ושדרוגים דואג שגם שינוי גדול לא יעיר אף אחד.</p>
-
-  <h2>5. עולם המסחר והשירות: "צוות התמיכה" 🛒</h2>
-  <p><strong>הבעיה:</strong> תיבת פניות של חנות מקוונת מקבלת ערבוב של שאלות מוצר, בעיות משלוח, בקשות החזר ותלונות — לכל סוג מומחיות וטון אחרים.</p>
-  <p><strong>התבנית:</strong> ממיין ← מומחים במקביל ← בקרה אנושית. הממיין מפצל, כל מומחה מטפל בערימה שלו בו־זמנית.</p>
-  <div class="table-scroll">
-  <table>
-    <tr><th>תפקיד</th><th>כלים</th><th>תוצר (החוזה)</th></tr>
-    <tr><td><a href="agents/commerce/triage.md" download><code dir="ltr">triage</code></a> — ממיין</td><td>Read, Write</td><td>לכל פנייה: קטגוריה + דחיפות + "דורש אדם? כן/לא"</td></tr>
-    <tr><td><a href="agents/commerce/product-expert.md" download><code dir="ltr">product-expert</code></a> — מומחה מוצר</td><td>Read (קטלוג, מדריכים)</td><td>טיוטת תשובה + מקור מהתיעוד</td></tr>
-    <tr><td><a href="agents/commerce/orders-expert.md" download><code dir="ltr">orders-expert</code></a> — מומחה הזמנות</td><td>MCP הזמנות (readonly)</td><td>טיוטת תשובה + סטטוס אמיתי מהמערכת</td></tr>
-    <tr><td><a href="agents/commerce/tone-checker.md" download><code dir="ltr">tone-checker</code></a> — בודק ניסוח</td><td>Read, Edit</td><td>תשובה סופית: אמפתית, בעברית תקינה, בלי הבטחות שאין לנו</td></tr>
-  </table>
-  </div>
-  <p><strong>הלקח מהעולם הזה:</strong> שימו לב מה הצוות הזה <em>לא</em> עושה — הוא לא שולח תשובות. התוצר הוא טיוטות בתור לאישור, ו"דורש אדם" מסלים מיד תלונות רגישות. בעולם שנוגע בלקוחות אמיתיים, הצוות מכין — האדם לוחץ "שלח". לפחות עד שנבנה אמון, בהדרגה ובמדידה.</p>
-
-  <h3>מרחיבים: ארגון המסחר המלא</h3>
-  <p>התמיכה היא נקודת המגע — סביבה פועל ארגון שלם, כולל צוות מכירות:</p>
-  <div class="table-scroll">
-  <table>
-    <tr><th>צוות</th><th>הסוכנים ותפקידם</th></tr>
-    <tr><td><strong>צוות מכירות</strong><br><span style="opacity:.7">מהליד להצעה — טיוטות בלבד, אדם סוגר</span></td><td><a href="agents/commerce/lead-qualifier.md" download><code dir="ltr">lead-qualifier</code></a> — מדרג פניות נכנסות לפי פוטנציאל אמיתי<br><a href="agents/commerce/outreach-writer.md" download><code dir="ltr">outreach-writer</code></a> — מנסח פניות מותאמות אישית — לאישור אנושי<br><a href="agents/commerce/proposal-drafter.md" download><code dir="ltr">proposal-drafter</code></a> — מרכיב הצעות מחיר מהקטלוג והמחירון<br><a href="agents/commerce/crm-updater.md" download><code dir="ltr">crm-updater</code></a> — מתעד כל אינטראקציה במערכת הלקוחות<br><a href="agents/commerce/followup-scheduler.md" download><code dir="ltr">followup-scheduler</code></a> — מתזמן תזכורות מעקב כדי שאף ליד לא יאבד</td></tr>
-    <tr><td><strong>צוות קטלוג</strong><br><span style="opacity:.7">החנות עצמה: מוצרים, מחירים, מלאי</span></td><td><a href="agents/commerce/description-writer.md" download><code dir="ltr">description-writer</code></a> — כותב תיאורי מוצר אחידים ומדויקים<br><a href="agents/commerce/price-monitor.md" download><code dir="ltr">price-monitor</code></a> — משווה מחירי מתחרים ומתריע על פערים<br><a href="agents/commerce/inventory-watcher.md" download><code dir="ltr">inventory-watcher</code></a> — מתריע על מלאי נמוך לפי קצב מכירה<br><a href="agents/commerce/image-checker.md" download><code dir="ltr">image-checker</code></a> — מוודא שלכל מוצר תמונות ותיוג תקינים</td></tr>
-    <tr><td><strong>צוות חוויית לקוח</strong><br><span style="opacity:.7">מהתלונות לתובנות</span></td><td><a href="agents/commerce/review-analyzer.md" download><code dir="ltr">review-analyzer</code></a> — מנתח ביקורות ומזהה דפוסים חוזרים<br><a href="agents/commerce/churn-detector.md" download><code dir="ltr">churn-detector</code></a> — מאתר לקוחות בסיכון נטישה לפי התנהגות<br><a href="agents/commerce/nps-reporter.md" download><code dir="ltr">nps-reporter</code></a> — מסכם משוב ומגמות שביעות רצון<br><a href="agents/commerce/voice-of-customer.md" download><code dir="ltr">voice-of-customer</code></a> — מתרגם תלונות חוזרות להצעות שיפור למוצר</td></tr>
-    <tr><td><strong>צוות תפעול הזמנות</strong><br><span style="opacity:.7">מהקנייה עד הדלת</span></td><td><a href="agents/commerce/fraud-flagger.md" download><code dir="ltr">fraud-flagger</code></a> — מסמן הזמנות חשודות לבדיקה אנושית<br><a href="agents/commerce/returns-processor.md" download><code dir="ltr">returns-processor</code></a> — מכין טיפול בהחזרות לפי המדיניות<br><a href="agents/commerce/shipping-tracker.md" download><code dir="ltr">shipping-tracker</code></a> — עוקב אחרי משלוחים ומתריע על עיכובים</td></tr>
-  </table>
-  </div>
-  <p><strong>איך הצוותים נפגשים:</strong> התמיכה שומעת את הלקוח, חוויית הלקוח מתרגמת את זה לתובנות, מכירות וקטלוג פועלים לפיהן — והכול תחת אותו כלל ברזל: בכל נגיעה בלקוח אמיתי, הסוכנים מכינים טיוטה והאדם לוחץ "שלח".</p>
-
-  <h2>מה חוזר בכל חמשת העולמות</h2>
-  <ul class="checklist">
-    <li><strong>אותם ארבעה רכיבים:</strong> מתאם, מומחים, זיכרון משותף, חוזה תוצרים — רק השמות מתחלפים</li>
-    <li><strong>ארגון שלם = צוותים של צוותים:</strong> כל צוות נשאר קטן וממוקד, והחיבור ביניהם עובר דרך תוצרים מוגדרים (PR, דוח, טיוטה) — לא דרך "כולם מדברים עם כולם"</li>
-    <li><strong>תמיד יש מבקר:</strong> סוקר קוד, עורך לשוני, בודק ניסוח — תפקיד הביקורת שורד בכל תחום</li>
-    <li><strong>הרשאות לפי תפקיד:</strong> readonly לקוראים, רשימות מאושרות למתקנים, שליחה רק דרך אדם</li>
-    <li><strong>האדם בנקודות ההכרעה:</strong> אישור תוכנית, השלמת critical, לחיצת "שלח" — כל צוות מגדיר את שלו</li>
+  <h2>כללי אצבע לצוות בריא</h2>
+  <ul>
+    <li><strong>3–5 תפקידים לרוב מספיקים.</strong> צוות של עשרה סוכנים הוא כמעט תמיד סימן לפירוק לא נכון של הבעיה.</li>
+    <li><strong>תפקיד אחד = אחריות אחת.</strong> אם קשה לכתוב לסוכן description במשפט, התפקיד רחב מדי.</li>
+    <li><strong>מבקר אחד לפחות.</strong> צוות בלי תפקיד ביקורת (סוקר, בודק, עורך) הוא פס ייצור של טעויות מהירות.</li>
+    <li><strong>הכול דרך הזיכרון המשותף.</strong> תוצר שלא נכתב לקובץ — לא קרה. זה מה שמאפשר לעצור, להמשיך מחר, ולנפות תקלות.</li>
   </ul>
 
   <h2>תרגילים</h2>
   <div class="exercise">
-    <div class="ex-head"><span class="ex-badge">תרגיל 12.1</span> מאמצים צוות</div>
-    <p>בחרו את הצוות הקרוב ביותר לעולם שלכם מבין החמישה, וממשו אותו בגרסה מינימלית: שלושה תפקידים, על נתונים/קוד אמיתיים שלכם. הריצו מקצה לקצה פעם אחת.</p>
-    <details class="solution"><summary>טיפ לצמצום</summary>
-      <p>אפשר כמעט תמיד למזג את שני התפקידים האמצעיים בגרסה ראשונה (כותב+עורך, מנקה+אנליסט) — אבל אל תוותרו על ההפרדה בין מבצע למבקר. היא הראשונה שמוכיחה את עצמה.</p>
+    <div class="ex-head"><span class="ex-badge">תרגיל 11.1</span> פס הייצור הראשון שלכם</div>
+    <p>צרו בפרויקט שלכם צוות מינימלי של שלושה: planner,‏ coder,‏ reviewer (אפשר להתבסס על הסוכנים מפרק 8). כתבו את הפקודה <code dir="ltr">/build-feature</code> מהדוגמה, והפעילו אותה על פיצ'ר קטן אמיתי. עקבו אחרי המסירות בין הסוכנים.</p>
+    <details class="solution"><summary>מה לבדוק</summary>
+      <p>שלוש נקודות המסירה: SPEC.md נוצר ומפורט? הקוד באמת עוקב אחרי ה‑SPEC? דוח הסקירה מדורג ומצביע על קבצים? אם מסירה "דלפה" (סוכן התעלם מתוצר קודמו) — חדדו את חוזה התוצרים ב‑system prompt של המקבל: "קרא קודם את SPEC.md ופעל רק לפיו".</p>
     </details>
   </div>
 
   <div class="exercise">
-    <div class="ex-head"><span class="ex-badge">תרגיל 12.2</span> מתכננים צוות לעולם חדש</div>
-    <p>בחרו תחום שלא הופיע בפרק — משפט? חינוך? נדל"ן? מוזיקה? — ותכננו לו צוות על הנייר: הבעיה, 3–5 תפקידים, כלים והרשאות לכל אחד, חוזי תוצרים, והתבנית (פס ייצור / מנהל־ועובדים / במקביל) עם נימוק. אחר כך בקשו מ‑Claude ביקורת על התכנון.</p>
-    <details class="solution"><summary>דוגמה בזק: עולם המשפט</summary>
-      <p>צוות בדיקת חוזה: clause-extractor מפרק לסעיפים ← risk-flagger מסמן סעיפים חריגים מול צ'קליסט משרדי ← precedent-researcher מוצא נוסחים מקובלים ← summarizer כותב תקציר לעורך הדין. פס ייצור; כולם קריאה בלבד; התוצר תמיד טיוטה לעורך דין אנושי — לעולם לא ייעוץ ללקוח.</p>
+    <div class="ex-head"><span class="ex-badge">תרגיל 11.2</span> שני סוכנים במקביל</div>
+    <p>בחרו שתי משימות בלתי תלויות בפרויקט (למשל: שיפור עמוד א' ושיפור עמוד ב'). צרו שני worktrees, הריצו Claude בכל אחד במקביל, ובסוף מזגו את שני הענפים. תעדו: כמה זמן חסכתם, וכמה עלה לכם האיחוד?</p>
+    <details class="solution"><summary>לקח מרכזי</summary>
+      <p>אם המיזוג עבר חלק — המשימות באמת היו בלתי תלויות, וזה הרווח האמיתי של התבנית. אם היו קונפליקטים — למדתם משהו חשוב יותר: הגבול בין המשימות עבר במקום הלא נכון. פיצול טוב הוא לאורך קווי התפר הטבעיים של הפרויקט (קבצים/תיקיות שונים), לא לרוחבם.</p>
     </details>
   </div>
 
   <div class="exercise">
-    <div class="ex-head"><span class="ex-badge">תרגיל 12.3</span> פרויקט הגמר: הצוות שלכם, באוויר</div>
-    <p>קחו את הצוות מתרגיל 12.1 או 12.2 והפכו אותו לאמיתי: מימוש מלא של כל התפקידים, הפעלה מתוזמנת או בפקודה אחת, ריצה על משימות אמיתיות במשך שבוע. נהלו יומן קצר: מה הצליח, איפה נשברו מסירות, מה שיניתם.</p>
-    <details class="solution"><summary>מדד ההצלחה</summary>
-      <p>לא "הצוות מושלם" אלא "הצוות משתפר": אם אחרי שבוע יש לכם רשימת שיפורים שנובעת מריצות אמיתיות — אתם עושים בדיוק את העבודה של מהנדס סוכנים. זה המקצוע: לבנות, למדוד, לחדד.</p>
+    <div class="ex-head"><span class="ex-badge">תרגיל 11.3</span> מהנדס הצוות</div>
+    <p>קחו את הצוות מתרגיל 11.1 ושברו אותו בכוונה: תנו ל‑planner לכתוב תוכנית מעורפלת בת שורה אחת ("תבנה את זה טוב"). הריצו את השרשרת וראו איך הטעות מתגלגלת במורד פס הייצור. אחר כך תקנו — הוסיפו ל‑planner דרישת מבנה (צעדים ממוספרים, קבצים מושפעים, קריטריון הצלחה) והריצו שוב.</p>
+    <details class="solution"><summary>למה התרגיל הזה חשוב</summary>
+      <p>בצוות סוכנים, איכות התוצר נקבעת בחוליה החלשה — וכמעט תמיד זו איכות המסירה, לא איכות הסוכן. ההשוואה בין שתי הריצות מלמדת יותר מכל תיאוריה: תוכנית טובה בתחילת השרשרת שווה יותר מסוכן גאוני בסופה.</p>
     </details>
   </div>
 
-  <h2>סיימתם את הקורס 🎉</h2>
-  <p>תסתכלו אחורה רגע: התחלתם מהתקנה של כלי טרמינל, ואתם מסיימים עם היכולת לתכנן ולהפעיל לא רק סוכן — אלא צוות סוכנים שלם, בכל תחום, עם גבולות נכונים, לולאות משוב ובקרה אנושית חכמה. זו מיומנות שהעולם רק מתחיל להבין את ערכה.</p>
-  <p><strong>לאן ממשיכים?</strong></p>
-  <ul>
-    <li><a href="https://code.claude.com/docs" target="_blank" rel="noopener">התיעוד הרשמי של Claude Code</a> — הכיסוי המלא והמתעדכן של כל מה שלמדנו</li>
-    <li><a href="https://docs.claude.com/en/api/agent-sdk/overview" target="_blank" rel="noopener">תיעוד ה‑Agent SDK</a> — העמקה בבניית סוכנים וצוותים בקוד</li>
-    <li><a href="https://www.anthropic.com/engineering" target="_blank" rel="noopener">בלוג ההנדסה של Anthropic</a> — מאמרים כמו "Building Effective Agents" ו‑"Claude Code Best Practices"</li>
-    <li>והכי חשוב — <strong>הפרויקטים שלכם</strong>: קחו תהליך אחד מייגע שאתם מבצעים ידנית, ותנו לו צוות.</li>
+  <h2>סיכום הפרק</h2>
+  <ul class="checklist">
+    <li>צוות = תפקידים מוגדרים + מתאם + זיכרון משותף + חוזה תוצרים</li>
+    <li>שלוש תבניות: פס ייצור (סדר קבוע), מנהל־ועובדים (שיקול דעת), במקביל (מהירות)</li>
+    <li>מתחילים מסוכן אחד; מפצלים רק כשנתקלים במגבלה אמיתית</li>
+    <li>תוצר שלא נכתב לקובץ — לא קרה; מבקר אחד לפחות בכל צוות</li>
   </ul>
 
   <h2>בוחן עצמי</h2>
   <section class="quiz">
     <div class="q" data-a="0">
-      <p class="q-text">1. איזה תפקיד קיים בכל צוות מוצלח, בכל תחום?</p>
-      <button class="opt">מבקר: סוקר קוד, עורך לשוני, בודק ניסוח</button>
-      <button class="opt">דובר</button>
-      <button class="opt">מזכיר</button>
+      <p class="q-text">1. מתי נכון לפצל סוכן בודד לצוות?</p>
+      <button class="opt">רק כשנתקלים בפועל במגבלה: הקשר מתנפח, צריך מבקר נפרד, או צריך מקביליות</button>
+      <button class="opt">תמיד — צוות תמיד עדיף</button>
+      <button class="opt">כשיש תקציב גדול</button>
       <p class="q-fb"></p>
     </div>
     <div class="q" data-a="1">
-      <p class="q-text">2. מה כלל הברזל בצוותים שנוגעים בלקוחות אמיתיים?</p>
-      <button class="opt">לענות תוך דקה</button>
-      <button class="opt">הסוכנים מכינים טיוטות — אדם מאשר ושולח</button>
-      <button class="opt">לא לענות בסופי שבוע</button>
+      <p class="q-text">2. מהו "חוזה תוצרים"?</p>
+      <button class="opt">הסכם משפטי עם Anthropic</button>
+      <button class="opt">הגדרה מדויקת של מה כל סוכן מקבל ומה הוא מחזיר</button>
+      <button class="opt">רשימת המחירים של המודלים</button>
       <p class="q-fb"></p>
     </div>
     <div class="q" data-a="2">
-      <p class="q-text">3. איך צוותים שונים בארגון מתקשרים זה עם זה?</p>
-      <button class="opt">בפגישות יומיות</button>
-      <button class="opt">כל סוכן מדבר עם כל סוכן</button>
-      <button class="opt">דרך תוצרים מוגדרים: PR, דוח, טיוטה</button>
+      <p class="q-text">3. איך שני סוכנים עובדים על אותו ריפו במקביל בלי לדרוך זה על זה?</p>
+      <button class="opt">עובדים בתורות</button>
+      <button class="opt">אחד עובד והשני צופה</button>
+      <button class="opt">git worktree — עותק עבודה נפרד לכל אחד</button>
       <p class="q-fb"></p>
     </div>
     <p class="quiz-score"></p>
   </section>
-  <div class="complete-row"><button id="completeBtn" data-lesson="l12"></button></div>
+  <div class="complete-row"><button id="completeBtn" data-lesson="l11"></button></div>
 
   <nav class="lesson-nav">
-    <a href="lesson-11.html"><span class="dir-label">→ הפרק הקודם</span>יצירת צוות סוכנים</a>
-    <a href="index.html"><span class="dir-label">חזרה ←</span>לתוכן הקורס</a>
+    <a href="lesson-11.html"><span class="dir-label">→ הפרק הקודם</span>סוכנים אוטונומיים לגמרי</a>
+    <a href="lesson-13.html"><span class="dir-label">הפרק הבא ←</span>צוותי סוכנים מעולמות שונים</a>
   </nav>
 </main>
 
