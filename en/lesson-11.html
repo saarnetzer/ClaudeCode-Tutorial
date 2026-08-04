@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 11 · Fully autonomous agents — the Agent SDK</title>
+<meta name="description" content="Lesson 11: build your own agent with the Claude Agent SDK, and the five principles of safe autonomy.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-11.html">
+<link rel="alternate" hreflang="he" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/lesson-11.html">
+<link rel="alternate" hreflang="en" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-11.html">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lesson 11 · Fully autonomous agents — the Agent SDK">
+<meta property="og:description" content="Lesson 11: build your own agent with the Claude Agent SDK, and the five principles of safe autonomy.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-11.html">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../style.css">
+<script src="../changelog.js" defer></script>
+<script src="../app.js" defer></script>
+<script data-goatcounter="https://saarnetzer.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> Claude Code Course</a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-11.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn">🌓 Theme</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">Lesson 11 of 13</span>
+  <h1>Fully autonomous agents — the Agent SDK and working principles</h1>
+  <p class="lead">In this lesson we build our own agent in code with the Claude Agent SDK — the same engine that powers Claude Code itself — and learn the five principles that separate an autonomous agent that creates value from one that creates chaos.</p>
+
+  <h2>What you'll learn</h2>
+  <ul class="checklist">
+    <li>What the Claude Agent SDK is and why it's the best starting point</li>
+    <li>A first agent in TypeScript and Python</li>
+    <li>Adding custom tools and programmatic permissions</li>
+    <li>The five principles of safe autonomy</li>
+    <li>Where to go next</li>
+  </ul>
+
+  <h2>What is the Agent SDK</h2>
+  <p>The <strong>Claude Agent SDK</strong> is a library (TypeScript and Python) that gives you, in code, everything that drives Claude Code: the agentic loop (think → tool → result → think...), the file and terminal tools, the permission system, subagents, hooks and MCP. Instead of building agent infrastructure from scratch — you get the proven infrastructure and assemble <em>your</em> agent on top: the logic, the boundaries, and the integration into your system.</p>
+  <pre><code># TypeScript
+npm install @anthropic-ai/claude-agent-sdk
+
+# Python
+pip install claude-agent-sdk</code></pre>
+
+  <h2>A first agent: 20 lines</h2>
+  <h3>TypeScript</h3>
+  <pre><span class="pre-label">agent.ts</span><code>import { query } from "@anthropic-ai/claude-agent-sdk";
+
+const result = query({
+  prompt: "find all the TODOs in the project and summarize them into TODO_REPORT.md",
+  options: {
+    cwd: "/path/to/project",
+    allowedTools: ["Read", "Grep", "Glob", "Write"],
+    maxTurns: 20,
+  },
+});
+
+for await (const message of result) {
+  if (message.type === "assistant") {
+    console.log(message.message.content);   // watch the agent "think"
+  }
+  if (message.type === "result") {
+    console.log("Summary:", message.result);
+    console.log("Cost ($):", message.total_cost_usd);
+  }
+}</code></pre>
+  <h3>Python</h3>
+  <pre><span class="pre-label">agent.py</span><code>import anyio
+from claude_agent_sdk import query, ClaudeAgentOptions
+
+async def main():
+    async for message in query(
+        prompt="find all the TODOs in the project and summarize them into TODO_REPORT.md",
+        options=ClaudeAgentOptions(
+            cwd="/path/to/project",
+            allowed_tools=["Read", "Grep", "Glob", "Write"],
+            max_turns=20,
+        ),
+    ):
+        print(message)
+
+anyio.run(main)</code></pre>
+  <p>Run it — and watch the agent work in the output: searching, reading, writing, returning a final result with a cost. <strong>This is a real autonomous agent</strong>: you gave a goal, and it chose the steps itself.</p>
+
+  <h2>A custom tool</h2>
+  <p>The real power: giving the agent tools from <em>your</em> world. Custom tools are defined as an in-process MCP server:</p>
+  <pre><span class="pre-label">tools.ts</span><code>import { tool, createSdkMcpServer, query } from "@anthropic-ai/claude-agent-sdk";
+import { z } from "zod";
+
+const sendAlert = tool(
+  "send_alert",
+  "Sends an alert to the ops team. Use only for high-severity incidents.",
+  { message: z.string(), severity: z.enum(["low", "high"]) },
+  async (args) => {
+    await notifyOps(args.message, args.severity);   // your logic
+    return { content: [{ type: "text", text: "Alert sent" }] };
+  }
+);
+
+const opsServer = createSdkMcpServer({
+  name: "ops-tools",
+  tools: [sendAlert],
+});
+
+const result = query({
+  prompt: "check last night's logs. if there's a severe incident - send an alert",
+  options: {
+    mcpServers: { "ops-tools": opsServer },
+    allowedTools: ["Read", "Grep", "mcp__ops-tools__send_alert"],
+    maxTurns: 30,
+  },
+});</code></pre>
+  <p>Note the tool's description — "use only for severe incidents". As with Skills and subagents, the description is the interface between your intent and the agent's judgment. Want harder control? The SDK also supports hooks and <code>canUseTool</code> — your function approving or rejecting every tool call in real time, in code.</p>
+
+  <h2>The five principles of safe autonomy</h2>
+  <p>Everything you've learned in the course distills into five principles. An agent that satisfies all five — you can truly release:</p>
+  <h3>1. A feedback loop the agent runs itself</h3>
+  <p>Autonomy without a way to verify success is guessing. Tests (Lesson 3), a browser (Lesson 7), compilation, lint — the agent needs a tool that tells it "you succeeded/failed" without a human. Phrase every task with a check criterion: <em>"...and you're done only when all the tests are green"</em>.</p>
+  <h3>2. Boundaries in code, not promises</h3>
+  <p>Least-privilege permissions (<code dir="ltr">allowedTools</code>), blocking hooks (Lesson 6), readonly users (Lesson 7), deny rules and an isolated environment (Lessons 9–10). What's forbidden — make it <em>impossible</em>, not just "not recommended".</p>
+  <h3>3. Quantitative brakes</h3>
+  <p><code dir="ltr">maxTurns</code> per run, cost monitoring from the returned JSON, and an external timeout. An agent stuck in a loop should stop by itself — not when you notice the bill.</p>
+  <h3>4. External memory and slice-based work</h3>
+  <p>Long tasks break into stages, each ending in a commit and a state-file update (PROGRESS.md — Lesson 4). An interrupted run resumes from the file, not from zero. Git is the backbone: every stage is reversible.</p>
+  <h3>5. A human at the decision points</h3>
+  <p>"Fully" autonomous doesn't mean "without humans" — it means the human moves from the inner loop to the checkpoints: the agent works alone for hours, but the deliverable is a PR you approve, and alerts (Notification hooks, send_alert) summon you when something unusual happens. You manage; you don't chaperone.</p>
+
+  <div class="callout tip">
+    <span class="co-title">✅ The final test</span>
+    Before releasing an agent to run alone, ask: "what's the worst that could happen in this run?" If the answer is "a messy git branch I'll delete" — go. If the answer includes a real database, money or customers — principle 2 is missing. Go back and strengthen boundaries.
+  </div>
+
+  <h2>Exercises</h2>
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 11.1</span> Your first agent in code</div>
+    <p>Run the TODO agent from the example (in whichever language suits you) on a real project. Then change the task to something of yours: generating a docs report, finding dead code, checking translation consistency. Follow the steps it chooses in the output.</p>
+    <details class="solution"><summary>If something gets stuck</summary>
+      <p>Make sure the <code dir="ltr">ANTHROPIC_API_KEY</code> environment variable is set, and that allowedTools includes what the task truly requires (writing a report = needs Write). A "tool not allowed" error in the output is a precise hint at what's missing.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 11.2</span> A custom tool + judgment</div>
+    <p>Build a "project health checker" agent with one custom tool: <code dir="ltr">report_status(status, details)</code> that writes to a JSON file (or sends a real message — Telegram/Slack if you like). The task: "run tests and lint; report ok if all is well, and failed with details if not". Run it once on a healthy project and once on a broken one.</p>
+    <details class="solution"><summary>What you're testing here</summary>
+      <p>That the agent uses your tool <em>correctly</em>: once with ok, once with failed + real failure details. If it reports ok on a broken project — sharpen the prompt ("actually run and read the output; don't assume"). Welcome to agent engineering.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 11.3</span> Capstone: the nightly agent</div>
+    <p>Put it all together: build an agent that runs on a schedule (cron or scheduled GitHub Actions) once a day on one of your repos, performing a maintenance task of your choice end to end — on a separate branch, with tests as the feedback loop, maxTurns, a state file, and a PR as the deliverable. Let it run three nights and review the results.</p>
+    <details class="solution"><summary>Recommended frame</summary>
+      <p>Take <code dir="ltr">nightly-deps.sh</code> from Lesson 10 as the skeleton and swap the task: dead-code cleanup, improving test coverage ("add one test to the least-covered file"), or docs updates. Walk the five principles as a checklist before the first run. After three nights you'll know exactly what to strengthen — and that's precisely the skill of an agent engineer.</p>
+    </details>
+  </div>
+
+  <h2>Self-check</h2>
+  <section class="quiz">
+    <div class="q" data-a="0">
+      <p class="q-text">1. What is the Agent SDK?</p>
+      <button class="opt">Claude Code's engine as a library for building your own agents</button>
+      <button class="opt">A tool for installing Claude Code</button>
+      <button class="opt">An operating system for agents</button>
+      <p class="q-fb"></p>
+    </div>
+    <div class="q" data-a="1">
+      <p class="q-text">2. Without what is "autonomy just guessing"?</p>
+      <button class="opt">Without a powerful GPU</button>
+      <button class="opt">Without a feedback loop the agent runs itself (tests, a browser)</button>
+      <button class="opt">Without an internet connection</button>
+      <p class="q-fb"></p>
+    </div>
+    <div class="q" data-a="2">
+      <p class="q-text">3. What's "the final test" before releasing an agent to run alone?</p>
+      <button class="opt">Did it pass 100 runs</button>
+      <button class="opt">Is its code short</button>
+      <button class="opt">"What's the worst that could happen in this run?"</button>
+      <p class="q-fb"></p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <h2>You've completed the single-agent track 🎉</h2>
+  <p>You started by installing a terminal tool, and you now know how to plan, build and release an autonomous agent — with the right boundaries, feedback loops and human oversight. One last step remains: in the next two lessons we go from a single agent to a whole <strong>agent squad</strong> — first the principles and patterns, then examples from five different industries.</p>
+
+  <div class="complete-row"><button id="completeBtn" data-lesson="l10"></button></div>
+
+  <nav class="lesson-nav">
+    <a href="lesson-10.html"><span class="dir-label">← Previous lesson</span>Headless mode and CI automation</a>
+    <a href="lesson-12.html"><span class="dir-label">Next lesson →</span>Building an agent squad</a>
+  </nav>
+
+</main>
+
+<footer class="site">A community course for learning Claude Code · official docs: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="https://github.com/saarnetzer/ClaudeCode-Tutorial/issues" target="_blank" rel="noopener">Found a mistake? Open an issue</a><br>© 2026 Saar Netzer · content licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> · built with Claude Code</footer>
+</body>
+</html>
