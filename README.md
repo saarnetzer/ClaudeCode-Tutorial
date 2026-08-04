@@ -3,7 +3,7 @@
 אתר סטטי בעברית שמלמד את Claude Code צעד־אחר־צעד:
 13 פרקים, יותר מ־30 תרגילים עם פתרונות, מההתקנה הראשונה ועד בניית סוכנים אוטונומיים עם ה‑Agent SDK.
 
-**האתר החי:** https://saarnetzer.github.io/ClaudeCode-Tutorial/
+**האתר החי:** https://saarnetzer.github.io/ClaudeCode-Tutorial/ · **English version:** https://saarnetzer.github.io/ClaudeCode-Tutorial/en/
 
 **להפעלה מקומית:** פתחו את `index.html` בדפדפן — אין צורך בשרת או בהתקנות.
 

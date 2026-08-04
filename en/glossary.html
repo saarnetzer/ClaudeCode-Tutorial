@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glossary · Claude Code Course</title>
+<meta name="description" content="The Claude Code course glossary: agent, context, MCP, Skill, Hook, Subagent and more — explained in a line or two.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/glossary.html">
+<link rel="alternate" hreflang="he" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/glossary.html">
+<link rel="alternate" hreflang="en" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/glossary.html">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Glossary · Claude Code Course">
+<meta property="og:description" content="The Claude Code course glossary: agent, context, MCP, Skill, Hook, Subagent and more — explained in a line or two.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/glossary.html">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../style.css">
+<script src="../changelog.js" defer></script>
+<script src="../app.js" defer></script>
+<script data-goatcounter="https://saarnetzer.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> Claude Code Course</a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../glossary.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn">🌓 Theme</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">Quick reference</span>
+  <h1>Glossary</h1>
+  <p class="lead">Every term from the course in one place, explained in a line or two. Next to each term — the lesson that covers it in depth.</p>
+
+  <dl class="glossary">
+    <dt>Agent</dt>
+    <dd>Software that takes a goal, plans, uses tools, checks its own result — and repeats until it succeeds. <a href="lesson-01.html">Lesson 1</a></dd>
+
+    <dt>Terminal / command line (CLI)</dt>
+    <dd>A text interface for working with your computer: type a command, get an answer. Claude Code's home. <a href="terminal-basics.html">Terminal guide</a></dd>
+
+    <dt>Context window</dt>
+    <dd>A conversation's "working memory": everything said, read and run. It's limited — so you manage it deliberately. <a href="lesson-04.html">Lesson 4</a></dd>
+
+    <dt>Token</dt>
+    <dd>The unit of text a language model processes (roughly three-quarters of a word). Context and cost are measured in tokens. <a href="lesson-04.html">Lesson 4</a></dd>
+
+    <dt>CLAUDE.md</dt>
+    <dd>The project's memory file — loaded automatically at the start of every conversation. Whatever is in it, Claude simply knows. <a href="lesson-04.html">Lesson 4</a></dd>
+
+    <dt>Plan Mode</dt>
+    <dd>A mode where Claude only reads and explores — changing anything is forbidden — and presents a plan for your approval. <a href="lesson-02.html">Lesson 2</a></dd>
+
+    <dt>Custom slash command</dt>
+    <dd>A Markdown file in <code dir="ltr">.claude/commands/</code> that turns a whole prompt into a one-word command. <a href="lesson-05.html">Lesson 5</a></dd>
+
+    <dt>Skill</dt>
+    <dd>A knowledge package Claude loads by itself when the task fits — based on its description. You don't have to remember to ask. <a href="lesson-05.html">Lesson 5</a></dd>
+
+    <dt>Hook</dt>
+    <dd>Your command running automatically around Claude's actions — enforcing quality, blocking danger, sending alerts. A mechanism, not a request. <a href="lesson-06.html">Lesson 6</a></dd>
+
+    <dt>MCP (Model Context Protocol)</dt>
+    <dd>An open protocol connecting external tools to Claude: a browser, databases, Slack and more. The agents' "USB socket". <a href="lesson-07.html">Lesson 7</a></dd>
+
+    <dt>Subagent</dt>
+    <dd>A specialist agent with its own instructions, tools and context, activated by the main agent when a task fits it. <a href="lesson-08.html">Lesson 8</a></dd>
+
+    <dt>Prompt injection</dt>
+    <dd>An attempt to plant instructions for the agent inside content it reads — a foreign README, a web page, a comment. The defense: boundaries in code, not trust. <a href="lesson-09.html">Lesson 9</a></dd>
+
+    <dt>Least privilege</dt>
+    <dd>Giving every agent and tool exactly the permissions the task requires — not one more. readonly when possible. <a href="lesson-07.html">Lesson 7</a></dd>
+
+    <dt>Headless mode</dt>
+    <dd>Running Claude as a one-shot command with no interface (<code dir="ltr">claude -p</code>) — the basis for scripts and automation. <a href="lesson-10.html">Lesson 10</a></dd>
+
+    <dt>CI (Continuous Integration)</dt>
+    <dd>An automated process running on every code change in the repo — tests, builds, and in our case Claude agents too. <a href="lesson-10.html">Lesson 10</a></dd>
+
+    <dt>Agent SDK</dt>
+    <dd>A TypeScript/Python library giving you Claude Code's engine in code — for building your own agents and squads. <a href="lesson-11.html">Lesson 11</a></dd>
+
+    <dt>Feedback loop</dt>
+    <dd>A tool that lets the agent check itself: tests, a browser, compilation. Without it — autonomy is guessing. <a href="lesson-11.html">Lesson 11</a></dd>
+
+    <dt>Agent squad</dt>
+    <dd>A group of agents with defined roles, an orchestrator, shared memory and deliverable contracts — working together on one goal. <a href="lesson-12.html">Lesson 12</a></dd>
+
+    <dt>Orchestrator</dt>
+    <dd>Whoever breaks a goal into tasks, delegates to specialists and merges deliverables — the main conversation or an SDK script. <a href="lesson-12.html">Lesson 12</a></dd>
+
+    <dt>Deliverable contract</dt>
+    <dd>A precise definition of what each agent in a squad receives and returns. The point where squads fail — or succeed. <a href="lesson-12.html">Lesson 12</a></dd>
+
+    <dt>Git worktree</dt>
+    <dd>An additional working copy of the same repo in a separate folder — letting several agents work in parallel without stepping on each other. <a href="lesson-12.html">Lesson 12</a></dd>
+
+    <dt>Commit</dt>
+    <dd>A "save point" in git. Small, frequent commits are the safety net of working with agents. <a href="lesson-03.html">Lesson 3</a></dd>
+
+    <dt>Branch</dt>
+    <dd>A parallel line of work in git you can merge back or discard — the safe place to let an agent work. <a href="lesson-03.html">Lesson 3</a></dd>
+
+    <dt>Pull Request (PR)</dt>
+    <dd>A request to merge a branch, with room for review and discussion. The main human checkpoint over agent work. <a href="lesson-03.html">Lesson 3</a></dd>
+
+    <dt>GitHub</dt>
+    <dd>A site hosting git repositories in the cloud: backup, sharing, and Pull Requests. Git is the software on your machine — GitHub is the cloud above it. <a href="git-basics.html">Setup guide</a></dd>
+
+    <dt>GitHub CLI (gh)</dt>
+    <dd>GitHub's official command-line tool. After a one-time <code dir="ltr">gh auth login</code>, Claude can open PRs and manage issues for you. <a href="git-basics.html">Setup guide</a></dd>
+  </dl>
+
+  <nav class="lesson-nav">
+    <a href="cheatsheet.html"><span class="dir-label">← More references</span>Cheat sheet</a>
+    <a href="index.html"><span class="dir-label">Back →</span>Course contents</a>
+  </nav>
+
+</main>
+
+<footer class="site">A community course for learning Claude Code · official docs: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="https://github.com/saarnetzer/ClaudeCode-Tutorial/issues" target="_blank" rel="noopener">Found a mistake? Open an issue</a><br>© 2026 Saar Netzer · content licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> · built with Claude Code</footer>
+</body>
+</html>

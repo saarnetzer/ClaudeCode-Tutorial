@@ -2,6 +2,16 @@
    Newest entry first; app.js renders the footer version, the what's-new box, and the changelog page. */
 window.COURSE_CHANGELOG = [
   {
+    version: "3.2.0",
+    date: "2026-08-04",
+    title: "הקורס עכשיו גם באנגלית",
+    changes: [
+      "🇺🇸 גרסה אנגלית מלאה: כל 13 הפרקים, הצ'יט-שיט, המילון ומדריכי ההקמה",
+      "מתג שפה בראש כל עמוד — המעבר שומר על אותו פרק",
+      "ההתקדמות משותפת בין השפות: פרק שסומן בעברית מסומן גם באנגלית"
+    ]
+  },
+  {
     version: "3.1.0",
     date: "2026-08-04",
     title: "תעודת סיום, רישיון פתוח ושיפורי חוויה",

@@ -1,3 +1,6 @@
+/* Claude Code Course — shared behavior. Bilingual: strings switch on <html lang="en">. */
+var CC_EN = document.documentElement.lang === 'en';
+function ccT(he, en) { return CC_EN ? en : he; }
 /* Claude Code Course — shared behavior: theme, copy buttons, progress tracking */
 (function () {
   var STORE_KEY = 'ccCourseDone';
@@ -32,13 +35,13 @@
     document.querySelectorAll('pre').forEach(function (pre) {
       var btn = document.createElement('button');
       btn.className = 'copy-btn';
-      btn.textContent = 'העתק';
+      btn.textContent = ccT('העתק', 'Copy');
       btn.addEventListener('click', function () {
         var code = pre.querySelector('code');
         var text = (code ? code.innerText : pre.innerText).trim();
         navigator.clipboard.writeText(text).then(function () {
-          btn.textContent = '✔ הועתק';
-          setTimeout(function () { btn.textContent = 'העתק'; }, 1500);
+          btn.textContent = ccT('✔ הועתק', '✔ Copied');
+          setTimeout(function () { btn.textContent = ccT('העתק', 'Copy'); }, 1500);
         });
       });
       pre.appendChild(btn);
@@ -53,7 +56,7 @@
       function render() {
         var isDone = getDone().indexOf(lessonId) !== -1;
         completeBtn.classList.toggle('done', isDone);
-        completeBtn.textContent = isDone ? '✔ הפרק הושלם — לחצו לביטול' : 'סמנו פרק זה כהושלם';
+        completeBtn.textContent = isDone ? ccT('✔ הפרק הושלם — לחצו לביטול', '✔ Lesson complete — click to undo') : ccT('סמנו פרק זה כהושלם', 'Mark this lesson complete');
       }
       completeBtn.addEventListener('click', function () {
         var d = getDone();
@@ -87,8 +90,8 @@
       var label = document.getElementById('progressLabel');
       if (label) {
         label.textContent = done.length === 0
-          ? 'עוד לא התחלתם — פרק 1 מחכה לכם 👇'
-          : 'השלמתם ' + done.length + ' מתוך ' + TOTAL_LESSONS + ' פרקים (' + pct + '%)';
+          ? ccT('עוד לא התחלתם — פרק 1 מחכה לכם 👇', "You haven't started yet — Lesson 1 is waiting 👇")
+          : ccT('השלמתם ', 'Completed ') + done.length + ccT(' מתוך ', ' of ') + TOTAL_LESSONS + ccT(' פרקים (', ' lessons (') + pct + '%)';
       }
     }
   });
@@ -116,16 +119,16 @@
             opts[right].classList.add('correct');
             if (i === right) {
               correct++;
-              fb.textContent = '✔ נכון!';
+              fb.textContent = ccT('✔ נכון!', '✔ Correct!');
               fb.className = 'q-fb ok';
             } else {
               opt.classList.add('wrong');
-              fb.textContent = '✖ לא מדויק — התשובה הנכונה מסומנת בירוק.';
+              fb.textContent = ccT('✖ לא מדויק — התשובה הנכונה מסומנת בירוק.', '✖ Not quite — the right answer is marked in green.');
               fb.className = 'q-fb no';
             }
             if (score && answered === qs.length) {
-              score.textContent = 'התוצאה שלכם: ' + correct + ' מתוך ' + qs.length +
-                (correct === qs.length ? ' — מושלם! 🎉' : correct >= qs.length - 1 ? ' — יפה מאוד!' : ' — שווה לרפרף שוב על הפרק.');
+              score.textContent = ccT('התוצאה שלכם: ', 'Your score: ') + correct + ccT(' מתוך ', ' of ') + qs.length +
+                (correct === qs.length ? ccT(' — מושלם! 🎉', ' — perfect! 🎉') : correct >= qs.length - 1 ? ccT(' — יפה מאוד!', ' — nicely done!') : ccT(' — שווה לרפרף שוב על הפרק.', ' — worth skimming the lesson again.'));
             }
           });
         });
@@ -199,7 +202,7 @@
         results.innerHTML = '';
         if (!query) { results.classList.remove('open'); return; }
         if (!list.length) {
-          results.innerHTML = '<div class="sr-empty">לא נמצאו תוצאות ל"' + query + '"</div>';
+          results.innerHTML = '<div class="sr-empty">' + ccT('לא נמצאו תוצאות ל"', 'No results for "') + query + '"</div>';
           results.classList.add('open');
           return;
         }
@@ -257,7 +260,7 @@
       var sep = document.createTextNode(' · ');
       var a = document.createElement('a');
       a.href = 'changelog.html';
-      a.textContent = 'גרסה ' + latest.version;
+      a.textContent = ccT('גרסה ', 'v') + latest.version;
       footer.appendChild(sep);
       footer.appendChild(a);
     }
@@ -318,7 +321,7 @@
         if (done.indexOf(cards[i].dataset.lesson) === -1) {
           var title = cards[i].querySelector('.ch-title');
           btn.href = cards[i].getAttribute('href');
-          btn.textContent = '▶ המשיכו מפרק ' + (i + 1) + ': ' + (title ? title.textContent : '');
+          btn.textContent = ccT('▶ המשיכו מפרק ', '▶ Continue from Lesson ') + (i + 1) + ': ' + (title ? title.textContent : '');
           row.style.display = '';
           break;
         }
@@ -331,7 +334,7 @@
     if (certRow && certBtn && done.length >= TOTAL) {
       certRow.style.display = '';
       certBtn.addEventListener('click', function () {
-        var name = prompt('איך לרשום את השם על התעודה?');
+        var name = prompt(ccT('איך לרשום את השם על התעודה?', 'What name should appear on the certificate?'));
         if (!name || !name.trim()) return;
         name = name.trim();
         var version = (window.COURSE_CHANGELOG && window.COURSE_CHANGELOG[0]) ? window.COURSE_CHANGELOG[0].version : '';
@@ -343,28 +346,28 @@
         x.strokeRect(50, 50, 1500, 1031);
         x.strokeStyle = '#3a332c'; x.lineWidth = 2;
         x.strokeRect(70, 70, 1460, 991);
-        x.textAlign = 'center'; x.direction = 'rtl';
+        x.textAlign = 'center'; x.direction = CC_EN ? 'ltr' : 'rtl';
         x.fillStyle = '#d97757';
         x.font = '110px "Segoe UI", sans-serif';
         x.fillText('\u2733', 800, 240);
         x.fillStyle = '#ece5dd';
         x.font = 'bold 84px "Segoe UI", "Heebo", sans-serif';
-        x.fillText('תעודת סיום', 800, 380);
+        x.fillText(ccT('תעודת סיום', 'Certificate of Completion'), 800, 380);
         x.fillStyle = '#b3a99c';
         x.font = '38px "Segoe UI", sans-serif';
-        x.fillText('מוענקת בזאת אל', 800, 470);
+        x.fillText(ccT('מוענקת בזאת אל', 'Awarded to'), 800, 470);
         x.fillStyle = '#e8956f';
         x.font = 'bold 72px "Segoe UI", "Heebo", sans-serif';
         x.fillText(name, 800, 580);
         x.fillStyle = '#ece5dd';
         x.font = '40px "Segoe UI", sans-serif';
-        x.fillText('על השלמת קורס Claude Code בעברית', 800, 690);
+        x.fillText(ccT('על השלמת קורס Claude Code בעברית', 'for completing the Claude Code course'), 800, 690);
         x.fillStyle = '#b3a99c';
         x.font = '34px "Segoe UI", sans-serif';
-        x.fillText('13 פרקים · מאפס ועד צוותי סוכנים אוטונומיים', 800, 755);
+        x.fillText(ccT('13 פרקים · מאפס ועד צוותי סוכנים אוטונומיים', '13 lessons · from zero to autonomous agent squads'), 800, 755);
         var d = new Date();
         var dateStr = d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear();
-        x.fillText(dateStr + (version ? ' · גרסת קורס ' + version : ''), 800, 880);
+        x.fillText(dateStr + (version ? ccT(' · גרסת קורס ', ' · course version ') + version : ''), 800, 880);
         x.fillStyle = '#7d746a';
         x.font = '28px Consolas, monospace';
         x.direction = 'ltr';

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reference · The terminal, step by step for beginners</title>
+<meta name="description" content="A terminal guide for absolute beginners: how to open a terminal on Windows, Mac and Linux, and the only five commands you need.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/terminal-basics.html">
+<link rel="alternate" hreflang="he" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/terminal-basics.html">
+<link rel="alternate" hreflang="en" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/terminal-basics.html">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Reference · The terminal, step by step for beginners">
+<meta property="og:description" content="A terminal guide for absolute beginners: how to open a terminal on Windows, Mac and Linux, and the only five commands you need.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/terminal-basics.html">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../style.css">
+<script src="../changelog.js" defer></script>
+<script src="../app.js" defer></script>
+<script data-goatcounter="https://saarnetzer.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> Claude Code Course</a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../terminal-basics.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn">🌓 Theme</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">Reference · before Lesson 1</span>
+  <h1>The terminal, step by step — for anyone starting from zero</h1>
+  <p class="lead">Never opened a terminal? You're in the right place. This page covers what a terminal even is, how to open it on your machine, and the only five commands this course needs. Fifteen minutes — and you're ready for Lesson 1.</p>
+
+  <h2>What is a terminal, anyway?</h2>
+  <p>A terminal (also called the "command line") is a way to talk to your computer <strong>in text</strong> instead of with a mouse: you type a command, press <kbd>Enter</kbd>, and the computer runs it and prints an answer. It looks like this:</p>
+  <pre><code>$ echo hello
+hello</code></pre>
+  <p>The <code>$</code> sign (or <code>&gt;</code> on Windows) is the "prompt" — a sign the terminal is waiting for your command. <strong>You don't type it</strong> — only what comes after it.</p>
+  <div class="callout info">
+    <span class="co-title">💡 Why do I even need this?</span>
+    Claude Code runs inside the terminal. But don't worry — you only need to know how to open it, get to a folder and run a command. Claude does everything else for you.
+  </div>
+
+  <h2>Step 1: open the terminal</h2>
+
+  <h3>🪟 Windows</h3>
+  <ol>
+    <li>Press the <kbd>⊞ Win</kbd> key.</li>
+    <li>Type <code>terminal</code> and press <kbd>Enter</kbd>.</li>
+    <li>A window named <strong>Windows Terminal</strong> (or PowerShell) opens — that's your terminal.</li>
+  </ol>
+  <p>Don't have Windows Terminal (on older Windows 10, say)? Install it free from the <a href="https://aka.ms/terminal" target="_blank" rel="noopener">Microsoft Store (aka.ms/terminal)</a>, or type <code>powershell</code> instead — that works fine too.</p>
+
+  <h3>🍎 macOS</h3>
+  <ol>
+    <li>Press <kbd>Cmd</kbd>+<kbd>Space</kbd> to open Spotlight search.</li>
+    <li>Type <code>terminal</code> and press <kbd>Enter</kbd>.</li>
+    <li>A window with a line of text opens — that's it.</li>
+  </ol>
+  <p>You can also go through Finder: Applications → Utilities → Terminal. Apple's official guide is <a href="https://support.apple.com/guide/terminal/welcome/mac" target="_blank" rel="noopener">here</a>.</p>
+
+  <h3>🐧 Linux</h3>
+  <ol>
+    <li>On most distributions (Ubuntu, Fedora...): <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd>.</li>
+    <li>Or search for <code>terminal</code> in the applications menu.</li>
+  </ol>
+  <p>There's an excellent beginner guide on <a href="https://ubuntu.com/tutorials/command-line-for-beginners" target="_blank" rel="noopener">Ubuntu's site</a>.</p>
+
+  <div class="callout tip">
+    <span class="co-title">✅ Check that it works</span>
+    In the terminal you just opened, type <code>echo hello</code> and press <kbd>Enter</kbd>. If the computer printed back <code>hello</code> — your terminal works, and you're already a command-line user.
+  </div>
+
+  <h2>Step 2: the five commands you actually need</h2>
+  <p>The terminal always "stands" inside some folder on your computer — like a file-explorer window, only in text. These commands move you between folders:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Command</th><th>What it does</th><th>Example</th></tr>
+    <tr><td><code>pwd</code></td><td>Shows which folder you're in (on Windows the prompt shows it)</td><td><code>pwd</code></td></tr>
+    <tr><td><code>ls</code> <span style="opacity:.6">(Windows also</span> <code>dir</code><span style="opacity:.6">)</span></td><td>Shows what's in the current folder</td><td><code>ls</code></td></tr>
+    <tr><td><code>cd</code></td><td>Moves to another folder (change directory)</td><td><code dir="ltr">cd Documents</code></td></tr>
+    <tr><td><code dir="ltr">cd ..</code></td><td>Goes up one folder</td><td><code dir="ltr">cd ..</code></td></tr>
+    <tr><td><code>mkdir</code></td><td>Creates a new folder</td><td><code dir="ltr">mkdir my-project</code></td></tr>
+  </table>
+  </div>
+  <p>Good news: every command in that table works as-is in Windows PowerShell too.</p>
+  <p>Try it in sequence — create a folder for the course and enter it (identical on every OS):</p>
+  <pre><code>mkdir claude-course
+cd claude-course
+pwd</code></pre>
+  <p>If <code>pwd</code> (or the prompt) shows a path ending in <code>claude-course</code> — you did it all correctly.</p>
+
+  <h2>Step 3: shortcuts that save time</h2>
+  <ul>
+    <li><kbd>Tab</kbd> — <strong>autocomplete.</strong> Type the start of a folder name and press Tab, and the terminal completes it. You'll use this constantly.</li>
+    <li><kbd>↑</kbd> (up arrow) — brings back the previous command. No need to retype.</li>
+    <li><kbd>Ctrl</kbd>+<kbd>C</kbd> — stops a command that's stuck or running too long. Your emergency key.</li>
+    <li><code>clear</code> (Windows also <code>cls</code>) — clears the screen when it fills up.</li>
+    <li><strong>Pasting:</strong> on Windows and Linux usually <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> (or right-click), on Mac <kbd>Cmd</kbd>+<kbd>V</kbd> as usual.</li>
+  </ul>
+
+  <div class="callout warn">
+    <span class="co-title">⚠️ Got an error message?</span>
+    It happens to everyone, every day. Terminal errors are text meant to help — read them. The most common: <code dir="ltr">command not found</code> = a typo or the software isn't installed. And <code dir="ltr">No such file or directory</code> = a wrong folder name (check with <code>ls</code> what's actually there).
+  </div>
+
+  <h2>That's it — you're ready</h2>
+  <p>That really is all you need. You know how to open a terminal, navigate to a folder, and run a command. We'll install Claude Code itself together, one command, at the start of <a href="lesson-01.html">Lesson 1</a>.</p>
+
+  <h2>Want to go deeper? (optional)</h2>
+  <ul>
+    <li><a href="https://aka.ms/terminal" target="_blank" rel="noopener">Windows Terminal — install from the Microsoft Store</a></li>
+    <li><a href="https://learn.microsoft.com/en-us/training/modules/introduction-to-powershell/" target="_blank" rel="noopener">Introduction to PowerShell — official Microsoft guide</a></li>
+    <li><a href="https://support.apple.com/guide/terminal/welcome/mac" target="_blank" rel="noopener">Apple's official Terminal guide for Mac</a></li>
+    <li><a href="https://ubuntu.com/tutorials/command-line-for-beginners" target="_blank" rel="noopener">The Linux command line for beginners — Ubuntu</a></li>
+  </ul>
+
+  <nav class="lesson-nav">
+    <a href="index.html"><span class="dir-label">← Back</span>Course contents</a>
+    <a href="lesson-01.html"><span class="dir-label">Ready? →</span>Lesson 1: install and first run</a>
+  </nav>
+
+</main>
+
+<footer class="site">A community course for learning Claude Code · official docs: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="https://github.com/saarnetzer/ClaudeCode-Tutorial/issues" target="_blank" rel="noopener">Found a mistake? Open an issue</a><br>© 2026 Saar Netzer · content licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> · built with Claude Code</footer>
+</body>
+</html>

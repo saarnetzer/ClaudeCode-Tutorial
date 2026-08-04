@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 13 · Agent squads across five industries</title>
+<meta name="description" content="Lesson 13: agent squads from five worlds — development, marketing, data, operations and commerce — with 100 downloadable agent files.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-13.html">
+<link rel="alternate" hreflang="he" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/lesson-13.html">
+<link rel="alternate" hreflang="en" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-13.html">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lesson 13 · Agent squads across five industries">
+<meta property="og:description" content="Lesson 13: agent squads from five worlds — development, marketing, data, operations and commerce — with 100 downloadable agent files.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-13.html">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../style.css">
+<script src="../changelog.js" defer></script>
+<script src="../app.js" defer></script>
+<script data-goatcounter="https://saarnetzer.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> Claude Code Course</a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-13.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn">🌓 Theme</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">Lesson 13 of 13 · The summit</span>
+  <h1>Agent squads across five industries — real-world examples</h1>
+  <p class="lead">The patterns from Lesson 12 are a skeleton — now we put flesh on it. Five squads from five different worlds: development, content and marketing, data, operations, and customer service. For each: the roles, the chosen pattern and why, and downloadable agent files.</p>
+
+  <h2>What you'll learn</h2>
+  <ul class="checklist">
+    <li>How to translate a problem from any field into a squad design</li>
+    <li>Five detailed squads, from five industries</li>
+    <li>The principles that repeat in all of them — regardless of field</li>
+    <li>The capstone: a squad for your own world</li>
+  </ul>
+
+  <div class="callout tip">
+    <span class="co-title">⬇️ Every agent — downloadable</span>
+    Every agent in this lesson's tables is a link to a ready agent file: save it into <code dir="ltr">.claude/agents/</code> in your project and it's live. You can also grab <a href="../agents/claude-agents-pack.zip" download><strong>all 100 agents in one zip</strong></a>. Note: the agent files are currently written in Hebrew — asking Claude to translate one to English is a ten-second task (and good practice).
+  </div>
+
+  <h2>1. The development world: "the feature squad" 🛠️</h2>
+  <p><strong>The problem:</strong> a medium-to-large feature demands planning, implementation, tests and review — and with a single agent that ends in bloated context and declining quality.</p>
+  <p><strong>The pattern:</strong> a pipeline with a stop for human approval after planning (exactly what we built in Lesson 12).</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Role</th><th>Tools</th><th>Deliverable (the contract)</th></tr>
+    <tr><td><a href="../agents/dev/planner.md" download><code dir="ltr">planner</code></a> — planner</td><td>read &amp; search only + Write for the SPEC</td><td><code>SPEC.md</code>: numbered steps + success criterion</td></tr>
+    <tr><td><a href="../agents/dev/coder.md" download><code dir="ltr">coder</code></a> — implementer</td><td>full</td><td>code + <code dir="ltr">PROGRESS.md</code> update after every step</td></tr>
+    <tr><td><a href="../agents/dev/test-writer.md" download><code dir="ltr">test-writer</code></a> — tester</td><td>full</td><td>passing tests for the new code</td></tr>
+    <tr><td><a href="../agents/dev/code-reviewer.md" download><code dir="ltr">code-reviewer</code></a> — reviewer</td><td>read only + git diff</td><td>a graded findings table</td></tr>
+  </table>
+  </div>
+  <p><strong>The lesson from this world:</strong> the critic must be separate from the implementer — and without write permissions, so the review stays a review.</p>
+
+  <h3>Scaling up: the full engineering organization</h3>
+  <p>The feature squad is the core, but a whole engineering org runs more teams alongside it:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Team</th><th>The agents and their roles</th></tr>
+    <tr><td><strong>Security team</strong><br><span style="opacity:.7">Reviews every change and dependency before production</span></td><td><a href="../agents/dev/threat-modeler.md" download><code dir="ltr">threat-modeler</code></a> — analyzes risks for every new feature at the SPEC stage<br><a href="../agents/dev/secrets-scanner.md" download><code dir="ltr">secrets-scanner</code></a> — scans for secrets and keys in code and git history<br><a href="../agents/dev/dependency-auditor.md" download><code dir="ltr">dependency-auditor</code></a> — checks known vulnerabilities in dependencies and prioritizes fixes<br><a href="../agents/dev/authz-reviewer.md" download><code dir="ltr">authz-reviewer</code></a> — checks permissions and access on every new endpoint<br><a href="../agents/dev/security-reporter.md" download><code dir="ltr">security-reporter</code></a> — merges the findings into one graded report</td></tr>
+    <tr><td><strong>Infrastructure (DevOps)</strong><br><span style="opacity:.7">The road from code to servers — fast, cheap, reversible</span></td><td><a href="../agents/dev/iac-writer.md" download><code dir="ltr">iac-writer</code></a> — writes and updates infrastructure-as-code (Terraform, K8s)<br><a href="../agents/dev/ci-doctor.md" download><code dir="ltr">ci-doctor</code></a> — diagnoses CI failures and fixes or reports<br><a href="../agents/dev/cost-watcher.md" download><code dir="ltr">cost-watcher</code></a> — monitors cloud costs and flags anomalies<br><a href="../agents/dev/capacity-planner.md" download><code dir="ltr">capacity-planner</code></a> — plans resources from load trends<br><a href="../agents/dev/rollback-guardian.md" download><code dir="ltr">rollback-guardian</code></a> — ensures every change has a ready way back</td></tr>
+    <tr><td><strong>Quality (QA)</strong><br><span style="opacity:.7">A testing layer beyond the feature squad's own tests</span></td><td><a href="../agents/dev/e2e-writer.md" download><code dir="ltr">e2e-writer</code></a> — end-to-end scenarios in a real browser (Lesson 7)<br><a href="../agents/dev/perf-tester.md" download><code dir="ltr">perf-tester</code></a> — measures performance and catches slow regressions<br><a href="../agents/dev/a11y-checker.md" download><code dir="ltr">a11y-checker</code></a> — accessibility: contrast, keyboard, screen readers<br><a href="../agents/dev/regression-hunter.md" download><code dir="ltr">regression-hunter</code></a> — turns every old bug into a test that prevents its return</td></tr>
+    <tr><td><strong>Maintenance &amp; docs</strong><br><span style="opacity:.7">The quiet work that keeps the project healthy</span></td><td><a href="../agents/dev/dep-updater.md" download><code dir="ltr">dep-updater</code></a> — nightly dependency updates on a separate branch (Lesson 10)<br><a href="../agents/dev/dead-code-cleaner.md" download><code dir="ltr">dead-code-cleaner</code></a> — finds and removes code with no callers<br><a href="../agents/dev/api-doc-writer.md" download><code dir="ltr">api-doc-writer</code></a> — keeps the docs in sync with the code<br><a href="../agents/dev/changelog-writer.md" download><code dir="ltr">changelog-writer</code></a> — writes the change list for every release</td></tr>
+  </table>
+  </div>
+  <p><strong>How the teams meet:</strong> at the Pull Request. The feature squad produces, security and QA review every PR, infrastructure provides the road to production — and maintenance sweeps through everything else in the background.</p>
+
+  <h2>2. Content and marketing: "the magazine desk" ✍️</h2>
+  <p><strong>The problem:</strong> a company blog post demands research, writing, editing and search optimization — four different skills a rushed single writer does averagely.</p>
+  <p><strong>The pattern:</strong> a pipeline, with the editor as a gatekeeper who may send a draft back.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Role</th><th>Tools</th><th>Deliverable (the contract)</th></tr>
+    <tr><td><a href="../agents/content/researcher.md" download><code dir="ltr">researcher</code></a> — researcher</td><td>WebSearch, Read, Write</td><td><code dir="ltr">research.md</code>: facts + a source for every claim</td></tr>
+    <tr><td><a href="../agents/content/copywriter.md" download><code dir="ltr">copywriter</code></a> — writer</td><td>Read, Write</td><td>a draft from research.md only — no invented facts</td></tr>
+    <tr><td><a href="../agents/content/editor.md" download><code dir="ltr">editor</code></a> — editor</td><td>Read, Edit</td><td>an edited version + notes; may send back to the writer</td></tr>
+    <tr><td><a href="../agents/content/seo-checker.md" download><code dir="ltr">seo-checker</code></a> — SEO checker</td><td>Read, Write</td><td>a report: titles, description, keywords, internal links</td></tr>
+  </table>
+  </div>
+  <p><strong>The lesson from this world:</strong> the researcher's contract ("a source for every claim") is what keeps the whole squad from inventing facts. Credibility is built at the start of the chain.</p>
+
+  <h3>Scaling up: the full marketing department</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Team</th><th>The agents and their roles</th></tr>
+    <tr><td><strong>Social team</strong><br><span style="opacity:.7">Distributes and adapts the content per platform</span></td><td><a href="../agents/content/trend-scout.md" download><code dir="ltr">trend-scout</code></a> — spots rising topics in the field before everyone<br><a href="../agents/content/post-writer.md" download><code dir="ltr">post-writer</code></a> — converts each article into per-network versions<br><a href="../agents/content/engagement-analyst.md" download><code dir="ltr">engagement-analyst</code></a> — analyzes what worked, what didn't, and why<br><a href="../agents/content/calendar-planner.md" download><code dir="ltr">calendar-planner</code></a> — builds a balanced weekly publishing calendar</td></tr>
+    <tr><td><strong>Campaigns team</strong><br><span style="opacity:.7">Paid advertising measured to the last dollar</span></td><td><a href="../agents/content/audience-profiler.md" download><code dir="ltr">audience-profiler</code></a> — defines target audiences and a message per audience<br><a href="../agents/content/ad-copywriter.md" download><code dir="ltr">ad-copywriter</code></a> — writes ad variants tailored to each audience<br><a href="../agents/content/ab-test-designer.md" download><code dir="ltr">ab-test-designer</code></a> — designs A/B experiments with clear success metrics<br><a href="../agents/content/budget-monitor.md" download><code dir="ltr">budget-monitor</code></a> — tracks cost-per-conversion and flags waste</td></tr>
+    <tr><td><strong>SEO team</strong><br><span style="opacity:.7">Expands the basic SEO check into strategy</span></td><td><a href="../agents/content/keyword-researcher.md" download><code dir="ltr">keyword-researcher</code></a> — researches search phrases and competition levels<br><a href="../agents/content/content-gap-analyst.md" download><code dir="ltr">content-gap-analyst</code></a> — finds topics competitors cover and you don't<br><a href="../agents/content/internal-linker.md" download><code dir="ltr">internal-linker</code></a> — suggests internal links between existing content<br><a href="../agents/content/rank-tracker.md" download><code dir="ltr">rank-tracker</code></a> — tracks rankings and reports changes</td></tr>
+    <tr><td><strong>Brand team</strong><br><span style="opacity:.7">Keeps all content sounding like one organization</span></td><td><a href="../agents/content/brand-guardian.md" download><code dir="ltr">brand-guardian</code></a> — enforces consistent tone, messaging and terminology<br><a href="../agents/content/visual-brief-writer.md" download><code dir="ltr">visual-brief-writer</code></a> — writes precise briefs for designers<br><a href="../agents/content/consistency-checker.md" download><code dir="ltr">consistency-checker</code></a> — scans site and materials for contradictions</td></tr>
+  </table>
+  </div>
+  <p><strong>How the teams meet:</strong> the magazine produces, social and campaigns distribute, SEO steers the next topics — and the brand-guardian reviews everyone before publishing.</p>
+
+  <h2>3. The data world: "the weekly report squad" 📊</h2>
+  <p><strong>The problem:</strong> every week the same business question ("what happened to sales and why") must be answered from raw data — a process of collection, cleaning, analysis and presentation.</p>
+  <p><strong>The pattern:</strong> orchestrator–workers. Why not a pipeline? Because the analysis dictates what follows: an anomaly demands another dive, a normal week does not. The orchestrator decides.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Role</th><th>Tools</th><th>Deliverable (the contract)</th></tr>
+    <tr><td><a href="../agents/data/collector.md" download><code dir="ltr">collector</code></a> — collector</td><td>a database MCP (readonly!)</td><td><code dir="ltr">data/raw_week.csv</code> + query documentation</td></tr>
+    <tr><td><a href="../agents/data/cleaner.md" download><code dir="ltr">cleaner</code></a> — cleaner</td><td>Read, Write, Bash (python)</td><td><code dir="ltr">data/clean_week.csv</code> + a log: what was fixed and why</td></tr>
+    <tr><td><a href="../agents/data/analyst.md" download><code dir="ltr">analyst</code></a> — analyst</td><td>Read, Write, Bash (python)</td><td><code dir="ltr">findings.md</code>: 3–5 findings + a confidence level each</td></tr>
+    <tr><td><a href="../agents/data/visualizer.md" download><code dir="ltr">visualizer</code></a> — visualizer</td><td>Read, Write</td><td>charts + an HTML report page</td></tr>
+  </table>
+  </div>
+  <p><strong>The lesson from this world:</strong> two things. One — readonly database permissions (Lesson 7) are what allow the squad to run unsupervised. Two — "a confidence level per finding" in the analyst's contract keeps the report from presenting a guess as a fact.</p>
+
+  <h3>Scaling up: the full data organization</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Team</th><th>The agents and their roles</th></tr>
+    <tr><td><strong>Data engineering</strong><br><span style="opacity:.7">The pipelines feeding everyone else</span></td><td><a href="../agents/data/pipeline-builder.md" download><code dir="ltr">pipeline-builder</code></a> — builds and maintains collection/processing (ETL) pipelines<br><a href="../agents/data/schema-guardian.md" download><code dir="ltr">schema-guardian</code></a> — protects data structure and backward compatibility<br><a href="../agents/data/quality-monitor.md" download><code dir="ltr">quality-monitor</code></a> — checks freshness, completeness and duplicates nightly<br><a href="../agents/data/backfill-runner.md" download><code dir="ltr">backfill-runner</code></a> — fills historical data carefully, with a full log</td></tr>
+    <tr><td><strong>Research team</strong><br><span style="opacity:.7">From hypothesis to controlled experiment</span></td><td><a href="../agents/data/hypothesis-designer.md" download><code dir="ltr">hypothesis-designer</code></a> — writes hypotheses with a clear falsification criterion<br><a href="../agents/data/experiment-runner.md" download><code dir="ltr">experiment-runner</code></a> — runs experiments and saves raw results<br><a href="../agents/data/evaluator.md" download><code dir="ltr">evaluator</code></a> — judges results against pre-defined metrics<br><a href="../agents/data/experiment-logger.md" download><code dir="ltr">experiment-logger</code></a> — documents everything for full reproducibility</td></tr>
+    <tr><td><strong>BI team</strong><br><span style="opacity:.7">From data to business decisions</span></td><td><a href="../agents/data/metric-definer.md" download><code dir="ltr">metric-definer</code></a> — defines uniform metrics — one definition for the whole org<br><a href="../agents/data/dashboard-builder.md" download><code dir="ltr">dashboard-builder</code></a> — builds and updates dashboards<br><a href="../agents/data/anomaly-explainer.md" download><code dir="ltr">anomaly-explainer</code></a> — explains every metric anomaly: real or noise<br><a href="../agents/data/stakeholder-reporter.md" download><code dir="ltr">stakeholder-reporter</code></a> — translates findings into business language</td></tr>
+    <tr><td><strong>Privacy &amp; governance</strong><br><span style="opacity:.7">The legal and ethical boundaries of the data</span></td><td><a href="../agents/data/pii-scanner.md" download><code dir="ltr">pii-scanner</code></a> — finds personally identifiable data in every new store<br><a href="../agents/data/access-reviewer.md" download><code dir="ltr">access-reviewer</code></a> — periodically reviews who accesses what and why<br><a href="../agents/data/retention-auditor.md" download><code dir="ltr">retention-auditor</code></a> — enforces retention and deletion policy</td></tr>
+  </table>
+  </div>
+  <p><strong>How the teams meet:</strong> data engineering feeds everyone; the privacy team reviews every new pipeline before it goes live; BI and research consume — and the weekly report is just the small window management sees.</p>
+
+  <h2>4. The operations world: "the night shift" 🌙</h2>
+  <p><strong>The problem:</strong> incidents do not wait for business hours. Someone must monitor, diagnose, fix what is safe to fix — and wake humans only when truly needed.</p>
+  <p><strong>The pattern:</strong> event-driven orchestrator–workers: runs on a schedule (Lesson 10), and the orchestrator escalates by severity.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Role</th><th>Tools</th><th>Deliverable (the contract)</th></tr>
+    <tr><td><a href="../agents/ops/watcher.md" download><code dir="ltr">watcher</code></a> — watcher</td><td>Read, Grep (logs), a monitoring MCP</td><td>a list of anomalies with severity: info / warn / critical</td></tr>
+    <tr><td><a href="../agents/ops/diagnoser.md" download><code dir="ltr">diagnoser</code></a> — diagnoser</td><td>read only + limited Bash</td><td>a diagnosis: probable cause + evidence + "safe to auto-fix? yes/no"</td></tr>
+    <tr><td><a href="../agents/ops/fixer.md" download><code dir="ltr">fixer</code></a> — fixer</td><td>restricted to an approved fix list</td><td>a fix + a commit on a branch + verification the incident is gone</td></tr>
+    <tr><td><a href="../agents/ops/reporter.md" download><code dir="ltr">reporter</code></a> — reporter</td><td>the send_alert mcp tool (Lesson 11)</td><td>critical → immediate alert; the rest → a morning digest</td></tr>
+  </table>
+  </div>
+  <p><strong>The lesson from this world:</strong> the "safe to auto-fix?" field in the diagnoser's contract is the entire decision point: the fixer handles only "yes", and every "no" goes to a human. The squad is autonomous exactly up to the risk boundary — and not one step beyond.</p>
+
+  <h3>Scaling up: the full operations organization</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Team</th><th>The agents and their roles</th></tr>
+    <tr><td><strong>SecOps team</strong><br><span style="opacity:.7">Day-to-day operational security</span></td><td><a href="../agents/ops/log-forensic.md" download><code dir="ltr">log-forensic</code></a> — investigates suspicious events deep in the logs<br><a href="../agents/ops/ioc-scanner.md" download><code dir="ltr">ioc-scanner</code></a> — cross-checks known indicators of compromise<br><a href="../agents/ops/patch-prioritizer.md" download><code dir="ltr">patch-prioritizer</code></a> — prioritizes security updates by actual exposure<br><a href="../agents/ops/access-anomaly-watcher.md" download><code dir="ltr">access-anomaly-watcher</code></a> — detects unusual account access patterns</td></tr>
+    <tr><td><strong>FinOps team</strong><br><span style="opacity:.7">Cost as an operational alarm</span></td><td><a href="../agents/ops/cost-watcher.md" download><code dir="ltr">cost-watcher</code></a> — monitors cloud spend daily<br><a href="../agents/ops/waste-hunter.md" download><code dir="ltr">waste-hunter</code></a> — finds idle resources people forgot to turn off<br><a href="../agents/ops/rightsizing-advisor.md" download><code dir="ltr">rightsizing-advisor</code></a> — recommends matching server sizes to real load<br><a href="../agents/ops/forecast-reporter.md" download><code dir="ltr">forecast-reporter</code></a> — predicts budget overruns before month end</td></tr>
+    <tr><td><strong>Reliability (SRE)</strong><br><span style="opacity:.7">Learns from every incident so it does not repeat</span></td><td><a href="../agents/ops/slo-tracker.md" download><code dir="ltr">slo-tracker</code></a> — tracks availability targets vs. reality<br><a href="../agents/ops/postmortem-writer.md" download><code dir="ltr">postmortem-writer</code></a> — writes a blameless postmortem after every incident<br><a href="../agents/ops/runbook-maintainer.md" download><code dir="ltr">runbook-maintainer</code></a> — updates runbooks from postmortem lessons<br><a href="../agents/ops/chaos-planner.md" download><code dir="ltr">chaos-planner</code></a> — plans controlled failure drills to harden the system</td></tr>
+    <tr><td><strong>Upgrades team</strong><br><span style="opacity:.7">Big changes without sleepless nights</span></td><td><a href="../agents/ops/migration-planner.md" download><code dir="ltr">migration-planner</code></a> — breaks version migrations into reversible stages<br><a href="../agents/ops/canary-watcher.md" download><code dir="ltr">canary-watcher</code></a> — monitors gradual rollouts and stops at the first sign<br><a href="../agents/ops/dep-updater.md" download><code dir="ltr">dep-updater</code></a> — runs routine dependency updates on a separate branch<br><a href="../agents/ops/rollback-guardian.md" download><code dir="ltr">rollback-guardian</code></a> — keeps a tested retreat ready for every stage</td></tr>
+  </table>
+  </div>
+  <p><strong>How the teams meet:</strong> the night shift reacts; SRE turns each incident into a postmortem and an updated runbook; SecOps and FinOps each watch their own axis; and upgrades makes sure even a big change wakes no one.</p>
+
+  <h2>5. Commerce and service: "the support squad" 🛒</h2>
+  <p><strong>The problem:</strong> an online store inbox gets a mix of product questions, shipping problems, refund requests and complaints — each type needs different expertise and tone.</p>
+  <p><strong>The pattern:</strong> triage → specialists in parallel → human control. The triager splits, each specialist handles its pile simultaneously.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Role</th><th>Tools</th><th>Deliverable (the contract)</th></tr>
+    <tr><td><a href="../agents/commerce/triage.md" download><code dir="ltr">triage</code></a> — triager</td><td>Read, Write</td><td>per ticket: category + urgency + "needs a human? yes/no"</td></tr>
+    <tr><td><a href="../agents/commerce/product-expert.md" download><code dir="ltr">product-expert</code></a> — product expert</td><td>Read (catalog, guides)</td><td>a draft reply + a source from the docs</td></tr>
+    <tr><td><a href="../agents/commerce/orders-expert.md" download><code dir="ltr">orders-expert</code></a> — orders expert</td><td>an orders MCP (readonly)</td><td>a draft reply + the real status from the system</td></tr>
+    <tr><td><a href="../agents/commerce/tone-checker.md" download><code dir="ltr">tone-checker</code></a> — tone checker</td><td>Read, Edit</td><td>the final reply: empathetic, correct, no promises we cannot keep</td></tr>
+  </table>
+  </div>
+  <p><strong>The lesson from this world:</strong> notice what this squad does <em>not</em> do — it does not send replies. The deliverable is drafts in an approval queue, and "needs a human" instantly escalates sensitive complaints. In a world that touches real customers, the squad prepares — the human presses "send". At least until trust is earned, gradually and measurably.</p>
+
+  <h3>Scaling up: the full commerce organization</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Team</th><th>The agents and their roles</th></tr>
+    <tr><td><strong>Sales team</strong><br><span style="opacity:.7">From lead to proposal — drafts only, a human closes</span></td><td><a href="../agents/commerce/lead-qualifier.md" download><code dir="ltr">lead-qualifier</code></a> — grades incoming leads by real potential<br><a href="../agents/commerce/outreach-writer.md" download><code dir="ltr">outreach-writer</code></a> — writes personalized outreach — for human approval<br><a href="../agents/commerce/proposal-drafter.md" download><code dir="ltr">proposal-drafter</code></a> — assembles quotes from the catalog and price list<br><a href="../agents/commerce/crm-updater.md" download><code dir="ltr">crm-updater</code></a> — logs every interaction in the CRM<br><a href="../agents/commerce/followup-scheduler.md" download><code dir="ltr">followup-scheduler</code></a> — schedules follow-ups so no lead is lost</td></tr>
+    <tr><td><strong>Catalog team</strong><br><span style="opacity:.7">The store itself: products, prices, stock</span></td><td><a href="../agents/commerce/description-writer.md" download><code dir="ltr">description-writer</code></a> — writes consistent, accurate product descriptions<br><a href="../agents/commerce/price-monitor.md" download><code dir="ltr">price-monitor</code></a> — compares competitor prices and flags gaps<br><a href="../agents/commerce/inventory-watcher.md" download><code dir="ltr">inventory-watcher</code></a> — warns on low stock based on sales velocity<br><a href="../agents/commerce/image-checker.md" download><code dir="ltr">image-checker</code></a> — verifies every product has valid images and tags</td></tr>
+    <tr><td><strong>Customer-experience team</strong><br><span style="opacity:.7">From complaints to insights</span></td><td><a href="../agents/commerce/review-analyzer.md" download><code dir="ltr">review-analyzer</code></a> — analyzes reviews and finds recurring patterns<br><a href="../agents/commerce/churn-detector.md" download><code dir="ltr">churn-detector</code></a> — spots customers at risk of leaving from behavior<br><a href="../agents/commerce/nps-reporter.md" download><code dir="ltr">nps-reporter</code></a> — summarizes feedback and satisfaction trends<br><a href="../agents/commerce/voice-of-customer.md" download><code dir="ltr">voice-of-customer</code></a> — turns recurring complaints into product improvement proposals</td></tr>
+    <tr><td><strong>Order-operations team</strong><br><span style="opacity:.7">From purchase to doorstep</span></td><td><a href="../agents/commerce/fraud-flagger.md" download><code dir="ltr">fraud-flagger</code></a> — flags suspicious orders for human review<br><a href="../agents/commerce/returns-processor.md" download><code dir="ltr">returns-processor</code></a> — prepares returns handling per policy<br><a href="../agents/commerce/shipping-tracker.md" download><code dir="ltr">shipping-tracker</code></a> — tracks shipments and warns about delays</td></tr>
+  </table>
+  </div>
+  <p><strong>How the teams meet:</strong> support hears the customer, customer experience turns it into insight, sales and catalog act on it — all under one iron rule: wherever a real customer is touched, agents prepare a draft and a human presses "send".</p>
+
+  <h2>What repeats across all five worlds</h2>
+  <ul class="checklist">
+    <li><strong>The same four components:</strong> orchestrator, specialists, shared memory, deliverable contracts — only the names change</li>
+    <li><strong>A whole organization = teams of teams:</strong> each team stays small and focused, connected through defined deliverables (a PR, a report, a draft) — not "everyone talks to everyone"</li>
+    <li><strong>There is always a critic:</strong> a code reviewer, an editor, a tone checker — the review role survives in every field</li>
+    <li><strong>Permissions per role:</strong> readonly for readers, approved lists for fixers, sending only through a human</li>
+    <li><strong>A human at the decision points:</strong> plan approval, critical escalation, pressing "send" — every squad defines its own</li>
+  </ul>
+
+  <h2>Exercises</h2>
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 13.1</span> Adopt a squad</div>
+    <p>Pick the squad closest to your world out of the five, and implement a minimal version: three roles, on your real data or code. Run it end to end once.</p>
+    <details class="solution"><summary>Trimming tip</summary>
+      <p>You can almost always merge the two middle roles in a first version (writer+editor, cleaner+analyst) — but never give up the separation between doer and critic. It is the first thing that proves its worth.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 13.2</span> Design a squad for a new world</div>
+    <p>Pick a field that did not appear in this lesson — law? education? real estate? music? — and design a squad on paper: the problem, 3–5 roles, tools and permissions for each, deliverable contracts, and the pattern (pipeline / orchestrator–workers / parallel) with reasoning. Then ask Claude to critique the design.</p>
+    <details class="solution"><summary>Lightning example: the legal world</summary>
+      <p>A contract-review squad: clause-extractor splits into clauses → risk-flagger marks unusual clauses against the firm checklist → precedent-researcher finds accepted wording → summarizer writes a brief for the attorney. A pipeline; everyone read-only; the deliverable is always a draft for a human attorney — never advice to a client.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 13.3</span> Capstone: your squad, live</div>
+    <p>Take the squad from 13.1 or 13.2 and make it real: full implementation of all roles, launched on a schedule or with one command, running on real tasks for a week. Keep a short journal: what worked, where handoffs broke, what you changed.</p>
+    <details class="solution"><summary>The success metric</summary>
+      <p>Not "the squad is perfect" but "the squad is improving": if after a week you have an improvement list born from real runs — you are doing exactly the job of an agent engineer. That is the profession: build, measure, sharpen.</p>
+    </details>
+  </div>
+
+  <h2>Self-check</h2>
+  <section class="quiz">
+    <div class="q" data-a="0">
+      <p class="q-text">1. Which role exists in every successful squad, in every field?</p>
+      <button class="opt">A critic: a code reviewer, an editor, a tone checker</button>
+      <button class="opt">A spokesperson</button>
+      <button class="opt">A secretary</button>
+      <p class="q-fb"></p>
+    </div>
+    <div class="q" data-a="1">
+      <p class="q-text">2. What is the iron rule for squads that touch real customers?</p>
+      <button class="opt">Reply within a minute</button>
+      <button class="opt">Agents prepare drafts — a human approves and sends</button>
+      <button class="opt">Never reply on weekends</button>
+      <p class="q-fb"></p>
+    </div>
+    <div class="q" data-a="2">
+      <p class="q-text">3. How do different teams in an organization communicate?</p>
+      <button class="opt">In daily meetings</button>
+      <button class="opt">Every agent talks to every agent</button>
+      <button class="opt">Through defined deliverables: a PR, a report, a draft</button>
+      <p class="q-fb"></p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <h2>You have finished the course 🎉</h2>
+  <p>Look back for a moment: you started by installing a terminal tool, and you finish able to design and operate not just an agent — but an entire agent squad, in any field, with the right boundaries, feedback loops and smart human oversight. That is a skill the world is only beginning to value.</p>
+  <p><strong>Where to next?</strong></p>
+  <ul>
+    <li><a href="https://code.claude.com/docs" target="_blank" rel="noopener">The official Claude Code docs</a> — the full, always-current coverage of everything we learned</li>
+    <li><a href="https://docs.claude.com/en/api/agent-sdk/overview" target="_blank" rel="noopener">The Agent SDK docs</a> — going deeper into building agents and squads in code</li>
+    <li><a href="https://www.anthropic.com/engineering" target="_blank" rel="noopener">Anthropic engineering blog</a> — articles like "Building Effective Agents" and "Claude Code Best Practices"</li>
+    <li>And most importantly — <strong>your own projects</strong>: take one tedious process you do by hand, and give it a squad.</li>
+  </ul>
+
+  <div class="complete-row"><button id="completeBtn" data-lesson="l12"></button></div>
+
+  <nav class="lesson-nav">
+    <a href="lesson-12.html"><span class="dir-label">← Previous lesson</span>Building an agent squad</a>
+    <a href="index.html"><span class="dir-label">Back →</span>Course contents</a>
+  </nav>
+</main>
+
+<footer class="site">A community course for learning Claude Code · official docs: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="https://github.com/saarnetzer/ClaudeCode-Tutorial/issues" target="_blank" rel="noopener">Found a mistake? Open an issue</a><br>© 2026 Saar Netzer · content licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> · built with Claude Code</footer>
+</body>
+</html>

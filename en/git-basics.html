@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reference · Git and GitHub from scratch</title>
+<meta name="description" content="A Git and GitHub guide for beginners: the difference between them, installing Git on any OS, opening a GitHub account, and connecting your machine.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/git-basics.html">
+<link rel="alternate" hreflang="he" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/git-basics.html">
+<link rel="alternate" hreflang="en" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/git-basics.html">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Reference · Git and GitHub from scratch">
+<meta property="og:description" content="A Git and GitHub guide for beginners: the difference between them, installing Git on any OS, opening a GitHub account, and connecting your machine.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/git-basics.html">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../style.css">
+<script src="../changelog.js" defer></script>
+<script src="../app.js" defer></script>
+<script data-goatcounter="https://saarnetzer.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> Claude Code Course</a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../git-basics.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn">🌓 Theme</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">Reference · before Lesson 3</span>
+  <h1>Git and GitHub from scratch — install, account, connection</h1>
+  <p class="lead">Lesson 3 assumes you have Git installed and a GitHub account. Don't? This page sorts that out in fifteen minutes, step by step — and from that install onward you won't need to memorize git commands: Claude runs them for you.</p>
+
+  <h2>First: what are they, and what's the difference?</h2>
+  <ul>
+    <li><strong>Git</strong> is software running on your computer that saves "save points" (commits) of your project. Like saving in a game: you can always go back. It works offline and needs no account.</li>
+    <li><strong>GitHub</strong> is a website (owned by Microsoft) that stores a copy of your project in the cloud: backup, sharing with others, and Pull Requests. For that you do need an account.</li>
+  </ul>
+  <p>In other words: Git = the save engine on your machine, GitHub = the cloud above it. The course needs both — Git from Lesson 3, and GitHub for some exercises and for Lesson 10.</p>
+  <div class="callout info">
+    <span class="co-title">💡 Why does this matter especially in an agent course?</span>
+    When an AI agent edits dozens of files for you, Git is the safety net: every change is recorded, and every mistake is reversible in 10 seconds. That's why Lesson 3 comes so early in the course.
+  </div>
+
+  <h2>Step 1: install Git</h2>
+  <p>It may already be installed — check in the terminal first:</p>
+  <pre><code>git --version</code></pre>
+  <p>Got a version number? Skip to step 2. Got "command not found"? Install:</p>
+
+  <h3>🪟 Windows</h3>
+  <pre><span class="pre-label">PowerShell</span><code>winget install --id Git.Git -e</code></pre>
+  <p>Or download the installer from the official site: <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">git-scm.com/download/win</a> (click "Next" through all the defaults — they're good). When it finishes, close and reopen the terminal.</p>
+
+  <h3>🍎 macOS</h3>
+  <pre><code>xcode-select --install</code></pre>
+  <p>This installs Apple's developer tools, which include Git. Alternative for <a href="https://brew.sh" target="_blank" rel="noopener">Homebrew</a> users: <code dir="ltr">brew install git</code>.</p>
+
+  <h3>🐧 Linux</h3>
+  <pre><code>sudo apt install git      # Ubuntu / Debian
+sudo dnf install git      # Fedora</code></pre>
+
+  <div class="callout tip">
+    <span class="co-title">✅ Check</span>
+    Open a new terminal and run <code dir="ltr">git --version</code>. A version number = installed. Onward.
+  </div>
+
+  <h2>Step 2: introduce yourself to Git</h2>
+  <p>Git signs every save point with a name and email. Set them once (same commands on every OS):</p>
+  <pre><code>git config --global user.name "Your Name"
+git config --global user.email "you@example.com"</code></pre>
+  <p>Use the same email you'll open your GitHub account with in the next step — that way your contributions are attributed correctly.</p>
+
+  <h2 id="github-account">Step 3: open a GitHub account (free)</h2>
+  <ol>
+    <li>Go to <a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a>.</li>
+    <li>Enter an <strong>email</strong> (the one from the previous step), choose a strong <strong>password</strong>, and pick a <strong>username</strong>.</li>
+    <li>Confirm the verification code sent to your email — and that's it, you have an account.</li>
+  </ol>
+  <div class="callout warn">
+    <span class="co-title">⚠️ A moment before you choose a username</span>
+    Your username appears in the URL of every project you publish (e.g. <code dir="ltr">github.com/your-name</code>) — and it's also your public developer résumé. Pick something professional you'll be happy to see five years from now; short, no random numbers.
+  </div>
+  <p><strong>Strongly recommended:</strong> enable two-factor authentication (2FA) — in account settings: Settings → Password and authentication → Two-factor authentication. Five minutes that protect all your code.</p>
+
+  <h2>Step 4: connect your machine to the account</h2>
+  <p>The most convenient way — and the one this course uses — is the <strong>GitHub CLI</strong> (the <code>gh</code> command):</p>
+  <h3>Install</h3>
+  <pre><span class="pre-label">Windows (PowerShell)</span><code>winget install --id GitHub.cli -e</code></pre>
+  <pre><span class="pre-label">macOS</span><code>brew install gh</code></pre>
+  <pre><span class="pre-label">Linux</span><code>sudo apt install gh   # or follow the instructions at cli.github.com</code></pre>
+  <h3>Sign in (once)</h3>
+  <pre><code>gh auth login</code></pre>
+  <p>Answer the questions like this: <strong>GitHub.com</strong> → <strong>HTTPS</strong> → <strong>Login with a web browser</strong>. An 8-character code appears — copy it, confirm in the browser that opens, and you're done.</p>
+  <div class="callout tip">
+    <span class="co-title">✅ Final check that everything is connected</span>
+    Run <code dir="ltr">gh auth status</code>. If you see a ✓ next to your username — your machine is connected to the account, and you're fully ready for Lesson 3, including the Pull Request exercise.
+  </div>
+
+  <h2>That's it — you're set</h2>
+  <p>Notice what we did <em>not</em> do here: we learned no git commands beyond config. That's deliberate — in Lesson 3 you'll discover that all the day-to-day work (commits, branches, recovery, PRs) is asked of Claude in plain words, and it runs the right commands. The infrastructure you just built is all that was missing.</p>
+
+  <h2>Want to go deeper? (optional)</h2>
+  <ul>
+    <li><a href="https://git-scm.com/book/en/v2" target="_blank" rel="noopener">Pro Git — the official free book</a></li>
+    <li><a href="https://docs.github.com/en/get-started" target="_blank" rel="noopener">Getting started — GitHub's official docs</a></li>
+    <li><a href="https://cli.github.com/manual/" target="_blank" rel="noopener">The full GitHub CLI manual</a></li>
+  </ul>
+
+  <nav class="lesson-nav">
+    <a href="index.html"><span class="dir-label">← Back</span>Course contents</a>
+    <a href="lesson-03.html"><span class="dir-label">Ready? →</span>Lesson 3: Working with Git and GitHub</a>
+  </nav>
+
+</main>
+
+<footer class="site">A community course for learning Claude Code · official docs: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="https://github.com/saarnetzer/ClaudeCode-Tutorial/issues" target="_blank" rel="noopener">Found a mistake? Open an issue</a><br>© 2026 Saar Netzer · content licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> · built with Claude Code</footer>
+</body>
+</html>
