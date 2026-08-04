@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 3 · Working with Git and GitHub</title>
+<meta name="description" content="Lesson 3: Git and GitHub with Claude Code in plain language — commits, branches, Pull Requests and recovering from mistakes.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-03.html">
+<link rel="alternate" hreflang="he" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/lesson-03.html">
+<link rel="alternate" hreflang="en" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-03.html">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lesson 3 · Working with Git and GitHub">
+<meta property="og:description" content="Lesson 3: Git and GitHub with Claude Code in plain language — commits, branches, Pull Requests and recovering from mistakes.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-03.html">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../style.css">
+<script src="../changelog.js" defer></script>
+<script src="../app.js" defer></script>
+<script data-goatcounter="https://saarnetzer.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> Claude Code Course</a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-03.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn">🌓 Theme</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">Lesson 3 of 13</span>
+  <h1>Working with Git and GitHub</h1>
+  <p class="lead">Git is the safety net that turns working with an agent from scary to calm: every change is recorded, and every mistake is reversible. The good news — with Claude Code you don't need to memorize a single git command. Ask in words; it executes.</p>
+
+  <h2>What you'll learn</h2>
+  <ul class="checklist">
+    <li>Why Git matters especially when working with AI agents</li>
+    <li>Commits and branches in plain language</li>
+    <li>Creating a Pull Request from the terminal</li>
+    <li>Recovering from mistakes — your strongest card</li>
+  </ul>
+
+  <h2>Why Git + agent = a winning pair</h2>
+  <p>When an agent edits dozens of files for you, two questions become critical: <em>"what exactly did it change?"</em> and <em>"how do I undo it if it's bad?"</em>. Git answers both. Hence the rule: <strong>before any significant task — commit. After every step that worked — commit.</strong> Small, frequent commits are the seatbelt of working with AI.</p>
+
+  <div class="callout info">
+    <span class="co-title">💡 New to Git?</span>
+    Totally fine. Think of Git as "save points in a game": commit = save. You can always return to a previous save. A branch = starting an alternate storyline you can merge back or discard. With Claude Code you don't need to know more than that to begin.
+    <br><br>Git not installed yet? No GitHub account? We have a <a href="git-basics.html"><strong>step-by-step setup guide</strong></a>: what Git and GitHub are, installing on any OS, opening an account and connecting your machine — fifteen minutes and you're set.
+  </div>
+
+  <h2>Everything in plain language</h2>
+  <p>Instead of remembering syntax, just ask:</p>
+  <pre><code>what changed in the project since the last commit? show me a summary before we save</code></pre>
+  <pre><code>commit the changes with an appropriate message</code></pre>
+  <pre><code>open a new branch named feature/dark-mode and switch to it</code></pre>
+  <pre><code>who last changed this function and why? check the history</code></pre>
+  <p>Claude runs the right git commands (you'll see and approve them), writes quality commit messages based on the actual change, and even knows how to dig through history to answer "detective" questions.</p>
+
+  <h3>A real scenario: a full feature on a branch</h3>
+  <pre><code>1. open a branch feature/contact-form
+2. add a contact form to the main page with validation
+3. run the tests
+4. if everything is green - commit with a tidy message</code></pre>
+  <p>Notice: we gave a whole sequence of steps in one request. Claude performs them in order, stopping for your approval at the sensitive points. That's already "agentic" thinking — you define a process, not commands.</p>
+
+  <h2>Pull Requests</h2>
+  <p>If you have the <a href="https://cli.github.com" target="_blank" rel="noopener">GitHub CLI</a> installed (the <code>gh</code> command) and you're signed in, Claude can open a PR for you:</p>
+  <pre><code>push the branch and open a Pull Request. in the description explain what changed, why, and how we tested</code></pre>
+  <p>Claude will go over the branch changes, write a title and description that genuinely summarize them (not just "update code"), and hand you a link to the finished PR.</p>
+  <div class="callout tip">
+    <span class="co-title">✅ PR review, too</span>
+    It works in the other direction as well: <code dir="ltr">look at PR number 42 and give me a review — possible bugs, security issues, improvement suggestions</code>. You get a dedicated code reviewer, available 24/7.
+  </div>
+
+  <h2>Recovering from mistakes</h2>
+  <p>Something bad happened? First — touch nothing, ask:</p>
+  <pre><code>I made a mess. show me the current git state and my options, without changing anything</code></pre>
+  <p>Then, as needed:</p>
+  <pre><code>discard all uncommitted changes and return to the last clean state</code></pre>
+  <pre><code>the last commit was a mistake - undo it but keep the changes in the files</code></pre>
+  <div class="callout warn">
+    <span class="co-title">⚠️ Destructive operations</span>
+    For destructive actions (discarding changes, hard reset) Claude will always ask for explicit approval and explain what will be deleted. Read the explanation before approving — this is exactly where the "normal" permission mode is worth gold.
+  </div>
+
+  <h2>Exercises</h2>
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 3.1</span> A first managed repo</div>
+    <p>Take one of the projects from previous lessons and ask Claude to: initialize a git repo, create a suitable <code>.gitignore</code>, and make a first commit. Then change something small and ask "show me what changed and commit".</p>
+    <details class="solution"><summary>What should happen</summary>
+      <p>Claude will run <code dir="ltr">git init</code>, figure out which files don't belong in the repo (node_modules, temp files) for the gitignore, and write a commit message describing the content. Notice the second message describes the <em>change</em>, not the project.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 3.2</span> Practicing recovery — on purpose</div>
+    <p>In the previous exercise's project (after a commit!), ask Claude to "delete half the code in the main file" (yes, really). Then recover: "return to the state of the last commit". Verify everything came back.</p>
+    <details class="solution"><summary>Why this exercise matters</summary>
+      <p>Whoever experiences one successful recovery stops being afraid. The fear "the agent will ruin something" evaporates when you know for certain that anything after a commit is reversible in 10 seconds. It changes your entire way of working.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 3.3</span> A feature end to end</div>
+    <p>Create a repo on GitHub (or use an existing one), and run the full flow in one request: new branch → a real change → commit → push → Pull Request with a full description. Required: a GitHub account (free — <a href="git-basics.html#github-account">setup guide</a>) and <code>gh</code> installed and signed in (<code dir="ltr">gh auth login</code>).</p>
+    <details class="solution"><summary>Peek at the solution</summary>
+      <p>Sample request: <code>open a branch fix/typos, fix typos in the README, commit, push, and open a PR with a description</code>. If <code>gh</code> isn't signed in, Claude will tell you and explain how — that's a way to learn, too.</p>
+    </details>
+  </div>
+
+  <h2>Self-check</h2>
+  <section class="quiz">
+    <div class="q" data-a="1">
+      <p class="q-text">1. What's the rule for commits when working with an agent?</p>
+      <button class="opt">One big commit at the end of the day</button>
+      <button class="opt">Before every significant task and after every step that worked</button>
+      <button class="opt">Commit only when everything is perfect</button>
+      <p class="q-fb"></p>
+    </div>
+    <div class="q" data-a="0">
+      <p class="q-text">2. You made a mess in git. What's the correct first step?</p>
+      <button class="opt">Ask for a summary of the state and the options — without changing anything</button>
+      <button class="opt">Immediately run git reset --hard</button>
+      <button class="opt">Delete the folder and clone again</button>
+      <p class="q-fb"></p>
+    </div>
+    <div class="q" data-a="2">
+      <p class="q-text">3. What do you need for Claude to open a Pull Request for you?</p>
+      <button class="opt">A Max subscription only</button>
+      <button class="opt">A GitHub Enterprise account</button>
+      <button class="opt">GitHub CLI (gh) installed and signed in</button>
+      <p class="q-fb"></p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <h2>Lesson summary</h2>
+  <ul class="checklist">
+    <li>Small, frequent commits = a safety net for agent work</li>
+    <li>All git operations in plain language: commits, branches, history, PRs</li>
+    <li>In trouble: first "what's the state and what are my options", only then action</li>
+    <li>Claude writes commit messages and PR descriptions from the real content</li>
+  </ul>
+
+  <div class="complete-row"><button id="completeBtn" data-lesson="l03"></button></div>
+
+  <nav class="lesson-nav">
+    <a href="lesson-02.html"><span class="dir-label">← Previous lesson</span>Everyday fundamentals</a>
+    <a href="lesson-04.html"><span class="dir-label">Next lesson →</span>Memory and context: CLAUDE.md</a>
+  </nav>
+
+</main>
+
+<footer class="site">A community course for learning Claude Code · official docs: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="https://github.com/saarnetzer/ClaudeCode-Tutorial/issues" target="_blank" rel="noopener">Found a mistake? Open an issue</a><br>© 2026 Saar Netzer · content licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> · built with Claude Code</footer>
+</body>
+</html>

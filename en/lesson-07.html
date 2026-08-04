@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 7 · MCP — connecting Claude to the world</title>
+<meta name="description" content="Lesson 7: MCP — give Claude a real browser, databases and external services, with security principles.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-07.html">
+<link rel="alternate" hreflang="he" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/lesson-07.html">
+<link rel="alternate" hreflang="en" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-07.html">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lesson 7 · MCP — connecting Claude to the world">
+<meta property="og:description" content="Lesson 7: MCP — give Claude a real browser, databases and external services, with security principles.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-07.html">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../style.css">
+<script src="../changelog.js" defer></script>
+<script src="../app.js" defer></script>
+<script data-goatcounter="https://saarnetzer.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> Claude Code Course</a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-07.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn">🌓 Theme</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">Lesson 7 of 13</span>
+  <h1>MCP — connecting Claude to the world</h1>
+  <p class="lead">Out of the install, Claude Code knows files and the terminal. But what about a real browser? A database? Your team's Slack? The MCP protocol is the "USB socket" that plugs new tools into Claude — and in this lesson we'll plug in a few.</p>
+
+  <h2>What you'll learn</h2>
+  <ul class="checklist">
+    <li>What MCP is and why it became a worldwide standard</li>
+    <li>Connecting a first MCP server: browser control</li>
+    <li>Connecting a database and external services</li>
+    <li>Configuration scopes and security considerations</li>
+  </ul>
+
+  <h2>The idea</h2>
+  <p><strong>MCP (Model Context Protocol)</strong> is an open protocol defining how an AI model talks to external tools. An MCP server is a small program exposing "tools" (e.g. <code>open_page</code>, <code>run_query</code>, <code dir="ltr">send_message</code>), and Claude — when connected to the server — sees those tools and can use them exactly like it uses file editing. Thousands of ready-made MCP servers exist today: GitHub, Slack, Postgres, Playwright, Figma, Notion, Stripe and more.</p>
+  <div class="callout info">
+    <span class="co-title">💡 Connecting to the big picture</span>
+    Remember the definition of an agent — "a model running tools in a loop"? MCP simply expands the toolbox. More tools = the agent can act on more of the world. An agent with a browser can <em>check for itself</em> the site it built. That's a fundamental shift.
+  </div>
+
+  <h2>First server: a browser with Playwright</h2>
+  <p>Let's connect a server that gives Claude a real browser:</p>
+  <pre><code>claude mcp add playwright -- npx @playwright/mcp@latest</code></pre>
+  <p>That's it. Open Claude and try:</p>
+  <pre><code>open the browser at http://localhost:3000, fill in the signup form
+with sample data, submit, and screenshot the result. if something is broken - fix the code and check again</code></pre>
+  <p>Re-read the end of that sentence: <em>"if something is broken — fix and check again"</em>. Claude now has a full feedback loop on UI: it writes code, <strong>sees the result itself</strong> in the browser, and fixes. Exactly like a human developer.</p>
+  <p>Useful management commands:</p>
+  <pre><code>claude mcp list          # which servers are connected and their status
+claude mcp get playwright # server details
+claude mcp remove playwright</code></pre>
+
+  <h2>Second server: a database</h2>
+  <pre><code>claude mcp add db -- npx -y @modelcontextprotocol/server-postgres "postgresql://readonly_user:pass@localhost:5432/shop"</code></pre>
+  <p>Then in conversation:</p>
+  <pre><code>how many orders were opened this month versus last month, broken down by city?
+show a table and explain what stands out</code></pre>
+  <p>Claude writes the SQL, runs it through the server, and interprets the results for you.</p>
+  <div class="callout danger">
+    <span class="co-title">🛑 The golden rule: least privilege</span>
+    Notice we connected a <code dir="ltr">readonly_user</code> in the example. Never connect an agent to a real database with write permissions "because it's convenient". Same principle for any MCP server: install only servers from trusted sources, and give them the minimal permission that suffices for the task. A tool the agent doesn't need — don't connect.
+  </div>
+
+  <h2>Configuration scopes</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Scope</th><th>Where it's stored</th><th>For whom</th></tr>
+    <tr><td><code>local</code> (default)</td><td>Your personal settings for this project</td><td>You only, this project only</td></tr>
+    <tr><td><code>project</code></td><td>A <code dir="ltr">.mcp.json</code> file at the repo root</td><td>The whole team (goes into git)</td></tr>
+    <tr><td><code>user</code></td><td>Your user settings</td><td>You, in all projects</td></tr>
+  </table>
+  </div>
+  <pre><code># a server the whole team gets automatically:
+claude mcp add --scope project github -- npx -y @modelcontextprotocol/server-github</code></pre>
+  <p>A <code dir="ltr">.mcp.json</code> in the repo is another brick of team infrastructure: whoever clones the project gets not only code, but every tool the agent needs to work on it.</p>
+
+  <h2>Exercises</h2>
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 7.1</span> A visual feedback loop</div>
+    <p>Connect the Playwright server. Open one of your course projects and ask: "open the page in the browser, screenshot it, and fix three styling issues you spot — after each fix screenshot again and verify it improved". Watch the loop work.</p>
+    <details class="solution"><summary>What should happen</summary>
+      <p>Claude opens the page, screenshots, identifies issues (alignment, colors, text overflow), fixes the code and screenshots again to compare. If the page doesn't load — make sure you started a local server, or ask it to open the file directly (file://).</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 7.2</span> Automated end-to-end checks</div>
+    <p>Continuing the previous exercise: ask Claude to write a full test scenario for your app (say, for the calculator: "press 7, +, 3, = and verify 10 is shown") and run it through the browser. Then break something on purpose and ask it to run again — verify the test catches the break.</p>
+    <details class="solution"><summary>Why it matters</summary>
+      <p>Tests the agent can run itself are a necessary condition for autonomy: without them it has no way to know if it succeeded. "Break it and verify it's caught" proves the test is real, not always-green.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 7.3</span> A server of your choice</div>
+    <p>Pick one MCP server relevant to your work (GitHub? Notion? a side project's database?), connect it at the appropriate scope, and complete one real task with it. First ask Claude: "what tools do you get from this server?"</p>
+    <details class="solution"><summary>Tip</summary>
+      <p>The question "what tools do you have now?" is a great way to understand any new server. And if something's off — <code dir="ltr">claude mcp list</code> shows whether the server even connected.</p>
+    </details>
+  </div>
+
+  <h2>Self-check</h2>
+  <section class="quiz">
+    <div class="q" data-a="0">
+      <p class="q-text">1. What does MCP add to Claude?</p>
+      <button class="opt">External tools: a browser, databases, cloud services</button>
+      <button class="opt">More memory</button>
+      <button class="opt">Faster responses</button>
+      <p class="q-fb"></p>
+    </div>
+    <div class="q" data-a="1">
+      <p class="q-text">2. What's the golden rule when connecting an agent to a database?</p>
+      <button class="opt">Only connect at night</button>
+      <button class="opt">A readonly user and least privilege</button>
+      <button class="opt">Only connect small databases</button>
+      <p class="q-fb"></p>
+    </div>
+    <div class="q" data-a="2">
+      <p class="q-text">3. How do you share an MCP server with your whole team?</p>
+      <button class="opt">Email installation instructions</button>
+      <button class="opt">Everyone configures it themselves</button>
+      <button class="opt">Project scope — the .mcp.json file goes into git</button>
+      <p class="q-fb"></p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <h2>Lesson summary</h2>
+  <ul class="checklist">
+    <li>MCP = a standard protocol adding tools to Claude: browser, DB, cloud services</li>
+    <li>Connecting is one command: <code dir="ltr">claude mcp add name -- command</code></li>
+    <li>project scope + <code dir="ltr">.mcp.json</code> = shared tools for the whole team</li>
+    <li>Always least privilege: readonly when possible, trusted servers only</li>
+  </ul>
+
+  <div class="complete-row"><button id="completeBtn" data-lesson="l07"></button></div>
+
+  <nav class="lesson-nav">
+    <a href="lesson-06.html"><span class="dir-label">← Previous lesson</span>Hooks — automation</a>
+    <a href="lesson-08.html"><span class="dir-label">Next lesson →</span>Subagents — a team of specialists</a>
+  </nav>
+
+</main>
+
+<footer class="site">A community course for learning Claude Code · official docs: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="https://github.com/saarnetzer/ClaudeCode-Tutorial/issues" target="_blank" rel="noopener">Found a mistake? Open an issue</a><br>© 2026 Saar Netzer · content licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> · built with Claude Code</footer>
+</body>
+</html>

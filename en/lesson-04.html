@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 4 · Memory and context: CLAUDE.md</title>
+<meta name="description" content="Lesson 4: CLAUDE.md and context management — teach Claude your project once and keep conversations focused.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-04.html">
+<link rel="alternate" hreflang="he" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/lesson-04.html">
+<link rel="alternate" hreflang="en" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-04.html">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lesson 4 · Memory and context: CLAUDE.md">
+<meta property="og:description" content="Lesson 4: CLAUDE.md and context management — teach Claude your project once and keep conversations focused.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-04.html">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../style.css">
+<script src="../changelog.js" defer></script>
+<script src="../app.js" defer></script>
+<script data-goatcounter="https://saarnetzer.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> Claude Code Course</a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-04.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn">🌓 Theme</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">Lesson 4 of 13</span>
+  <h1>Memory and context: CLAUDE.md and context management</h1>
+  <p class="lead">The difference between "Claude that works okay" and "Claude that feels like a veteran teammate" is almost always one small file: CLAUDE.md. In this lesson we'll teach Claude our project once — and keep conversations sharp and focused.</p>
+
+  <h2>What you'll learn</h2>
+  <ul class="checklist">
+    <li>What the context window is and why it's your scarcest resource</li>
+    <li>The CLAUDE.md file: what goes in and what doesn't</li>
+    <li>Three memory levels: project, personal, and global</li>
+    <li>Techniques for managing long conversations</li>
+  </ul>
+
+  <h2>First, a concept: the context window</h2>
+  <p>Every conversation with Claude has limited "working memory" — the <strong>context window</strong>. Everything said, every file read and every command output takes up room in it. When it fills up, older details get compressed or forgotten. Two practical rules follow:</p>
+  <ul>
+    <li><strong>A new conversation for every new task.</strong> Finished a feature? <code>/clear</code>. There's no reason to drag thousands of lines of stale, distracting context into a new task.</li>
+    <li><strong>Whatever always matters — belongs in a file, not the conversation.</strong> That is exactly CLAUDE.md's job.</li>
+  </ul>
+
+  <h2>CLAUDE.md — the project's ID card</h2>
+  <p>At the start of every conversation, Claude automatically reads the <code>CLAUDE.md</code> file in the project folder. Whatever is written there — it simply <em>knows</em>, without you repeating it. To generate a first draft automatically:</p>
+  <pre><code>/init</code></pre>
+  <p>Claude scans the project and writes a starter file. But the real value comes from your editing. A recommended structure:</p>
+  <pre><span class="pre-label">CLAUDE.md</span><code># MyShop — online store
+
+## Commands
+- Local dev: `npm run dev`
+- Tests: `npm test` (required before every commit)
+- Lint: `npm run lint`
+
+## Architecture
+- Frontend: React + Vite in `client/`
+- Backend: Express in `server/`, routes in `server/routes/`
+- DB: PostgreSQL via Prisma. Schema in `prisma/schema.prisma`
+
+## Important rules
+- All user-facing text in Hebrew. Variable names in English
+- Never touch `legacy/` without explicit approval
+- Dates always UTC on the server, convert to local time only for display
+- After any schema change run `npx prisma generate`</code></pre>
+
+  <div class="callout tip">
+    <span class="co-title">✅ The CLAUDE.md quality test</span>
+    Ask yourself: "if a new developer joined tomorrow, what would I have to tell them on day one?" — that's exactly what belongs in the file. Short, factual, no rambling. A huge file hurts more than it helps, because it loads into every conversation.
+  </div>
+
+  <h3>Updating as you work</h3>
+  <p>Caught yourself explaining something to Claude for the second time? That's a sign it belongs in memory. Start a message with a hash <code>#</code> — and Claude will offer to add it to the memory file:</p>
+  <pre><code># always use axios, not fetch, in this project</code></pre>
+
+  <h3>Three memory levels</h3>
+  <div class="table-scroll">
+  <table>
+    <tr><th>File</th><th>Scope</th><th>When</th></tr>
+    <tr><td><code dir="ltr">./CLAUDE.md</code></td><td>The project — shared with the team (in git)</td><td>Commands, architecture, team rules</td></tr>
+    <tr><td><code dir="ltr">./CLAUDE.local.md</code></td><td>The project — you only (outside git)</td><td>Local paths, personal per-project preferences</td></tr>
+    <tr><td><code dir="ltr">~/.claude/CLAUDE.md</code></td><td>Every project on your machine</td><td>"answer in Hebrew", personal code style</td></tr>
+  </table>
+  </div>
+  <div class="callout info">
+    <span class="co-title">💡 Where's that on Windows?</span>
+    The <code dir="ltr">~</code> symbol means your home folder. On Windows that's <code dir="ltr">C:\Users\&lt;username&gt;</code> — so <code dir="ltr">~/.claude/CLAUDE.md</code> is <code dir="ltr">C:\Users\&lt;username&gt;\.claude\CLAUDE.md</code>.
+  </div>
+  <p>In a large project you can also put CLAUDE.md files in subfolders — Claude loads them when working in the relevant area.</p>
+
+  <h2>Managing long conversations</h2>
+  <ul>
+    <li><strong><code>/compact</code></strong> — compresses history into a summary. Use at a natural stopping point (after a commit, before a new subtask).</li>
+    <li><strong><code>/clear</code></strong> — full reset. Better than compact when switching to an unrelated task.</li>
+    <li><strong>Deliberate interim summaries:</strong> before a long break ask "summarize into PROGRESS.md what we did, what works and what's left" — and open the next conversation with "read PROGRESS.md and let's continue".</li>
+  </ul>
+  <div class="callout info">
+    <span class="co-title">💡 The organizing principle</span>
+    Context is a precious resource: every wasted token reduces focus. Agents work best when the context holds exactly what's relevant — no less, and no more. Think of yourselves as the agent's context managers.
+  </div>
+
+  <h2>Exercises</h2>
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 4.1</span> A first CLAUDE.md</div>
+    <p>In a project you worked on in previous lessons, run <code>/init</code>. Read the generated file, delete anything unnecessary, and add two personal rules of your own (e.g. "user-facing text in Hebrew"). Open a new conversation and check the rules really apply.</p>
+    <details class="solution"><summary>How to verify it works</summary>
+      <p>After <code>/clear</code>, ask for something the rule should affect — e.g. "add a new button" — and check the text comes out in the right language without asking. If so: memory works.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 4.2</span> Global memory</div>
+    <p>Create <code dir="ltr">~/.claude/CLAUDE.md</code> with 2–3 preferences that are always true for you (language, answer style, favorite tools). Open Claude in two different folders and verify the preferences apply in both.</p>
+    <details class="solution"><summary>Sample content</summary>
+      <pre><code># Personal preferences
+- answer me in Hebrew, code in English
+- before a big change - show a short plan
+- prefer a simple solution over a "clever" one</code></pre>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 4.3</span> Passing the baton between conversations</div>
+    <p>Start a multi-step task (e.g.: an "About" page + navigation + styling). Midway, ask Claude to write a progress summary to <code>PROGRESS.md</code>. Run <code>/clear</code>, then: "read PROGRESS.md and continue where we stopped". Verify it truly picks up correctly.</p>
+    <details class="solution"><summary>Why this matters</summary>
+      <p>This technique — keeping state in files instead of conversation memory — is a cornerstone of autonomous agents (Lesson 11). An agent that runs for hours needs "external memory" that survives context resets. You're already practicing it by hand.</p>
+    </details>
+  </div>
+
+  <h2>Self-check</h2>
+  <section class="quiz">
+    <div class="q" data-a="0">
+      <p class="q-text">1. What happens with CLAUDE.md at the start of every conversation?</p>
+      <button class="opt">It loads automatically — Claude simply knows its content</button>
+      <button class="opt">You must ask Claude to read it</button>
+      <button class="opt">It only loads in Plan Mode</button>
+      <p class="q-fb"></p>
+    </div>
+    <div class="q" data-a="1">
+      <p class="q-text">2. You finished a feature and are moving to something unrelated. What's right?</p>
+      <button class="opt">Keep the same conversation — the context is valuable</button>
+      <button class="opt">/clear — a new conversation for a new task</button>
+      <button class="opt">Close and reopen the terminal</button>
+      <p class="q-fb"></p>
+    </div>
+    <div class="q" data-a="2">
+      <p class="q-text">3. How do you add a rule to memory mid-conversation?</p>
+      <button class="opt">Edit the file manually each time</button>
+      <button class="opt">Write "remember that..." in every conversation</button>
+      <button class="opt">Start a message with # — Claude offers to save it to memory</button>
+      <p class="q-fb"></p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <h2>Lesson summary</h2>
+  <ul class="checklist">
+    <li>The context window is limited — manage it deliberately: <code>/clear</code> between tasks, <code>/compact</code> at stopping points</li>
+    <li>CLAUDE.md = what you'd tell a new developer on day one</li>
+    <li>Three levels: project (shared), local (personal per project), global (~/.claude)</li>
+    <li>Important knowledge lives in files — not conversation memory</li>
+  </ul>
+
+  <div class="complete-row"><button id="completeBtn" data-lesson="l04"></button></div>
+
+  <nav class="lesson-nav">
+    <a href="lesson-03.html"><span class="dir-label">← Previous lesson</span>Working with Git and GitHub</a>
+    <a href="lesson-05.html"><span class="dir-label">Next lesson →</span>Custom commands and Skills</a>
+  </nav>
+
+</main>
+
+<footer class="site">A community course for learning Claude Code · official docs: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="https://github.com/saarnetzer/ClaudeCode-Tutorial/issues" target="_blank" rel="noopener">Found a mistake? Open an issue</a><br>© 2026 Saar Netzer · content licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> · built with Claude Code</footer>
+</body>
+</html>

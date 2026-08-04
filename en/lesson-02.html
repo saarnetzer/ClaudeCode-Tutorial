@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 2 · Everyday fundamentals</title>
+<meta name="description" content="Lesson 2: phrasing requests that get great results, permission modes, Plan Mode, and the commands you must know.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-02.html">
+<link rel="alternate" hreflang="he" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/lesson-02.html">
+<link rel="alternate" hreflang="en" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-02.html">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lesson 2 · Everyday fundamentals">
+<meta property="og:description" content="Lesson 2: phrasing requests that get great results, permission modes, Plan Mode, and the commands you must know.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/lesson-02.html">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../style.css">
+<script src="../changelog.js" defer></script>
+<script src="../app.js" defer></script>
+<script data-goatcounter="https://saarnetzer.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> Claude Code Course</a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-02.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn">🌓 Theme</button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">Lesson 2 of 13</span>
+  <h1>Everyday fundamentals</h1>
+  <p class="lead">This lesson turns you from a hesitant user into a fluent one: how to phrase requests that get excellent results, how to control what Claude is allowed to do, and which commands and keys save serious time.</p>
+
+  <h2>What you'll learn</h2>
+  <ul class="checklist">
+    <li>The single most important principle of phrasing requests</li>
+    <li>The three permission modes, including Plan Mode</li>
+    <li>The built-in slash commands you must know</li>
+    <li>How Claude explores an existing project</li>
+  </ul>
+
+  <h2>How to phrase a good request</h2>
+  <p>The most important rule: <strong>give context and a goal, not just an order.</strong> Claude fills gaps well, but the more precise the request — the closer the result is to what you wanted, in one round.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Weak request 😕</th><th>Strong request 💪</th></tr>
+    <tr>
+      <td>"fix the bug"</td>
+      <td>"When you click 'Send' on the signup form without an email, the page crashes. Find the cause and fix it, and add validation with a friendly error message."</td>
+    </tr>
+    <tr>
+      <td>"add tests"</td>
+      <td>"Add tests for <code>utils/dates.js</code>, including leap-year and timezone edge cases. Use the framework already in the project."</td>
+    </tr>
+    <tr>
+      <td>"improve the code"</td>
+      <td>"The <code>processOrders</code> function is slow with 10,000 orders. Measure, find the bottleneck, and propose a fix — before changing anything."</td>
+    </tr>
+  </table>
+  </div>
+  <p>Notice the pattern in the last example: <strong>"propose before you change"</strong>. That approach is so useful it has an entire built-in mode — Plan Mode, coming right up.</p>
+
+  <div class="callout tip">
+    <span class="co-title">✅ Pointing at files</span>
+    Typing <code>@</code> followed by a file path (e.g. <code dir="ltr">@src/app.js</code>) attaches the file to the request's context. It's the fast way to say "look exactly here".
+  </div>
+
+  <h2>Permission modes: who decides what's allowed</h2>
+  <p>Claude Code is safe by default: it asks for approval before editing files and running commands. <kbd>Shift+Tab</kbd> switches between modes:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Mode</th><th>What happens</th><th>When to use</th></tr>
+    <tr><td><strong>Normal (default)</strong></td><td>Manual approval for every edit and command</td><td>New projects, sensitive operations</td></tr>
+    <tr><td><strong>Auto-accept edits</strong></td><td>File edits auto-approved; commands still ask</td><td>Routine work in a familiar project</td></tr>
+    <tr><td><strong>Plan Mode</strong></td><td>Claude only reads and explores — changing anything is forbidden. At the end it presents a plan for your approval</td><td>Big/risky tasks, learning a project</td></tr>
+  </table>
+  </div>
+  <p><strong>Plan Mode is the professionals' secret weapon.</strong> For a complex task, the right process is: enter Plan Mode, let Claude explore and present a plan, refine the plan in dialogue — and only then approve execution. Fixing a sentence in a plan is a hundred times cheaper than fixing a thousand lines of code written in the wrong direction.</p>
+  <p>Here's what it looks like (demo):</p>
+  <div class="termdemo">
+    <div class="td-bar"><span class="td-dot"></span><span class="td-dot"></span><span class="td-dot"></span><span class="td-title">demo: plan-mode</span><button class="td-replay">↺ Replay</button></div>
+    <pre class="td-screen"></pre>
+    <script type="application/json" class="td-script">[
+["out","(Plan Mode — Shift+Tab pressed twice)"],
+["cmd","add a saved calculation history to the calculator"],
+["claude","● Reading app.js, index.html, style.css..."],
+["pause",""],
+["claude","● Plan:"],
+["out","  1. history array persisted to localStorage"],
+["out","  2. side panel rendering the last results"],
+["out","  3. clear-history button + empty state"],
+["out",""],
+["claude","? Approve plan · Edit · Cancel — no files were touched"]]</script>
+  </div>
+  <p>You can also approve permissions permanently: the <code>/permissions</code> command shows and manages a rule list — for example always allowing <code dir="ltr">npm test</code> but never <code dir="ltr">rm -rf</code>. Allow/deny rules, protecting secrets and all the other defense layers get an entire lesson — <a href="lesson-09.html"><strong>Lesson 9</strong></a>.</p>
+
+  <div class="callout danger">
+    <span class="co-title">🛑 About the scary flag</span>
+    There's a flag called <code dir="ltr">--dangerously-skip-permissions</code> that disables all approval questions. Do not use it on your personal machine. We'll discuss it in Lesson 10 — in isolated environments (sandbox/container) it has a place, and only there.
+  </div>
+
+  <h2>Built-in commands worth memorizing</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>/help</code></td><td>List all available commands</td></tr>
+    <tr><td><code>/clear</code></td><td>Wipes the conversation — a fresh page (files are untouched, of course)</td></tr>
+    <tr><td><code>/compact</code></td><td>Compresses history into a summary — frees working memory</td></tr>
+    <tr><td><code>/model</code></td><td>Switch model (powerful &amp; slow ↔ fast &amp; cheap)</td></tr>
+    <tr><td><code>/init</code></td><td>Creates a CLAUDE.md for the project — Lesson 4 covers it in depth</td></tr>
+    <tr><td><code>/review</code></td><td>Code review of the current changes</td></tr>
+    <tr><td><code>/config</code></td><td>Settings: theme, notifications and more</td></tr>
+  </table>
+  </div>
+
+  <h2>Working on an existing project</h2>
+  <p>The real magic shows on an existing project. Open Claude in a project folder you know and ask questions before changing anything:</p>
+  <pre><code>what does this project do? give me an overview of the structure, the technologies, and the entry point</code></pre>
+  <pre><code>where is user login handled? explain the flow step by step with file names</code></pre>
+  <p>Claude will use search and read tools to answer — and it's completely safe, because reading changes nothing. Need to get to know a new project at work? This is one of the fastest ways that exist today.</p>
+
+  <h2>Exercises</h2>
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 2.1</span> Same task, two phrasings</div>
+    <p>In a new folder ask: "build a calculator". Take the result. Then run <code>/clear</code> and ask: "build a calculator in a single HTML page: four operations, modern dark styling, keyboard support, and divide-by-zero handled with a friendly message". Compare the two results.</p>
+    <details class="solution"><summary>What should happen</summary>
+      <p>Both will work, but the second will be far closer to what you imagined — without fix-up rounds. The takeaway: spelling out requirements up front is the best-paying investment in working with agents.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 2.2</span> Plan Mode in action</div>
+    <p>Open any existing project (or deliberately break the calculator from the previous exercise). Switch to Plan Mode with <kbd>Shift+Tab</kbd> (twice), and ask: "I want to add a saved calculation history. Explore the code and present a plan". Read the plan, request one change to it ("keep only the last 10"), and only then approve execution.</p>
+    <details class="solution"><summary>What should happen</summary>
+      <p>In Plan Mode you'll see Claude only reading — no edit-approval prompts. The plan appears at the end, and your requested change goes into it before a single line of code is written. This is exactly the workflow for serious tasks.</p>
+    </details>
+  </div>
+
+  <div class="exercise">
+    <div class="ex-head"><span class="ex-badge">Exercise 2.3</span> Exploring a stranger's project</div>
+    <p>Download some open-source project (<code dir="ltr">git clone</code> of a library that intrigues you), open Claude in it, and ask three questions: what's the structure, how would you add feature X, and where are the tests. Try to reach an understanding of the project in 10 minutes.</p>
+    <details class="solution"><summary>Tip</summary>
+      <p>An especially good question for unfamiliar projects: "if I had to fix a bug in [area], which 3 files would I start reading?" — the answer maps the territory that really matters.</p>
+    </details>
+  </div>
+
+  <h2>Self-check</h2>
+  <section class="quiz">
+    <div class="q" data-a="0">
+      <p class="q-text">1. What is Claude allowed to do in Plan Mode?</p>
+      <button class="opt">Only read and explore, then present a plan</button>
+      <button class="opt">Edit files but not run commands</button>
+      <button class="opt">Everything, just slower</button>
+      <p class="q-fb"></p>
+    </div>
+    <div class="q" data-a="1">
+      <p class="q-text">2. How do you attach a specific file to your request's context?</p>
+      <button class="opt">Copy the file's whole content into the message</button>
+      <button class="opt">Type @ and the file path</button>
+      <button class="opt">You can't — Claude picks on its own</button>
+      <p class="q-fb"></p>
+    </div>
+    <div class="q" data-a="2">
+      <p class="q-text">3. What makes a request strong?</p>
+      <button class="opt">Being as short as possible</button>
+      <button class="opt">Being written in English only</button>
+      <button class="opt">Context + goal + explicit requirements</button>
+      <p class="q-fb"></p>
+    </div>
+    <p class="quiz-score"></p>
+  </section>
+
+  <h2>Lesson summary</h2>
+  <ul class="checklist">
+    <li>A good request = context + goal + explicit requirements</li>
+    <li><kbd>Shift+Tab</kbd> switches permission modes; Plan Mode for safe exploration and planning</li>
+    <li><code>/clear</code> for a clean start, <code>/compact</code> to compress, <code>@file</code> to point</li>
+    <li>On an existing project — ask first, change later</li>
+  </ul>
+
+  <div class="complete-row"><button id="completeBtn" data-lesson="l02"></button></div>
+
+  <nav class="lesson-nav">
+    <a href="lesson-01.html"><span class="dir-label">← Previous lesson</span>Install and first run</a>
+    <a href="lesson-03.html"><span class="dir-label">Next lesson →</span>Working with Git and GitHub</a>
+  </nav>
+
+</main>
+
+<footer class="site">A community course for learning Claude Code · official docs: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="https://github.com/saarnetzer/ClaudeCode-Tutorial/issues" target="_blank" rel="noopener">Found a mistake? Open an issue</a><br>© 2026 Saar Netzer · content licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> · built with Claude Code</footer>
+</body>
+</html>

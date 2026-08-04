@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code Course — From Zero to Autonomous Agent Squads</title>
+<meta name="description" content="A free, hands-on Claude Code course: 13 lessons, 40+ exercises, 100 ready-made agents — from your first install to full agent squads.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/">
+<link rel="alternate" hreflang="he" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/">
+<link rel="alternate" hreflang="en" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Claude Code Course — From Zero to Autonomous Agent Squads">
+<meta property="og:description" content="A free, hands-on Claude Code course: 13 lessons, 40+ exercises, 100 ready-made agents — from your first install to full agent squads.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../style.css">
+<script src="../changelog.js" defer></script>
+<script src="../app.js" defer></script>
+<script data-goatcounter="https://saarnetzer.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span> Claude Code Course</a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn">🌓 Theme</button></nav>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>From zero to <span class="grad">autonomous agent squads</span></h1>
+    <p class="lead">A practical, step-by-step course on Claude Code — Anthropic's AI coding agent. From your very first install to agents that work for you on their own: plain explanations, real examples, and exercises in every lesson.</p>
+    <div class="badges">
+      <span class="badge">🎯 13 hands-on lessons</span>
+      <span class="badge">🏋️ 40+ exercises with solutions</span>
+      <span class="badge">🤖 no prior AI knowledge needed</span>
+      <span class="badge">🇮🇱 גם בעברית</span>
+    </div>
+    <p style="margin-top:.8rem;font-size:.9rem"><a href="cheatsheet.html">📋 Cheat sheet</a> · <a href="glossary.html">📖 Glossary</a> · <a href="terminal-basics.html">🖥️ Terminal guide</a> · <a href="git-basics.html">🌿 Git guide</a> · <a href="lesson-09.html">🔒 Security lesson</a></p>
+  </section>
+
+  <section>
+    <h2 style="border-top:none">Your progress</h2>
+    <div class="progress-outer"><div class="progress-inner" id="progressBar"></div></div>
+    <p class="progress-label" id="progressLabel"></p>
+    <p id="continueRow" style="display:none;margin-top:.6rem"><a id="continueBtn" href="#" style="display:inline-block;background:var(--accent);color:#fff;border-radius:10px;padding:.55rem 1.3rem;font-weight:700"></a></p>
+    <div id="certRow" style="display:none;margin-top:.8rem">
+      <button id="certBtn" style="background:var(--green);color:#fff;border:none;border-radius:10px;padding:.65rem 1.6rem;font-size:1rem;font-weight:700;cursor:pointer">🎓 All done — generate your certificate</button>
+      <p style="font-size:.85rem;color:var(--text2);margin:.4rem 0 0">The certificate is generated in your browser, with the name you choose — ready to share on LinkedIn.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>What you need before starting</h2>
+    <ul>
+      <li>A computer running macOS, Linux, or Windows.</li>
+      <li>Basic familiarity with the terminal (open it, type a command, Enter). That's it. Never opened a terminal? We have a <a href="terminal-basics.html"><strong>step-by-step guide for absolute beginners</strong></a> — fifteen minutes and you're ready.</li>
+      <li>A <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a> account (Pro/Max subscription) or an API key from the <a href="https://console.anthropic.com" target="_blank" rel="noopener">Anthropic Console</a>.</li>
+      <li>From Lesson 3 onward: Git installed and a free GitHub account. New to those too? There's a <a href="git-basics.html"><strong>step-by-step setup guide</strong></a>.</li>
+      <li>You don't need to be a professional programmer — the course is built from the ground up, and every concept is explained the moment it appears.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Course contents</h2>
+    <div class="toc">
+      <a class="chapter" href="lesson-01.html" data-lesson="l01">
+        <span class="num">1</span>
+        <span><span class="ch-title">What is Claude Code? Install and first run</span>
+        <span class="ch-desc">What this tool actually does, how to install it, sign in, and run a first conversation that really builds something.</span></span>
+        <span class="ch-meta">~20 min</span>
+      </a>
+      <a class="chapter" href="lesson-02.html" data-lesson="l02">
+        <span class="num">2</span>
+        <span><span class="ch-title">Everyday fundamentals</span>
+        <span class="ch-desc">How to phrase requests well, how Claude reads and edits files, permission modes, and the commands you must know.</span></span>
+        <span class="ch-meta">~30 min</span>
+      </a>
+      <a class="chapter" href="lesson-03.html" data-lesson="l03">
+        <span class="num">3</span>
+        <span><span class="ch-title">Working with Git and GitHub</span>
+        <span class="ch-desc">Commits, branches, conflicts and Pull Requests — all in plain language, no git commands to memorize.</span></span>
+        <span class="ch-meta">~25 min</span>
+      </a>
+      <a class="chapter" href="lesson-04.html" data-lesson="l04">
+        <span class="num">4</span>
+        <span><span class="ch-title">Memory and context: CLAUDE.md</span>
+        <span class="ch-desc">Teach Claude your project once, and keep conversations sharp and focused.</span></span>
+        <span class="ch-meta">~25 min</span>
+      </a>
+      <a class="chapter" href="lesson-05.html" data-lesson="l05">
+        <span class="num">5</span>
+        <span><span class="ch-title">Custom commands and Skills</span>
+        <span class="ch-desc">Turn repeated tasks into a one-word slash command, and build skills Claude pulls in on its own.</span></span>
+        <span class="ch-meta">~30 min</span>
+      </a>
+      <a class="chapter" href="lesson-06.html" data-lesson="l06">
+        <span class="num">6</span>
+        <span><span class="ch-title">Hooks — automating your workflow</span>
+        <span class="ch-desc">Your code running automatically around Claude's actions: auto-format, safety blocks, notifications.</span></span>
+        <span class="ch-meta">~30 min</span>
+      </a>
+      <a class="chapter" href="lesson-07.html" data-lesson="l07">
+        <span class="num">7</span>
+        <span><span class="ch-title">MCP — connecting Claude to the world</span>
+        <span class="ch-desc">Give Claude new tools: a real browser, databases, Slack and more — via the MCP protocol.</span></span>
+        <span class="ch-meta">~30 min</span>
+      </a>
+      <a class="chapter" href="lesson-08.html" data-lesson="l08">
+        <span class="num">8</span>
+        <span><span class="ch-title">Subagents — a team of specialists</span>
+        <span class="ch-desc">Build specialist agents (code reviewer, test writer, researcher) that Claude delegates to on its own.</span></span>
+        <span class="ch-meta">~30 min</span>
+      </a>
+      <a class="chapter" href="lesson-09.html" data-lesson="l13">
+        <span class="num">9</span>
+        <span><span class="ch-title">Controlling what's allowed — agent security</span>
+        <span class="ch-desc">Allow/deny rules, protecting secrets, prompt injection, and when a sandbox is mandatory — the brakes you learn before letting go of the wheel.</span></span>
+        <span class="ch-meta">~30 min</span>
+      </a>
+      <a class="chapter" href="lesson-10.html" data-lesson="l09">
+        <span class="num">10</span>
+        <span><span class="ch-title">Headless mode and CI automation</span>
+        <span class="ch-desc">Run Claude without an interactive screen: scripts, GitHub Actions, and tagging @claude on Pull Requests.</span></span>
+        <span class="ch-meta">~35 min</span>
+      </a>
+      <a class="chapter" href="lesson-11.html" data-lesson="l10">
+        <span class="num">11</span>
+        <span><span class="ch-title">Fully autonomous agents — the Agent SDK</span>
+        <span class="ch-desc">Build your own agent with the Claude Agent SDK, and learn the principles that let it run alone — safely.</span></span>
+        <span class="ch-meta">~45 min</span>
+      </a>
+      <a class="chapter" href="lesson-12.html" data-lesson="l11">
+        <span class="num">12</span>
+        <span><span class="ch-title">Building an agent squad — principles and patterns</span>
+        <span class="ch-desc">From a single agent to a whole team: roles, deliverable contracts, and three organizational patterns.</span></span>
+        <span class="ch-meta">~40 min</span>
+      </a>
+      <a class="chapter" href="lesson-13.html" data-lesson="l12">
+        <span class="num">13</span>
+        <span><span class="ch-title">Agent squads across five industries</span>
+        <span class="ch-desc">A dev team, a magazine desk, a data team, a night-shift ops crew and a support team — with 100 downloadable agents.</span></span>
+        <span class="ch-meta">~45 min</span>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>How to get the most out of this course</h2>
+    <ol>
+      <li><strong>Do, don't just read.</strong> Every lesson has exercises — open a terminal next to the browser and actually run them. Skill is earned by doing.</li>
+      <li><strong>In order.</strong> The lessons build on each other: Lesson 13 assumes you've mastered everything before it.</li>
+      <li><strong>Solutions only after trying.</strong> Every exercise has a hidden solution — peek only after a real attempt.</li>
+      <li><strong>Track your progress.</strong> Each lesson ends with a "complete" button — it saves your progress in this browser.</li>
+    </ol>
+    <div class="callout tip">
+      <span class="co-title">🧪 Ready-made practice project</span>
+      Want a common starting point for the exercises? Download the <a href="../practice/claude-practice-project.zip" download><strong>practice project</strong></a> — a small task-list app with three planted bugs, used by exercises from Lesson 2 onward. There's also a <a href="../practice/index.html" target="_blank" rel="noopener">live preview</a>.
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">A community course for learning Claude Code · official docs: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="https://github.com/saarnetzer/ClaudeCode-Tutorial/issues" target="_blank" rel="noopener">Found a mistake? Open an issue</a><br>© 2026 Saar Netzer · content licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> · built with Claude Code</footer>
+</body>
+</html>
