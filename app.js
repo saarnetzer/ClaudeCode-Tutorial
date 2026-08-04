@@ -249,8 +249,14 @@ function ccT(he, en) { return CC_EN ? en : he; }
     var log = window.COURSE_CHANGELOG;
     if (!log || !log.length) return;
     var latest = log[0];
-    function heDate(iso) {
+    function relTitle(rel) { return CC_EN ? (rel.titleEn || rel.title) : rel.title; }
+    function relChanges(rel) { return CC_EN ? (rel.changesEn || rel.changes) : rel.changes; }
+    function fmtDate(iso) {
       var p = iso.split('-');
+      if (CC_EN) {
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return months[parseInt(p[1], 10) - 1] + ' ' + p[2].replace(/^0/, '') + ', ' + p[0];
+      }
       return p[2].replace(/^0/, '') + '.' + p[1].replace(/^0/, '') + '.' + p[0];
     }
 
@@ -268,13 +274,17 @@ function ccT(he, en) { return CC_EN ? en : he; }
     /* what's-new box on the home page */
     var box = document.getElementById('whatsNew');
     if (box) {
-      var h = '<div class="callout info"><span class="co-title">🆕 מה חדש בגרסה ' + latest.version +
-              ' <span style="font-weight:400;opacity:.7">(' + heDate(latest.date) + ')</span></span><ul style="margin:.4rem 0">';
-      latest.changes.forEach(function (c) { h += '<li></li>'; });
-      h += '</ul><p style="margin:.4rem 0 0;font-size:.9rem"><a href="changelog.html">כל היסטוריית הגרסאות</a> · <a href="feedback.html">שלחו משוב</a></p></div>';
+      var items = relChanges(latest);
+      var h = '<div class="callout info"><span class="co-title">' +
+              ccT('🆕 מה חדש בגרסה ', '🆕 What\'s new in v') + latest.version +
+              ' <span style="font-weight:400;opacity:.7">(' + fmtDate(latest.date) + ')</span></span><ul style="margin:.4rem 0">';
+      items.forEach(function () { h += '<li></li>'; });
+      h += '</ul><p style="margin:.4rem 0 0;font-size:.9rem"><a href="changelog.html">' +
+           ccT('כל היסטוריית הגרסאות', 'Full version history') + '</a> · <a href="feedback.html">' +
+           ccT('שלחו משוב', 'Send feedback') + '</a></p></div>';
       box.innerHTML = h;
       var lis = box.querySelectorAll('li');
-      latest.changes.forEach(function (c, i) { lis[i].textContent = c; });
+      items.forEach(function (c, i) { lis[i].textContent = c; });
     }
 
     /* full changelog page */
@@ -286,11 +296,11 @@ function ccT(he, en) { return CC_EN ? en : he; }
         var head = document.createElement('div');
         head.className = 'ex-head';
         head.innerHTML = '<span class="ex-badge"></span><span></span><span style="margin-inline-start:auto;font-weight:400;color:var(--text3);font-size:.85rem"></span>';
-        head.children[0].textContent = 'גרסה ' + rel.version;
-        head.children[1].textContent = rel.title;
-        head.children[2].textContent = heDate(rel.date);
+        head.children[0].textContent = ccT('גרסה ', 'v') + rel.version;
+        head.children[1].textContent = relTitle(rel);
+        head.children[2].textContent = fmtDate(rel.date);
         var ul = document.createElement('ul');
-        rel.changes.forEach(function (c) {
+        relChanges(rel).forEach(function (c) {
           var li = document.createElement('li');
           li.textContent = c;
           ul.appendChild(li);
