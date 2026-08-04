@@ -11,4 +11,6 @@
 
 **גרסה נוכחית:** ראו את [היסטוריית הגרסאות](https://saarnetzer.github.io/ClaudeCode-Tutorial/changelog.html) (מנוהלת ב-`changelog.js`).
 
+**רישיון:** התוכן ב-[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) — ראו `LICENSE`.
+
 **משוב:** [דיווח בעיות והצעות](https://saarnetzer.github.io/ClaudeCode-Tutorial/feedback.html) · תיקונים ב-Pull Request יתקבלו בשמחה.

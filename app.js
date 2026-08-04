@@ -299,3 +299,84 @@
     }
   });
 })();
+
+/* ===== continue button + completion certificate (home page) ===== */
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+    var bar = document.getElementById('progressBar');
+    if (!bar) return;
+    var TOTAL = 13;
+    var done = [];
+    try { done = JSON.parse(localStorage.getItem('ccCourseDone')) || []; } catch (e) {}
+
+    /* continue where you left off: first chapter card (in display order) not done */
+    var row = document.getElementById('continueRow');
+    var btn = document.getElementById('continueBtn');
+    if (row && btn && done.length > 0 && done.length < TOTAL) {
+      var cards = document.querySelectorAll('.toc a.chapter');
+      for (var i = 0; i < cards.length; i++) {
+        if (done.indexOf(cards[i].dataset.lesson) === -1) {
+          var title = cards[i].querySelector('.ch-title');
+          btn.href = cards[i].getAttribute('href');
+          btn.textContent = '▶ המשיכו מפרק ' + (i + 1) + ': ' + (title ? title.textContent : '');
+          row.style.display = '';
+          break;
+        }
+      }
+    }
+
+    /* certificate when everything is complete */
+    var certRow = document.getElementById('certRow');
+    var certBtn = document.getElementById('certBtn');
+    if (certRow && certBtn && done.length >= TOTAL) {
+      certRow.style.display = '';
+      certBtn.addEventListener('click', function () {
+        var name = prompt('איך לרשום את השם על התעודה?');
+        if (!name || !name.trim()) return;
+        name = name.trim();
+        var version = (window.COURSE_CHANGELOG && window.COURSE_CHANGELOG[0]) ? window.COURSE_CHANGELOG[0].version : '';
+        var c = document.createElement('canvas');
+        c.width = 1600; c.height = 1131;
+        var x = c.getContext('2d');
+        x.fillStyle = '#12100e'; x.fillRect(0, 0, 1600, 1131);
+        x.strokeStyle = '#d97757'; x.lineWidth = 6;
+        x.strokeRect(50, 50, 1500, 1031);
+        x.strokeStyle = '#3a332c'; x.lineWidth = 2;
+        x.strokeRect(70, 70, 1460, 991);
+        x.textAlign = 'center'; x.direction = 'rtl';
+        x.fillStyle = '#d97757';
+        x.font = '110px "Segoe UI", sans-serif';
+        x.fillText('\u2733', 800, 240);
+        x.fillStyle = '#ece5dd';
+        x.font = 'bold 84px "Segoe UI", "Heebo", sans-serif';
+        x.fillText('תעודת סיום', 800, 380);
+        x.fillStyle = '#b3a99c';
+        x.font = '38px "Segoe UI", sans-serif';
+        x.fillText('מוענקת בזאת אל', 800, 470);
+        x.fillStyle = '#e8956f';
+        x.font = 'bold 72px "Segoe UI", "Heebo", sans-serif';
+        x.fillText(name, 800, 580);
+        x.fillStyle = '#ece5dd';
+        x.font = '40px "Segoe UI", sans-serif';
+        x.fillText('על השלמת קורס Claude Code בעברית', 800, 690);
+        x.fillStyle = '#b3a99c';
+        x.font = '34px "Segoe UI", sans-serif';
+        x.fillText('13 פרקים · מאפס ועד צוותי סוכנים אוטונומיים', 800, 755);
+        var d = new Date();
+        var dateStr = d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear();
+        x.fillText(dateStr + (version ? ' · גרסת קורס ' + version : ''), 800, 880);
+        x.fillStyle = '#7d746a';
+        x.font = '28px Consolas, monospace';
+        x.direction = 'ltr';
+        x.fillText('saarnetzer.github.io/ClaudeCode-Tutorial', 800, 990);
+        var a = document.createElement('a');
+        a.download = 'claude-code-course-certificate.png';
+        a.href = c.toDataURL('image/png');
+        a.click();
+        if (window.goatcounter && window.goatcounter.count) {
+          window.goatcounter.count({ path: 'certificate-generated', title: 'Certificate generated', event: true });
+        }
+      });
+    }
+  });
+})();
