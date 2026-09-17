@@ -486,3 +486,82 @@ function ccT(he, en) { return CC_EN ? en : he; }
     onScroll();
   });
 })();
+
+/* ===== contact form ===== */
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('contactForm');
+    if (!form) return;
+    var statusEl = document.getElementById('cf-status');
+    var submit = form.querySelector('.cc-submit');
+    var endpoint = (window.CONTACT_ENDPOINT || '').trim();
+
+    function say(msg, cls) {
+      statusEl.className = 'cc-status ' + (cls || '');
+      statusEl.textContent = msg;
+    }
+    function sayHTML(html, cls) {
+      statusEl.className = 'cc-status ' + (cls || '');
+      statusEl.innerHTML = html;
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      /* a filled honeypot means a bot: pretend success and drop it */
+      if (form.querySelector('[name="_gotcha"]').value) {
+        say(ccT('תודה, הפנייה נשלחה.', 'Thanks, your message was sent.'), 'ok');
+        form.reset();
+        return;
+      }
+
+      /* validation with a clear first-error focus */
+      var required = form.querySelectorAll('[required]');
+      var firstBad = null;
+      required.forEach(function (el) {
+        var bad = !el.value.trim() || (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim()));
+        el.classList.toggle('invalid', bad);
+        if (bad && !firstBad) firstBad = el;
+      });
+      if (firstBad) {
+        say(ccT('נא למלא את השדות המסומנים.', 'Please fill in the highlighted fields.'), 'err');
+        firstBad.focus();
+        return;
+      }
+
+      /* not wired to a form service yet — say so honestly and offer a route */
+      if (!endpoint) {
+        sayHTML(ccT(
+          'טופס זה עדיין לא חובר לשירות שליחה. בינתיים אפשר לפנות דרך <a href="https://github.com/saarnetzer/ClaudeCode-Tutorial/issues/new" target="_blank" rel="noopener">issue בריפו של הקורס</a> (שימו לב: issue הוא ציבורי).',
+          'This form is not connected to a sending service yet. In the meantime you can reach out via <a href="https://github.com/saarnetzer/ClaudeCode-Tutorial/issues/new" target="_blank" rel="noopener">an issue on the course repo</a> (note: issues are public).'
+        ), 'note');
+        return;
+      }
+
+      submit.disabled = true;
+      say(ccT('שולח…', 'Sending…'), 'note');
+
+      fetch(endpoint, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form)
+      }).then(function (r) {
+        if (!r.ok) throw new Error('bad status');
+        say(ccT('✔ הפנייה נשלחה. אחזור אליכם בקרוב.', '✔ Sent. I will get back to you soon.'), 'ok');
+        form.reset();
+        if (window.goatcounter && window.goatcounter.count) {
+          window.goatcounter.count({ path: 'contact-sent', title: 'Contact form sent', event: true });
+        }
+      }).catch(function () {
+        say(ccT('השליחה נכשלה. נסו שוב בעוד רגע.', 'Sending failed. Please try again in a moment.'), 'err');
+      }).then(function () {
+        submit.disabled = false;
+      });
+    });
+
+    /* clear the error state as soon as the visitor starts fixing it */
+    form.querySelectorAll('[required]').forEach(function (el) {
+      el.addEventListener('input', function () { el.classList.remove('invalid'); });
+    });
+  });
+})();

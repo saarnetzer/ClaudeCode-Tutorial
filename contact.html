@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>צור קשר · קורס Claude Code</title>
+<meta name="description" content="פנייה בנושא ליווי הטמעת סוכנים, סדנה לצוות, סקירת ארכיטקטורה או שאלה על הקורס.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/contact.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="צור קשר · קורס Claude Code">
+<meta property="og:description" content="פנייה בנושא ליווי הטמעת סוכנים, סדנה לצוות, סקירת ארכיטקטורה או שאלה על הקורס.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/contact.html">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
+<meta property="og:locale" content="he_IL">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" hreflang="he" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/contact.html">
+<link rel="alternate" hreflang="en" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/contact.html">
+<link rel="stylesheet" href="style.css">
+<script>
+/* ── הגדרת יעד הטופס ──────────────────────────────────────────────
+   הדביקו כאן את כתובת ה-endpoint משירות הטפסים (למשל Formspree).
+   כל עוד הערך ריק, הטופס מציג הודעה ומפנה לערוץ חלופי.        */
+window.CONTACT_ENDPOINT = "";
+</script>
+<script src="changelog.js" defer></script>
+<script src="app.js" defer></script>
+<script data-goatcounter="https://saarnetzer.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> קורס Claude Code</span></a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/contact.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">צור קשר</span>
+  <h1>יש לכם שאלה, או פרויקט שצריך ליווי?</h1>
+  <p class="lead">הקורס חינמי ויישאר חינמי — אין כאן מה לקנות. התיבה הזו נועדה למי שרוצה ללכת צעד אחד רחוק יותר: הטמעת סוכנים בארגון, סדנה לצוות, סקירת ארכיטקטורה, או פשוט לספר מה בניתם.</p>
+
+  <div class="callout info">
+    <span class="co-title">💡 מצאתם טעות בקורס?</span>
+    לדיווח על באג או להצעת שיפור בתוכן יש ערוץ ייעודי: <a href="feedback.html">עמוד המשוב</a>. התיבה כאן היא לפניות אישיות.
+  </div>
+
+  <form id="contactForm" class="cc-form" novalidate>
+    <div class="cc-field">
+      <label for="cf-name">שם <span class="req">*</span></label>
+      <input id="cf-name" name="name" type="text" required autocomplete="name" placeholder="איך לפנות אליכם">
+    </div>
+
+    <div class="cc-field">
+      <label for="cf-email">אימייל לחזרה <span class="req">*</span></label>
+      <input id="cf-email" name="email" type="email" required autocomplete="email" dir="ltr" placeholder="you@example.com">
+    </div>
+
+    <div class="cc-field">
+      <label for="cf-org">ארגון / חברה</label>
+      <input id="cf-org" name="organization" type="text" autocomplete="organization" placeholder="רשות">
+    </div>
+
+    <div class="cc-field">
+      <label for="cf-topic">נושא הפנייה <span class="req">*</span></label>
+      <select id="cf-topic" name="topic" required>
+        <option value="">בחרו נושא…</option>
+        <option>ליווי הטמעת סוכנים בארגון</option>
+        <option>סדנה או הדרכה לצוות</option>
+        <option>סקירת ארכיטקטורה של פרויקט סוכנים</option>
+        <option>משוב על פרויקט הגמר שלי</option>
+        <option>שאלה על הקורס</option>
+        <option>שיתוף פעולה / אחר</option>
+      </select>
+    </div>
+
+    <div class="cc-field">
+      <label for="cf-message">במה מדובר? <span class="req">*</span></label>
+      <textarea id="cf-message" name="message" rows="6" required placeholder="כמה משפטים על מה שאתם בונים, ומה תרצו לקבל"></textarea>
+      <p class="cc-hint">ככל שתפרטו יותר על ההקשר — כך התשובה תהיה מועילה יותר.</p>
+    </div>
+
+    <!-- מלכודת ספאם: שדה מוסתר שבוט ימלא ואדם לא יראה -->
+    <div class="cc-hp" aria-hidden="true">
+      <label for="cf-website">אל תמלאו שדה זה</label>
+      <input id="cf-website" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
+    </div>
+
+    <button type="submit" class="cc-submit">שליחת הפנייה</button>
+    <p id="cf-status" class="cc-status" role="status" aria-live="polite"></p>
+  </form>
+
+  <p style="font-size:.9rem;color:var(--text2);margin-top:1.5rem">
+    הפרטים שתשלחו משמשים אך ורק כדי לחזור אליכם. אין רשימת תפוצה, ואין העברה לצד שלישי.
+  </p>
+
+  <nav class="lesson-nav">
+    <a href="capstone.html"><span class="dir-label">→ חזרה</span>פרויקט הגמר</a>
+    <a href="index.html"><span class="dir-label">לקורס ←</span>תוכן הקורס</a>
+  </nav>
+</main>
+
+<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="feedback.html">מצאתם טעות? שלחו משוב</a><br>© 2026 סער נצר (<a href="https://github.com/saarnetzer" target="_blank" rel="noopener">Saar Netzer</a>) · התוכן ברישיון <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.he" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> · נבנה באמצעות Claude Code</footer>
+</body>
+</html>

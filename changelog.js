@@ -4,6 +4,20 @@
    according to the page's <html lang>. */
 window.COURSE_CHANGELOG = [
   {
+    version: "3.4.0",
+    date: "2026-09-17",
+    title: "תיבת צור קשר",
+    titleEn: "A contact form",
+    changes: [
+      "✉️ עמוד צור קשר עם טופס פנייה — לליווי, סדנאות, סקירת ארכיטקטורה או שאלה",
+      "הפרדה ברורה בין דיווח על תקלה בקורס (ציבורי, דרך GitHub) לבין פנייה אישית"
+    ],
+    changesEn: [
+      "✉️ A contact page with an enquiry form — for guidance, workshops, architecture reviews or questions",
+      "A clear split between reporting a course bug (public, via GitHub) and a personal enquiry"
+    ]
+  },
+  {
     version: "3.3.0",
     date: "2026-09-17",
     title: "פרויקט גמר עם ציון, תיקוני מובייל ושיפורי עיצוב",

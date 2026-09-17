@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact · Claude Code Course</title>
+<meta name="description" content="Get in touch about rolling agents out across an organisation, a team workshop, an architecture review, or a question about the course.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/contact.html">
+<link rel="alternate" hreflang="he" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/contact.html">
+<link rel="alternate" hreflang="en" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/contact.html">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contact · Claude Code Course">
+<meta property="og:description" content="Get in touch about rolling agents out across an organisation, a team workshop, an architecture review, or a question about the course.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/contact.html">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/og-image.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../style.css">
+<script>
+/* ── Form destination ─────────────────────────────────────────────
+   Paste the endpoint from your form service (e.g. Formspree) here.
+   While this is empty the form shows a notice and offers a fallback. */
+window.CONTACT_ENDPOINT = "";
+</script>
+<script src="../changelog.js" defer></script>
+<script src="../app.js" defer></script>
+<script data-goatcounter="https://saarnetzer.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> Claude Code Course</span></a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../contact.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">Contact</span>
+  <h1>Got a question, or a project that needs guidance?</h1>
+  <p class="lead">The course is free and will stay free — there's nothing to buy here. This form is for people who want to go one step further: rolling agents out across an organisation, a team workshop, an architecture review, or simply telling me what you built.</p>
+
+  <div class="callout info">
+    <span class="co-title">💡 Found a mistake in the course?</span>
+    Bug reports and content suggestions have their own channel: the <a href="feedback.html">feedback page</a>. This form is for personal enquiries.
+  </div>
+
+  <form id="contactForm" class="cc-form" novalidate>
+    <div class="cc-field">
+      <label for="cf-name">Name <span class="req">*</span></label>
+      <input id="cf-name" name="name" type="text" required autocomplete="name" placeholder="What should I call you">
+    </div>
+
+    <div class="cc-field">
+      <label for="cf-email">Email for my reply <span class="req">*</span></label>
+      <input id="cf-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com">
+    </div>
+
+    <div class="cc-field">
+      <label for="cf-org">Organisation / company</label>
+      <input id="cf-org" name="organization" type="text" autocomplete="organization" placeholder="Optional">
+    </div>
+
+    <div class="cc-field">
+      <label for="cf-topic">What's this about? <span class="req">*</span></label>
+      <select id="cf-topic" name="topic" required>
+        <option value="">Choose a topic…</option>
+        <option>Rolling agents out across an organisation</option>
+        <option>A workshop or training for a team</option>
+        <option>An architecture review of an agent project</option>
+        <option>Feedback on my capstone project</option>
+        <option>A question about the course</option>
+        <option>Collaboration / something else</option>
+      </select>
+    </div>
+
+    <div class="cc-field">
+      <label for="cf-message">Tell me more <span class="req">*</span></label>
+      <textarea id="cf-message" name="message" rows="6" required placeholder="A few sentences about what you're building and what you'd like to get"></textarea>
+      <p class="cc-hint">The more context you give, the more useful the answer will be.</p>
+    </div>
+
+    <!-- Spam trap: a hidden field a bot fills in and a human never sees -->
+    <div class="cc-hp" aria-hidden="true">
+      <label for="cf-website">Leave this field empty</label>
+      <input id="cf-website" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
+    </div>
+
+    <button type="submit" class="cc-submit">Send enquiry</button>
+    <p id="cf-status" class="cc-status" role="status" aria-live="polite"></p>
+  </form>
+
+  <p style="font-size:.9rem;color:var(--text2);margin-top:1.5rem">
+    What you send is used only to reply to you. No mailing list, nothing passed to third parties.
+  </p>
+
+  <nav class="lesson-nav">
+    <a href="capstone.html"><span class="dir-label">← Back</span>Capstone project</a>
+    <a href="index.html"><span class="dir-label">To the course →</span>Course contents</a>
+  </nav>
+</main>
+
+<footer class="site">A community course for learning Claude Code · official docs: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="feedback.html">Found a mistake? Send feedback</a><br>© 2026 Saar Netzer · content licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> · built with Claude Code</footer>
+</body>
+</html>
