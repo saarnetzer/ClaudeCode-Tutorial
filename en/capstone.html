@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capstone project · Submit, review and score</title>
+<meta name="description" content="The Claude Code course capstone: what to build, the grading criteria, an examiner agent for self-assessment, and how to submit for review.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/capstone.html">
+<link rel="alternate" hreflang="he" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/capstone.html">
+<link rel="alternate" hreflang="en" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/capstone.html">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Capstone project · Submit, review and score">
+<meta property="og:description" content="The Claude Code course capstone: what to build, the grading criteria, an examiner agent for self-assessment, and how to submit for review.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/capstone.html">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/og-image.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../style.css">
+<script src="../changelog.js" defer></script>
+<script src="../app.js" defer></script>
+<script data-goatcounter="https://saarnetzer.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> Claude Code Course</span></a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../capstone.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">Capstone project</span>
+  <h1>Build something real — and get scored on it</h1>
+  <p class="lead">A good course isn't measured by how many lessons you read, but by what you can build afterwards. The capstone is the proof: an agent or an agent squad running on something real of yours — reviewed against clear criteria.</p>
+
+  <h2>What to build</h2>
+  <p>Pick <strong>one track</strong> — both are scored identically:</p>
+  <div class="cheat-grid">
+    <div class="cheat-card">
+      <h3>🤖 Track A: an autonomous agent</h3>
+      <p>A single agent that runs on a schedule or with one command and performs a real task end to end: dependency updates, dead-code cleanup, improving test coverage, a periodic report.</p>
+      <p style="font-size:.88rem;color:var(--text2)">Based on <a href="lesson-11.html">Lesson 11</a>, exercise 11.3</p>
+    </div>
+    <div class="cheat-card">
+      <h3>👥 Track B: an agent squad</h3>
+      <p>Three or more roles with an orchestrator, shared memory and deliverable contracts — in your own domain: development, marketing, data, operations or support.</p>
+      <p style="font-size:.88rem;color:var(--text2)">Based on <a href="lesson-12.html">Lesson 12</a> and <a href="lesson-13.html">Lesson 13</a></p>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <span class="co-title">⚠️ One hard requirement</span>
+    The project must run on <strong>something real of yours</strong> — a repo, data or a process you actually work with. A toy project will pass the technical review and miss the entire point.
+  </div>
+
+  <h2>How you're scored</h2>
+  <p>The criteria are no surprise — they're the five autonomy principles from <a href="lesson-11.html">Lesson 11</a>, weighted:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>#</th><th>Criterion</th><th>What's actually checked</th><th>Weight</th></tr>
+    <tr><td>1</td><td>Feedback loop</td><td>The agent has an objective way to know it succeeded — and actually runs it</td><td>25%</td></tr>
+    <tr><td>2</td><td>Boundaries in code</td><td>Narrow allowedTools, deny rules, blocking hooks, readonly MCP access</td><td>25%</td></tr>
+    <tr><td>3</td><td>Quantitative brakes</td><td>A turn cap, cost monitoring, a timeout</td><td>15%</td></tr>
+    <tr><td>4</td><td>External memory</td><td>Work in slices, a state file, a commit per stage</td><td>15%</td></tr>
+    <tr><td>5</td><td>Human at decision points</td><td>The output passes approval, alerts on anomalies, clear who approves what</td><td>20%</td></tr>
+  </table>
+  </div>
+  <p><strong>The decisive rule:</strong> the distinction between <em>declared</em> and <em>enforced</em>. An instruction in CLAUDE.md is a request; a deny rule or a hook is a mechanism. Full marks on criterion 2 are awarded only for enforcement.</p>
+
+  <h2>Step 1: check yourself — with an agent</h2>
+  <p>Before submitting, let an examiner agent go over your work. It checks all five criteria, looks for evidence in the code, and returns a report with a score and the three most important fixes:</p>
+  <pre><code># 1. Download the examiner into your project
+#    (link below — save it in .claude/agents/)
+
+# 2. In your project, ask Claude:
+have course-examiner review this project and give me a score</code></pre>
+  <p style="margin-top:.6rem">
+    ⬇️ <a href="../agents/course/course-examiner.en.md" download><strong>Download the examiner agent (English)</strong></a> ·
+    <a href="../agents/course/course-examiner.md" download>גרסה עברית</a>
+  </p>
+  <div class="callout tip">
+    <span class="co-title">✅ Why this works</span>
+    The examiner is defined with read-only permissions and an explicit instruction not to flatter — exactly the principles you learned in Lesson 8. It's also a live demonstration: <strong>an agent reviewing an agent's work</strong>. Got a low score? Fix and run it again. That's the loop.
+  </div>
+
+  <h2>Step 2: submit for review</h2>
+  <p>Submitting is entirely optional — but it's what turns an exercise into a deliverable. Two ways:</p>
+  <ol>
+    <li><strong>Peer review and feedback:</strong> open a <a href="https://github.com/saarnetzer/ClaudeCode-Tutorial/issues/new?template=capstone.md" target="_blank" rel="noopener">capstone submission</a> — a short description, a link to the repo (or screenshots if it's private), and the examiner's report. You'll get human feedback.</li>
+    <li><strong>For yourself only:</strong> save the examiner's report in the project as <code dir="ltr">EXAM_REPORT.md</code> and run it again in a month. Comparing the two reports is the real measure of your progress.</li>
+  </ol>
+  <div class="callout info">
+    <span class="co-title">💡 A free GitHub account is required</span>
+    Submissions open as an issue on GitHub. No account? <a href="git-basics.html#github-account">A two-minute setup guide</a>. Don't want one? Option 2 stands on its own.
+  </div>
+
+  <h2>Step 3: the certificate</h2>
+  <p>Once you've marked all 13 lessons complete, the certificate button appears on the <a href="index.html">home page</a>. It's generated in your browser with the name you choose — and if you also passed the examiner, mention the score when you share it. That's what turns a certificate from decoration into proof.</p>
+
+  <nav class="lesson-nav">
+    <a href="lesson-13.html"><span class="dir-label">← Last lesson</span>Agent squads across five industries</a>
+    <a href="index.html"><span class="dir-label">Back →</span>Course contents</a>
+  </nav>
+
+</main>
+
+<footer class="site">A community course for learning Claude Code · official docs: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="feedback.html">Found a mistake? Send feedback</a><br>© 2026 Saar Netzer · content licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> · built with Claude Code</footer>
+</body>
+</html>

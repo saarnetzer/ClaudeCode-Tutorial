@@ -31,20 +31,69 @@ function ccT(he, en) { return CC_EN ? en : he; }
       });
     }
 
+    /* ---------- shared copy helper ---------- */
+    var toast;
+    function showToast(msg) {
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'copyToast';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toast._t);
+      toast._t = setTimeout(function () { toast.classList.remove('show'); }, 1600);
+    }
+    function copyText(text, onDone) {
+      text = (text || '').trim();
+      if (!text) return;
+      function done() {
+        showToast(ccT('✔ הועתק', '✔ Copied'));
+        if (onDone) onDone();
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { fallback(); });
+      } else { fallback(); }
+      function fallback() {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.cssText = 'position:fixed;top:-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+    }
+
     /* copy buttons on every <pre> */
     document.querySelectorAll('pre').forEach(function (pre) {
+      if (pre.classList.contains('td-screen')) return;   /* skip terminal demos */
       var btn = document.createElement('button');
       btn.className = 'copy-btn';
+      btn.type = 'button';
       btn.textContent = ccT('העתק', 'Copy');
       btn.addEventListener('click', function () {
         var code = pre.querySelector('code');
-        var text = (code ? code.innerText : pre.innerText).trim();
-        navigator.clipboard.writeText(text).then(function () {
+        copyText(code ? code.innerText : pre.innerText, function () {
           btn.textContent = ccT('✔ הועתק', '✔ Copied');
           setTimeout(function () { btn.textContent = ccT('העתק', 'Copy'); }, 1500);
         });
       });
       pre.appendChild(btn);
+    });
+
+    /* one-tap copy for every command in the cheat sheet */
+    document.querySelectorAll('.cheat-card table code').forEach(function (code) {
+      code.classList.add('copyable');
+      code.setAttribute('role', 'button');
+      code.setAttribute('tabindex', '0');
+      code.setAttribute('title', ccT('לחצו להעתקה', 'Click to copy'));
+      function go() { copyText(code.textContent); }
+      code.addEventListener('click', go);
+      code.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
+      });
     });
 
     var done = getDone();
@@ -391,5 +440,49 @@ function ccT(he, en) { return CC_EN ? en : he; }
         }
       });
     }
+  });
+})();
+
+/* ===== reading progress + back to top ===== */
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+    var main = document.querySelector('main.wrap');
+    if (!main) return;
+
+    /* progress bar only on long pages (lessons and guides) */
+    var isLong = main.scrollHeight > window.innerHeight * 1.8;
+    var bar;
+    if (isLong) {
+      bar = document.createElement('div');
+      bar.id = 'readProgress';
+      document.body.appendChild(bar);
+    }
+
+    var top = document.createElement('button');
+    top.id = 'toTop';
+    top.type = 'button';
+    top.textContent = '↑';
+    top.setAttribute('aria-label', ccT('חזרה לראש העמוד', 'Back to top'));
+    top.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    document.body.appendChild(top);
+
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        var y = window.scrollY || document.documentElement.scrollTop;
+        if (bar) {
+          var h = document.documentElement.scrollHeight - window.innerHeight;
+          bar.style.width = (h > 0 ? Math.min(100, (y / h) * 100) : 0) + '%';
+        }
+        top.classList.toggle('show', y > 600);
+        ticking = false;
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   });
 })();

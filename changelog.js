@@ -4,6 +4,26 @@
    according to the page's <html lang>. */
 window.COURSE_CHANGELOG = [
   {
+    version: "3.3.0",
+    date: "2026-09-17",
+    title: "פרויקט גמר עם ציון, תיקוני מובייל ושיפורי עיצוב",
+    titleEn: "A graded capstone, mobile fixes and design polish",
+    changes: [
+      "🎓 עמוד פרויקט גמר: קריטריוני בדיקה, סוכן־בוחן שנותן ציון ודוח תיקונים, והגשה למשוב",
+      "תוקן: כפתורי התפריט נעלמו במובייל בתצוגה אנכית",
+      "לחיצה על כל פקודה בצ'יט-שיט מעתיקה אותה — כולל בנייד",
+      "תוקן יישור טבלאות ותשובות בוחן בעמודים באנגלית, ומספור התרגילים בפרקים 10–13",
+      "סרגל התקדמות קריאה, כפתור חזרה למעלה וליטוש עיצובי"
+    ],
+    changesEn: [
+      "🎓 A capstone page: review criteria, an examiner agent that scores your work, and submission for feedback",
+      "Fixed: header buttons disappeared on mobile in portrait orientation",
+      "Tap any command in the cheat sheet to copy it — mobile included",
+      "Fixed table and quiz alignment on the English pages, and exercise numbering in lessons 10–13",
+      "A reading progress bar, a back-to-top button and visual polish"
+    ]
+  },
+  {
     version: "3.2.0",
     date: "2026-08-04",
     title: "הקורס עכשיו גם באנגלית",

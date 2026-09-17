@@ -24,8 +24,8 @@
 </head>
 <body>
 <header class="site">
-  <div class="brand"><a href="index.html"><span class="spark">✳</span> קורס Claude Code</a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/lesson-12.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
+  <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> קורס Claude Code</span></a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/lesson-12.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
 </header>
 
 <main class="wrap">
@@ -166,7 +166,7 @@ for await (const message of result) {
 
   <h2>תרגילים</h2>
   <div class="exercise">
-    <div class="ex-head"><span class="ex-badge">תרגיל 11.1</span> פס הייצור הראשון שלכם</div>
+    <div class="ex-head"><span class="ex-badge">תרגיל 12.1</span> פס הייצור הראשון שלכם</div>
     <p>צרו בפרויקט שלכם צוות מינימלי של שלושה: planner,‏ coder,‏ reviewer (אפשר להתבסס על הסוכנים מפרק 8). כתבו את הפקודה <code dir="ltr">/build-feature</code> מהדוגמה, והפעילו אותה על פיצ'ר קטן אמיתי. עקבו אחרי המסירות בין הסוכנים.</p>
     <details class="solution"><summary>מה לבדוק</summary>
       <p>שלוש נקודות המסירה: SPEC.md נוצר ומפורט? הקוד באמת עוקב אחרי ה‑SPEC? דוח הסקירה מדורג ומצביע על קבצים? אם מסירה "דלפה" (סוכן התעלם מתוצר קודמו) — חדדו את חוזה התוצרים ב‑system prompt של המקבל: "קרא קודם את SPEC.md ופעל רק לפיו".</p>
@@ -174,7 +174,7 @@ for await (const message of result) {
   </div>
 
   <div class="exercise">
-    <div class="ex-head"><span class="ex-badge">תרגיל 11.2</span> שני סוכנים במקביל</div>
+    <div class="ex-head"><span class="ex-badge">תרגיל 12.2</span> שני סוכנים במקביל</div>
     <p>בחרו שתי משימות בלתי תלויות בפרויקט (למשל: שיפור עמוד א' ושיפור עמוד ב'). צרו שני worktrees, הריצו Claude בכל אחד במקביל, ובסוף מזגו את שני הענפים. תעדו: כמה זמן חסכתם, וכמה עלה לכם האיחוד?</p>
     <details class="solution"><summary>לקח מרכזי</summary>
       <p>אם המיזוג עבר חלק — המשימות באמת היו בלתי תלויות, וזה הרווח האמיתי של התבנית. אם היו קונפליקטים — למדתם משהו חשוב יותר: הגבול בין המשימות עבר במקום הלא נכון. פיצול טוב הוא לאורך קווי התפר הטבעיים של הפרויקט (קבצים/תיקיות שונים), לא לרוחבם.</p>
@@ -182,7 +182,7 @@ for await (const message of result) {
   </div>
 
   <div class="exercise">
-    <div class="ex-head"><span class="ex-badge">תרגיל 11.3</span> מהנדס הצוות</div>
+    <div class="ex-head"><span class="ex-badge">תרגיל 12.3</span> מהנדס הצוות</div>
     <p>קחו את הצוות מתרגיל 11.1 ושברו אותו בכוונה: תנו ל‑planner לכתוב תוכנית מעורפלת בת שורה אחת ("תבנה את זה טוב"). הריצו את השרשרת וראו איך הטעות מתגלגלת במורד פס הייצור. אחר כך תקנו — הוסיפו ל‑planner דרישת מבנה (צעדים ממוספרים, קבצים מושפעים, קריטריון הצלחה) והריצו שוב.</p>
     <details class="solution"><summary>למה התרגיל הזה חשוב</summary>
       <p>בצוות סוכנים, איכות התוצר נקבעת בחוליה החלשה — וכמעט תמיד זו איכות המסירה, לא איכות הסוכן. ההשוואה בין שתי הריצות מלמדת יותר מכל תיאוריה: תוכנית טובה בתחילת השרשרת שווה יותר מסוכן גאוני בסופה.</p>

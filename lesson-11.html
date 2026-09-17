@@ -24,8 +24,8 @@
 </head>
 <body>
 <header class="site">
-  <div class="brand"><a href="index.html"><span class="spark">✳</span> קורס Claude Code</a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/lesson-11.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn">🌓 ערכת נושא</button></nav>
+  <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> קורס Claude Code</span></a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/lesson-11.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
 </header>
 
 <main class="wrap">
@@ -140,7 +140,7 @@ const result = query({
 
   <h2>תרגילים</h2>
   <div class="exercise">
-    <div class="ex-head"><span class="ex-badge">תרגיל 10.1</span> הסוכן הראשון שלכם בקוד</div>
+    <div class="ex-head"><span class="ex-badge">תרגיל 11.1</span> הסוכן הראשון שלכם בקוד</div>
     <p>הריצו את סוכן ה‑TODO מהדוגמה (בשפה שנוחה לכם) על פרויקט אמיתי. אחר כך שנו את המשימה למשהו שלכם: יצירת דוח תיעוד, איתור קוד מת, בדיקת עקביות תרגומים. עקבו בפלט אחרי הצעדים שהוא בוחר.</p>
     <details class="solution"><summary>אם משהו נתקע</summary>
       <p>ודאו שמשתנה הסביבה <code dir="ltr">ANTHROPIC_API_KEY</code> מוגדר, ושה‑allowedTools כוללים את מה שהמשימה באמת דורשת (כתיבת דוח = צריך Write). שגיאת "כלי לא מורשה" בפלט היא רמז מדויק למה שחסר.</p>
@@ -148,7 +148,7 @@ const result = query({
   </div>
 
   <div class="exercise">
-    <div class="ex-head"><span class="ex-badge">תרגיל 10.2</span> כלי מותאם + שיקול דעת</div>
+    <div class="ex-head"><span class="ex-badge">תרגיל 11.2</span> כלי מותאם + שיקול דעת</div>
     <p>בנו סוכן "בודק בריאות פרויקט" עם כלי מותאם אחד: <code dir="ltr">report_status(status, details)</code> שכותב לקובץ JSON (או שולח הודעה אמיתית — טלגרם/סלאק אם תרצו). המשימה: "הרץ טסטים ו‑lint; דווח ok אם הכול תקין, ו‑failed עם פירוט אם לא". הריצו פעם על פרויקט תקין ופעם על שבור.</p>
     <details class="solution"><summary>מה בודקים כאן</summary>
       <p>שהסוכן מפעיל את הכלי שלכם <em>נכון</em>: פעם אחת עם ok, פעם עם failed + פירוט אמיתי של הכשל. אם הוא מדווח ok על פרויקט שבור — חדדו את הפרומפט ("הרץ בפועל וקרא את הפלט; אל תניח"). ברוכים הבאים להנדסת סוכנים.</p>
@@ -156,7 +156,7 @@ const result = query({
   </div>
 
   <div class="exercise">
-    <div class="ex-head"><span class="ex-badge">תרגיל 10.3</span> פרויקט גמר: הסוכן הלילי</div>
+    <div class="ex-head"><span class="ex-badge">תרגיל 11.3</span> פרויקט גמר: הסוכן הלילי</div>
     <p>חברו הכול: בנו סוכן שרץ מתוזמן (cron או GitHub Actions מתוזמן) פעם ביום על ריפו שלכם, ומבצע משימת תחזוקה לבחירתכם מקצה לקצה — על ענף נפרד, עם טסטים כלולאת משוב, maxTurns, קובץ מצב, ו‑PR כתוצר. תנו לו לרוץ שלושה לילות וסקרו את התוצרים.</p>
     <details class="solution"><summary>מסגרת מומלצת</summary>
       <p>קחו את <code dir="ltr">nightly-deps.sh</code> מפרק 10 כשלד, והחליפו את המשימה: ניקוי קוד מת, שיפור כיסוי טסטים ("הוסף טסט אחד לקובץ הכי פחות מכוסה"), או עדכון תיעוד. עברו על חמשת העקרונות כ‑checklist לפני ההרצה הראשונה. אחרי שלושה לילות תדעו בדיוק מה לחזק — וזו בדיוק המיומנות של מהנדס סוכנים.</p>

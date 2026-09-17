@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פרויקט הגמר · הגשה, בדיקה וציון</title>
+<meta name="description" content="פרויקט הגמר של קורס Claude Code: מה בונים, לפי אילו קריטריונים נבדקים, סוכן־בוחן להערכה עצמית, ואיך מגישים לבדיקה.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/capstone.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="פרויקט הגמר · הגשה, בדיקה וציון">
+<meta property="og:description" content="פרויקט הגמר של קורס Claude Code: מה בונים, לפי אילו קריטריונים נבדקים, סוכן־בוחן להערכה עצמית, ואיך מגישים לבדיקה.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/capstone.html">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
+<meta property="og:locale" content="he_IL">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" hreflang="he" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/capstone.html">
+<link rel="alternate" hreflang="en" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/capstone.html">
+<link rel="stylesheet" href="style.css">
+<script src="changelog.js" defer></script>
+<script src="app.js" defer></script>
+<script data-goatcounter="https://saarnetzer.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> קורס Claude Code</span></a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/capstone.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
+</header>
+
+<main class="wrap">
+  <span class="kicker">פרויקט הגמר</span>
+  <h1>בונים תוצר אמיתי — ומקבלים עליו ציון</h1>
+  <p class="lead">קורס טוב לא נמדד בכמה פרקים קראתם, אלא במה שאתם מסוגלים לבנות אחריו. פרויקט הגמר הוא ההוכחה: סוכן או צוות סוכנים שרץ על משהו אמיתי שלכם — ועובר בדיקה לפי קריטריונים ברורים.</p>
+
+  <h2>מה בונים</h2>
+  <p>בחרו <strong>מסלול אחד</strong> — שניהם מקבלים אותו ציון:</p>
+  <div class="cheat-grid">
+    <div class="cheat-card">
+      <h3>🤖 מסלול א׳: סוכן אוטונומי</h3>
+      <p>סוכן יחיד שרץ מתוזמן או בפקודה אחת ומבצע משימה אמיתית מקצה לקצה: עדכון תלויות, ניקוי קוד מת, שיפור כיסוי טסטים, דוח תקופתי.</p>
+      <p style="font-size:.88rem;color:var(--text2)">מבוסס על <a href="lesson-11.html">פרק 11</a>, תרגיל 11.3</p>
+    </div>
+    <div class="cheat-card">
+      <h3>👥 מסלול ב׳: צוות סוכנים</h3>
+      <p>שלושה תפקידים ומעלה עם מתאם, זיכרון משותף וחוזי תוצרים — בעולם התוכן שלכם: פיתוח, שיווק, נתונים, תפעול או שירות.</p>
+      <p style="font-size:.88rem;color:var(--text2)">מבוסס על <a href="lesson-12.html">פרק 12</a> ו<a href="lesson-13.html">פרק 13</a></p>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <span class="co-title">⚠️ דרישת סף אחת</span>
+    הפרויקט חייב לרוץ על <strong>משהו אמיתי שלכם</strong> — ריפו, נתונים או תהליך שאתם באמת עובדים איתם. פרויקט צעצוע יעבור את הבדיקה הטכנית ויפספס את כל הפואנטה.
+  </div>
+
+  <h2>לפי מה נבדקים</h2>
+  <p>הקריטריונים אינם הפתעה — הם חמשת עקרונות האוטונומיה מ<a href="lesson-11.html">פרק 11</a>, במשקלות:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>#</th><th>קריטריון</th><th>מה בודקים בפועל</th><th>משקל</th></tr>
+    <tr><td>1</td><td>לולאת משוב</td><td>לסוכן יש דרך אובייקטיבית לדעת שהצליח — והוא מריץ אותה בפועל</td><td>25%</td></tr>
+    <tr><td>2</td><td>גבולות בקוד</td><td>‏allowedTools מצומצם, כללי deny, hooks חוסמים, readonly ב-MCP</td><td>25%</td></tr>
+    <tr><td>3</td><td>בלמים כמותיים</td><td>תקרת צעדים, ניטור עלות, timeout</td><td>15%</td></tr>
+    <tr><td>4</td><td>זיכרון חיצוני</td><td>עבודה בפרוסות, קובץ מצב, קומיט לכל שלב</td><td>15%</td></tr>
+    <tr><td>5</td><td>אדם בנקודות ההכרעה</td><td>התוצר עובר אישור, התראה בחריגה, ברור מי מאשר מה</td><td>20%</td></tr>
+  </table>
+  </div>
+  <p><strong>הכלל המכריע:</strong> הבחנה בין <em>מוצהר</em> ל<em>נאכף</em>. הוראה ב-CLAUDE.md היא בקשה; כלל deny או hook הוא מנגנון. ציון מלא בקריטריון 2 ניתן רק על אכיפה.</p>
+
+  <h2>שלב 1: בודקים את עצמכם — עם סוכן</h2>
+  <p>לפני שמגישים, תנו לסוכן־בוחן לעבור על העבודה שלכם. הוא בודק את חמשת הקריטריונים, מחפש ראיות בקוד, ומחזיר דוח עם ציון ושלושת התיקונים החשובים ביותר:</p>
+  <pre><code># 1. הורידו את הבוחן לפרויקט שלכם
+#    (הקישור למטה — שמרו ב-.claude/agents/)
+
+# 2. בפרויקט, בקשו מ-Claude:
+תן ל-course-examiner לבדוק את הפרויקט הזה ולתת לי ציון</code></pre>
+  <p style="margin-top:.6rem">
+    ⬇️ <a href="agents/course/course-examiner.md" download><strong>הורדת סוכן הבוחן (עברית)</strong></a> ·
+    <a href="agents/course/course-examiner.en.md" download>English version</a>
+  </p>
+  <div class="callout tip">
+    <span class="co-title">✅ למה זה עובד</span>
+    הבוחן מוגדר עם הרשאות קריאה בלבד ועם הוראה מפורשת לא להחמיא — בדיוק העקרונות שלמדתם בפרק 8. זו גם הדגמה חיה: <strong>סוכן שבודק עבודה של סוכן</strong>. אם קיבלתם ציון נמוך — תקנו והריצו שוב. זו הלולאה.
+  </div>
+
+  <h2>שלב 2: מגישים לבדיקה</h2>
+  <p>הגשה היא רשות לחלוטין — אבל היא מה שהופך תרגיל לתוצר. שתי דרכים:</p>
+  <ol>
+    <li><strong>בדיקת עמיתים ומשוב:</strong> פתחו <a href="https://github.com/saarnetzer/ClaudeCode-Tutorial/issues/new?template=capstone.md" target="_blank" rel="noopener">הגשת פרויקט גמר</a> — תיאור קצר, קישור לריפו (או צילומי מסך אם הוא פרטי), ודוח הבוחן. תקבלו משוב אנושי.</li>
+    <li><strong>לעצמכם בלבד:</strong> שמרו את דוח הבוחן בפרויקט כ-<code dir="ltr">EXAM_REPORT.md</code> והריצו אותו שוב בעוד חודש. ההשוואה בין שני הדוחות היא המדד האמיתי להתקדמות שלכם.</li>
+  </ol>
+  <div class="callout info">
+    <span class="co-title">💡 נדרש חשבון GitHub (חינם)</span>
+    ההגשה נפתחת כ-issue באתר GitHub. אין לכם חשבון? <a href="git-basics.html#github-account">מדריך פתיחה בשתי דקות</a>. לא רוצים לפתוח? אפשרות 2 עומדת בפני עצמה.
+  </div>
+
+  <h2>שלב 3: התעודה</h2>
+  <p>אחרי שסימנתם את כל 13 הפרקים כהושלמו, כפתור התעודה מופיע ב<a href="index.html">עמוד הראשי</a>. התעודה נוצרת בדפדפן שלכם עם השם שתבחרו — ואם עברתם גם את הבוחן, ציינו את הציון כשאתם משתפים אותה. זה מה שהופך תעודה מעיטור להוכחה.</p>
+
+  <nav class="lesson-nav">
+    <a href="lesson-13.html"><span class="dir-label">→ הפרק האחרון</span>צוותי סוכנים מעולמות שונים</a>
+    <a href="index.html"><span class="dir-label">חזרה ←</span>לתוכן הקורס</a>
+  </nav>
+</main>
+
+<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="feedback.html">מצאתם טעות? שלחו משוב</a><br>© 2026 סער נצר (<a href="https://github.com/saarnetzer" target="_blank" rel="noopener">Saar Netzer</a>) · התוכן ברישיון <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.he" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> · נבנה באמצעות Claude Code</footer>
+</body>
+</html>
