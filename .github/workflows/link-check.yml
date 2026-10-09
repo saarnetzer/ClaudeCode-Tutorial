@@ -20,12 +20,17 @@ jobs:
         with:
           args: >-
             --no-progress
+            --root-dir "${{ github.workspace }}"
             --accept 200,201,204,206,301,302,308,429
             --exclude 'goatcounter\.com'
             --exclude 'gc\.zgo\.at'
             --exclude 'github\.com/saarnetzer/ClaudeCode-Tutorial/issues/new'
+            --exclude 'claude\.ai'
+            --exclude 'github\.com/signup'
+            --exclude 'github\.com/login'
             --exclude-path node_modules
             './*.html'
+            './en/*.html'
           output: ./lychee-report.md
           fail: false
       - name: Open issue if links are broken
