@@ -14,13 +14,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      # 404.html has to use absolute links (GitHub serves it from any path),
+      # so they carry the Pages base path: /ClaudeCode-Tutorial/style.css.
+      # Staging the site under a folder of that name lets --root-dir resolve
+      # them exactly as the deployed site does.
+      - name: Stage the site the way Pages serves it
+        run: |
+          mkdir -p _linkcheck/ClaudeCode-Tutorial
+          rsync -a --exclude '.git' --exclude '_linkcheck' ./ _linkcheck/ClaudeCode-Tutorial/
+
       - name: Check links in site pages
         id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
           args: >-
             --no-progress
-            --root-dir "${{ github.workspace }}"
+            --root-dir "${{ github.workspace }}/_linkcheck"
             --accept 200,201,204,206,301,302,308,429
             --exclude 'goatcounter\.com'
             --exclude 'gc\.zgo\.at'
@@ -29,10 +39,11 @@ jobs:
             --exclude 'github\.com/signup'
             --exclude 'github\.com/login'
             --exclude-path node_modules
-            './*.html'
-            './en/*.html'
+            './_linkcheck/ClaudeCode-Tutorial/*.html'
+            './_linkcheck/ClaudeCode-Tutorial/en/*.html'
           output: ./lychee-report.md
           fail: false
+
       - name: Open issue if links are broken
         if: steps.lychee.outputs.exit_code != 0
         uses: peter-evans/create-issue-from-file@v5
