@@ -55,12 +55,26 @@
   </div>
 
   <h2>התקנה</h2>
-  <h3>macOS / Linux</h3>
+  <p>בחרו את השורה שמתאימה למערכת שלכם, הדביקו אותה בטרמינל והריצו. זו ההתקנה המומלצת, והיא גם מתעדכנת מעצמה ברקע. ההתקנה אינה מציגה סרגל התקדמות — זה תקין, פשוט תנו לה לסיים.</p>
+  <h3>macOS / Linux / WSL</h3>
   <pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre>
-  <h3>Windows (PowerShell)</h3>
+  <h3>Windows — PowerShell</h3>
   <pre><code>irm https://claude.ai/install.ps1 | iex</code></pre>
-  <h3>או דרך npm (אם Node.js כבר מותקן אצלכם)</h3>
-  <pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
+  <h3>Windows — שורת הפקודה (CMD)</h3>
+  <pre><code>curl -fsSL https://claude.ai/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd</code></pre>
+  <div class="callout info">
+    <span class="co-title">💡 איך יודעים באיזה חלון אני נמצא?</span>
+    ב‑PowerShell תחילת השורה נראית כך: <code dir="ltr">PS C:\</code>. ב‑CMD זה אותו דבר בלי ה‑<code dir="ltr">PS</code>. ואם טעיתם — השגיאה תגיד לכם: הודעה על <code dir="ltr">&amp;&amp;</code> שאינו מפריד חוקי פירושה שאתם ב‑PowerShell, והודעה ש‑<code dir="ltr">irm</code> אינו מזוהה פירושה שאתם ב‑CMD.
+  </div>
+  <h3>דרך מנהל חבילות (לא חובה)</h3>
+  <p>אם אתם רגילים להתקין תוכנות דרך מנהל חבילות, יש גם חבילות רשמיות:</p>
+  <pre><span class="pre-label">macOS — Homebrew</span><code>brew install --cask claude-code</code></pre>
+  <pre><span class="pre-label">Windows — WinGet</span><code>winget install Anthropic.ClaudeCode</code></pre>
+  <p>בלינוקס יש גם חבילות ל‑<code dir="ltr">apt</code>, ל‑<code dir="ltr">dnf</code> ול‑<code dir="ltr">apk</code>. שימו לב להבדל אחד: התקנה דרך מנהל חבילות <strong>אינה</strong> מתעדכנת מעצמה, ולכן צריך לשדרג ידנית מדי פעם — למשל <code dir="ltr">brew upgrade claude-code</code> או <code dir="ltr">winget upgrade Anthropic.ClaudeCode</code>.</p>
+  <div class="callout tip">
+    <span class="co-title">✅ למשתמשי Windows</span>
+    מומלץ להתקין גם את <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">Git for Windows</a>. בלעדיו Claude Code יריץ פקודות דרך PowerShell במקום דרך Bash, וחלק מהדוגמאות בקורס לא יעבדו כמו שהן. מי שעובד ב‑WSL לא צריך את זה.
+  </div>
   <p>בסיום, ודאו שההתקנה הצליחה:</p>
   <pre><code>claude --version</code></pre>
   <p>אם קיבלתם מספר גרסה — אתם מוכנים.</p>
@@ -113,7 +127,7 @@ claude</code></pre>
   <table>
     <tr><th>פעולה</th><th>איך</th></tr>
     <tr><td>לעצור את Claude באמצע פעולה</td><td>מקש <kbd>Esc</kbd> — עוצר מיד, ואפשר לתת הנחיה מתוקנת</td></tr>
-    <tr><td>לצאת מהשיחה</td><td><kbd>Ctrl+C</kbd> פעמיים, או הפקודה <code>/exit</code></td></tr>
+    <tr><td>לצאת מהשיחה</td><td><kbd>Ctrl+C</kbd> פעמיים, <kbd>Ctrl+D</kbd> פעמיים, או הפקודה <code>/exit</code></td></tr>
     <tr><td>להמשיך את השיחה האחרונה</td><td><code dir="ltr">claude --continue</code></td></tr>
     <tr><td>לבחור שיחה ישנה מרשימה</td><td><code dir="ltr">claude --resume</code></td></tr>
   </table>

@@ -43,14 +43,24 @@
   </ul>
 
   <h2>The protection you already have — if you use it right</h2>
-  <p>Claude Code is safe by default: it <strong>asks approval before any significant action</strong> — editing a file, running a command, network access. Without your approval it reads and proposes, nothing more. You met this in the very first lesson. What you may not have noticed: every other protection in this lesson builds on that base, so the first law is very simple:</p>
+  <p>Claude Code doesn't act without approval: before any significant action — editing a file, running a command, reaching the network — someone has to approve it. The only question is <strong>who</strong>. As we saw in Lesson 2, a session you start in a terminal now begins in <strong>Auto mode</strong>, where a separate model reviews the actions in your place. That catches the gross mistakes — but it is not your review.</p>
+  <div class="callout warn">
+    <span class="co-title">⚠️ Security step one: choose the mode deliberately</span>
+    Before working on code you care about, switch to <strong>Manual</strong> (<kbd>Shift+Tab</kbd>, or <code dir="ltr">claude --permission-mode default</code>). In that mode every edit and every command goes through you, and you see exactly what is happening. You can also set it in advance for the whole project:
+  </div>
+  <pre><span class="pre-label">.claude/settings.json</span><code>{
+  "permissions": {
+    "defaultMode": "default"
+  }
+}</code></pre>
+  <p>And here the first law comes in, which holds in every mode: when an approval prompt appears — read it.</p>
   <div class="callout danger">
     <span class="co-title">🛑 The law you must not break</span>
     <strong>Read what you approve.</strong> The approval prompt shows exactly what Claude is about to do — the full command, the exact file. Approving by habit ("yes, yes, yes") wipes out the entire defense in one stroke. A command unrelated to what you asked? Stop with <kbd>Esc</kbd> and ask it why.
   </div>
 
   <h2>Allow and Deny rules: the project's constitution</h2>
-  <p>You met the three permission modes in Lesson 2. Now we add a stronger layer — <strong>standing rules</strong> in the settings file, defining both what's always approved, and more importantly: what's <em>never</em> allowed:</p>
+  <p>You met the permission modes in Lesson 2. Now we add a stronger layer — <strong>standing rules</strong> in the settings file, defining both what's always approved, and more importantly: what's <em>never</em> allowed:</p>
   <pre><span class="pre-label">.claude/settings.json</span><code>{
   "permissions": {
     "allow": [

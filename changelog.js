@@ -4,6 +4,28 @@
    according to the page's <html lang>. */
 window.COURSE_CHANGELOG = [
   {
+    version: "3.5.0",
+    date: "2026-10-09",
+    title: "עדכון מול התיעוד הרשמי: מצבי הרשאות, התקנה ופקודות חדשות",
+    titleEn: "Synced with the current official docs: permission modes, installs, new commands",
+    changes: [
+      "⚠️ ברירת המחדל של מצבי ההרשאות השתנתה: שיחה בטרמינל מתחילה כיום במצב Auto, שבו מודל נוסף בודק את הפעולות במקומכם. פרקים 2 ו‑9 עודכנו — כולל איך ומתי לעבור ל‑Manual, וטבלת חמשת המצבים המלאה",
+      "🆕 שיטות התקנה חדשות בפרק 1: שורת הפקודה של Windows (CMD), Homebrew, WinGet וחבילות לינוקס — במקום ההתקנה דרך npm שאינה בתיעוד הרשמי יותר",
+      "🆕 פקודות שנוספו ל-Claude Code ונכנסו לקורס: /rewind לביטול שינויים, /context לראות מה יושב בחלון ההקשר, וגם /plan ו-/usage",
+      "הערה חדשה למשתמשי Windows: למה כדאי להתקין גם Git for Windows",
+      "תוקן: החיפוש בעמוד הראשי באנגלית לא עבד כלל — עכשיו יש לו אינדקס משלו",
+      "עודכן הקישור לתיעוד ה-Agent SDK שעבר כתובת, ותוקנו מספר התרגילים ונוסח בפרק 4"
+    ],
+    changesEn: [
+      "⚠️ The default permission mode has changed: a terminal session now starts in Auto mode, where a second model reviews actions in your place. Lessons 2 and 9 are updated — including how and when to switch to Manual, and the full five-mode table",
+      "🆕 New install methods in Lesson 1: Windows Command Prompt (CMD), Homebrew, WinGet and Linux packages — replacing the npm install, which the official docs no longer list",
+      "🆕 Commands Claude Code has added, now taught here: /rewind to undo changes, /context to see what's in the context window, plus /plan and /usage",
+      "A new note for Windows users on why Git for Windows is worth installing",
+      "Fixed: search on the English home page did nothing at all — it now has an index of its own",
+      "Updated the Agent SDK docs link to its new address, and corrected the exercise count and some wording in Lesson 4"
+    ]
+  },
+  {
     version: "3.4.0",
     date: "2026-09-17",
     title: "תיבת צור קשר",

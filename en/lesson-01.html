@@ -55,12 +55,26 @@
   </div>
 
   <h2>Installation</h2>
-  <h3>macOS / Linux</h3>
+  <p>Pick the line that matches your system, paste it into a terminal and run it. This is the recommended install, and it keeps itself up to date in the background. It shows no progress bar while it downloads — that's normal, just let it finish.</p>
+  <h3>macOS / Linux / WSL</h3>
   <pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre>
-  <h3>Windows (PowerShell)</h3>
+  <h3>Windows — PowerShell</h3>
   <pre><code>irm https://claude.ai/install.ps1 | iex</code></pre>
-  <h3>Or via npm (if you already have Node.js)</h3>
-  <pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
+  <h3>Windows — Command Prompt (CMD)</h3>
+  <pre><code>curl -fsSL https://claude.ai/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd</code></pre>
+  <div class="callout info">
+    <span class="co-title">💡 Which window am I in?</span>
+    In PowerShell the line starts with <code dir="ltr">PS C:\</code>; in CMD it's the same without the <code dir="ltr">PS</code>. And if you get it wrong, the error tells you: a complaint that <code dir="ltr">&amp;&amp;</code> is not a valid statement separator means you're in PowerShell, and <code dir="ltr">irm</code> is not recognized means you're in CMD.
+  </div>
+  <h3>Via a package manager (optional)</h3>
+  <p>If you're used to installing software through a package manager, there are official packages too:</p>
+  <pre><span class="pre-label">macOS — Homebrew</span><code>brew install --cask claude-code</code></pre>
+  <pre><span class="pre-label">Windows — WinGet</span><code>winget install Anthropic.ClaudeCode</code></pre>
+  <p>On Linux there are also <code dir="ltr">apt</code>, <code dir="ltr">dnf</code> and <code dir="ltr">apk</code> packages. One difference matters: a package-manager install does <strong>not</strong> update itself, so you'll need to upgrade manually now and then — <code dir="ltr">brew upgrade claude-code</code> or <code dir="ltr">winget upgrade Anthropic.ClaudeCode</code>.</p>
+  <div class="callout tip">
+    <span class="co-title">✅ On Windows</span>
+    Install <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">Git for Windows</a> as well. Without it, Claude Code runs commands through PowerShell instead of Bash, and some examples in this course won't work as written. If you work in WSL you don't need it.
+  </div>
   <p>When it finishes, verify the install:</p>
   <pre><code>claude --version</code></pre>
   <p>If you got a version number — you're ready.</p>
@@ -96,7 +110,7 @@ claude</code></pre>
   <p>On first run you'll be asked to sign in. There are two options:</p>
   <ul>
     <li><strong>A Claude subscription (Pro/Max)</strong> — sign in through the browser with your claude.ai account. Simplest for individuals.</li>
-    <li><strong>An Anthropic Console API key</strong> — pay per use. Suited to teams and automation (we'll need it in Lesson 11).</li>
+    <li><strong>An Anthropic Console API key</strong> — pay per use. Suited to teams and automation (we'll need it in Lesson 10).</li>
   </ul>
   <p>After signing in you'll see an input line waiting. That's it — you're in. Try typing:</p>
   <pre><code>build a single HTML page named index.html with a simple tic-tac-toe game and nice styling</code></pre>
@@ -112,7 +126,7 @@ claude</code></pre>
   <table>
     <tr><th>Action</th><th>How</th></tr>
     <tr><td>Stop Claude mid-action</td><td><kbd>Esc</kbd> — stops immediately; you can give a corrected instruction</td></tr>
-    <tr><td>Exit the conversation</td><td><kbd>Ctrl+C</kbd> twice, or the <code>/exit</code> command</td></tr>
+    <tr><td>Exit the conversation</td><td><kbd>Ctrl+C</kbd> twice, <kbd>Ctrl+D</kbd> twice, or the <code>/exit</code> command</td></tr>
     <tr><td>Resume the last conversation</td><td><code dir="ltr">claude --continue</code></td></tr>
     <tr><td>Pick an older conversation from a list</td><td><code dir="ltr">claude --resume</code></td></tr>
   </table>

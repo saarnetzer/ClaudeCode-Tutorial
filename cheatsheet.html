@@ -39,7 +39,9 @@
     <h3>🚀 התקנה והרצה</h3>
     <div class="table-scroll"><table>
       <tr><td><code dir="ltr">curl -fsSL https://claude.ai/install.sh | bash</code></td><td>התקנה macOS / Linux</td></tr>
-      <tr><td><code dir="ltr">irm https://claude.ai/install.ps1 | iex</code></td><td>התקנה Windows</td></tr>
+      <tr><td><code dir="ltr">irm https://claude.ai/install.ps1 | iex</code></td><td>התקנה Windows (PowerShell)</td></tr>
+      <tr><td><code dir="ltr">brew install --cask claude-code</code></td><td>התקנה דרך Homebrew</td></tr>
+      <tr><td><code dir="ltr">winget install Anthropic.ClaudeCode</code></td><td>התקנה דרך WinGet</td></tr>
       <tr><td><code dir="ltr">claude --version</code></td><td>אימות התקנה</td></tr>
       <tr><td><code>claude</code></td><td>פתיחת שיחה בתיקייה הנוכחית</td></tr>
       <tr><td><code dir="ltr">claude --continue</code></td><td>המשך השיחה האחרונה</td></tr>
@@ -51,8 +53,8 @@
     <h3>⌨️ מקשים</h3>
     <div class="table-scroll"><table>
       <tr><td><kbd>Esc</kbd></td><td>עצירת Claude באמצע פעולה</td></tr>
-      <tr><td><kbd>Shift+Tab</kbd></td><td>החלפת מצב הרשאות (רגיל / auto-accept / Plan)</td></tr>
-      <tr><td><kbd>Ctrl+C</kbd> פעמיים</td><td>יציאה מהשיחה</td></tr>
+      <tr><td><kbd>Shift+Tab</kbd></td><td>החלפת מצב הרשאות (Auto / Manual / Accept edits / Plan)</td></tr>
+      <tr><td><kbd>Ctrl+C</kbd> / <kbd>Ctrl+D</kbd> פעמיים</td><td>יציאה מהשיחה (גם <code>/exit</code>)</td></tr>
       <tr><td><kbd>Tab</kbd></td><td>השלמה אוטומטית בטרמינל</td></tr>
       <tr><td><kbd>↑</kbd></td><td>הפקודה הקודמת בטרמינל</td></tr>
     </table></div>
@@ -64,6 +66,11 @@
       <tr><td><code>/help</code></td><td>כל הפקודות הזמינות</td></tr>
       <tr><td><code>/clear</code></td><td>איפוס שיחה מלא</td></tr>
       <tr><td><code>/compact</code></td><td>כיווץ ההיסטוריה לסיכום</td></tr>
+      <tr><td><code>/context</code></td><td>מה יושב בחלון ההקשר כרגע</td></tr>
+      <tr><td><code>/rewind</code></td><td>חזרה לנקודה קודמת בשיחה ובקוד (גם <code>/undo</code>)</td></tr>
+      <tr><td><code>/plan</code></td><td>מעבר למצב תכנון</td></tr>
+      <tr><td><code>/usage</code></td><td>עלות השיחה ומצב מגבלות המנוי (גם <code>/cost</code>)</td></tr>
+      <tr><td><code>/doctor</code></td><td>בדיקת תקינות ההתקנה וההגדרות</td></tr>
       <tr><td><code>/model</code></td><td>החלפת מודל</td></tr>
       <tr><td><code>/init</code></td><td>יצירת CLAUDE.md לפרויקט</td></tr>
       <tr><td><code>/permissions</code></td><td>ניהול כללי הרשאות</td></tr>

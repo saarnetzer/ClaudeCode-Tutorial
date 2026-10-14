@@ -36,7 +36,7 @@
   <h2>What you'll learn</h2>
   <ul class="checklist">
     <li>The single most important principle of phrasing requests</li>
-    <li>The three permission modes, including Plan Mode</li>
+    <li>The permission modes — who approves what, Plan Mode included</li>
     <li>The built-in slash commands you must know</li>
     <li>How Claude explores an existing project</li>
   </ul>
@@ -68,14 +68,20 @@
   </div>
 
   <h2>Permission modes: who decides what's allowed</h2>
-  <p>Claude Code is safe by default: it asks for approval before editing files and running commands. <kbd>Shift+Tab</kbd> switches between modes:</p>
+  <p>Before any significant action — editing a file, running a command, reaching the network — someone has to approve it. <strong>The permission mode decides who that someone is.</strong> <kbd>Shift+Tab</kbd> cycles the modes mid-session, and the current one shows at the bottom of the screen.</p>
   <div class="table-scroll">
   <table>
-    <tr><th>Mode</th><th>What happens</th><th>When to use</th></tr>
-    <tr><td><strong>Normal (default)</strong></td><td>Manual approval for every edit and command</td><td>New projects, sensitive operations</td></tr>
-    <tr><td><strong>Auto-accept edits</strong></td><td>File edits auto-approved; commands still ask</td><td>Routine work in a familiar project</td></tr>
-    <tr><td><strong>Plan Mode</strong></td><td>Claude only reads and explores — changing anything is forbidden. At the end it presents a plan for your approval</td><td>Big/risky tasks, learning a project</td></tr>
+    <tr><th>Mode</th><th>What runs without asking you</th><th>When to use</th></tr>
+    <tr><td><strong>Auto</strong> ⬅️ the default</td><td>Everything — but a second model (the "classifier") reviews each action before it runs, in your place</td><td>Long tasks, when you don't want to approve every step</td></tr>
+    <tr><td><strong>Manual</strong> (in settings: <code dir="ltr">default</code>)</td><td>Reads only — every edit and every command goes through you</td><td>Unfamiliar code, sensitive operations, when you want to see each step</td></tr>
+    <tr><td><strong>Accept edits</strong></td><td>Reads and file edits; terminal commands still ask</td><td>Routine work in a familiar project you're reviewing</td></tr>
+    <tr><td><strong>Plan Mode</strong></td><td>Reads only, and changing anything is forbidden. At the end it presents a plan for your approval</td><td>Big or risky tasks, learning a new project</td></tr>
+    <tr><td><strong>Bypass</strong></td><td>Everything, with no checks at all</td><td>Only in a container or an isolated machine — Lesson 10 covers it</td></tr>
   </table>
+  </div>
+  <div class="callout warn">
+    <span class="co-title">⚠️ Note: the default changed</span>
+    In recent versions a session you start in a terminal begins in <strong>Auto mode</strong>: instead of you approving each action, a separate model reviews it and approves or blocks it. That's very convenient — but it is not the same as you reviewing it yourself. While you're learning, and any time you touch real code you care about, <strong>switch to Manual</strong>: press <kbd>Shift+Tab</kbd> until it says Manual, or start with <code dir="ltr">claude --permission-mode default</code>. Seeing the actions with your own eyes is part of the learning.
   </div>
   <p><strong>Plan Mode is the professionals' secret weapon.</strong> For a complex task, the right process is: enter Plan Mode, let Claude explore and present a plan, refine the plan in dialogue — and only then approve execution. Fixing a sentence in a plan is a hundred times cheaper than fixing a thousand lines of code written in the wrong direction.</p>
   <p>Here's what it looks like (demo):</p>
@@ -83,7 +89,7 @@
     <div class="td-bar"><span class="td-dot"></span><span class="td-dot"></span><span class="td-dot"></span><span class="td-title">demo: plan-mode</span><button class="td-replay">↺ Replay</button></div>
     <pre class="td-screen"></pre>
     <script type="application/json" class="td-script">[
-["out","(Plan Mode — Shift+Tab pressed twice)"],
+["out","(Plan Mode — selected with Shift+Tab)"],
 ["cmd","add a saved calculation history to the calculator"],
 ["claude","● Reading app.js, index.html, style.css..."],
 ["pause",""],
@@ -98,7 +104,7 @@
 
   <div class="callout danger">
     <span class="co-title">🛑 About the scary flag</span>
-    There's a flag called <code dir="ltr">--dangerously-skip-permissions</code> that disables all approval questions. Do not use it on your personal machine. We'll discuss it in Lesson 10 — in isolated environments (sandbox/container) it has a place, and only there.
+    The last mode in the table, Bypass, is also available as a flag: <code dir="ltr">--dangerously-skip-permissions</code>. It removes every check — including Auto mode's classifier. Do not use it on your personal machine. We'll discuss it in Lesson 10 — in isolated environments (sandbox/container) it has a place, and only there.
   </div>
 
   <h2>Built-in commands worth memorizing</h2>
@@ -110,9 +116,16 @@
     <tr><td><code>/compact</code></td><td>Compresses history into a summary — frees working memory</td></tr>
     <tr><td><code>/model</code></td><td>Switch model (powerful &amp; slow ↔ fast &amp; cheap)</td></tr>
     <tr><td><code>/init</code></td><td>Creates a CLAUDE.md for the project — Lesson 4 covers it in depth</td></tr>
+    <tr><td><code>/rewind</code></td><td>Go back to an earlier point in the conversation and the code — Claude Code's undo button</td></tr>
+    <tr><td><code>/plan</code></td><td>Jump straight into plan mode, without <kbd>Shift+Tab</kbd></td></tr>
+    <tr><td><code>/usage</code></td><td>What the session cost, and where you stand against your plan limits</td></tr>
     <tr><td><code>/review</code></td><td>Code review of the current changes</td></tr>
     <tr><td><code>/config</code></td><td>Settings: theme, notifications and more</td></tr>
   </table>
+  </div>
+  <div class="callout tip">
+    <span class="co-title">✅ The command that will save you grief: /rewind</span>
+    Claude changed three files and you don't like the result? You don't have to undo it by hand. <code>/rewind</code> opens a list of checkpoints in the session and you choose how far back to go — the conversation only, the code only, or both. (It's also available as <code>/undo</code> and <code>/checkpoint</code>.) Lesson 3 adds the real safety net on top of it: Git.
   </div>
 
   <h2>Working on an existing project</h2>
@@ -132,7 +145,7 @@
 
   <div class="exercise">
     <div class="ex-head"><span class="ex-badge">Exercise 2.2</span> Plan Mode in action</div>
-    <p>Open any existing project (or deliberately break the calculator from the previous exercise). Switch to Plan Mode with <kbd>Shift+Tab</kbd> (twice), and ask: "I want to add a saved calculation history. Explore the code and present a plan". Read the plan, request one change to it ("keep only the last 10"), and only then approve execution.</p>
+    <p>Open any existing project (or deliberately break the calculator from the previous exercise). Switch to Plan Mode with <kbd>Shift+Tab</kbd> (press until it says Plan), and ask: "I want to add a saved calculation history. Explore the code and present a plan". Read the plan, request one change to it ("keep only the last 10"), and only then approve execution.</p>
     <details class="solution"><summary>What should happen</summary>
       <p>In Plan Mode you'll see Claude only reading — no edit-approval prompts. The plan appears at the end, and your requested change goes into it before a single line of code is written. This is exactly the workflow for serious tasks.</p>
     </details>

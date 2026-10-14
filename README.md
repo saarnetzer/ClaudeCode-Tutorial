@@ -1,7 +1,7 @@
 # קורס Claude Code — מאפס ועד סוכנים אוטונומיים
 
 אתר סטטי בעברית שמלמד את Claude Code צעד־אחר־צעד:
-13 פרקים, יותר מ־30 תרגילים עם פתרונות, מההתקנה הראשונה ועד בניית סוכנים אוטונומיים עם ה‑Agent SDK.
+13 פרקים, 39 תרגילים עם פתרונות, מההתקנה הראשונה ועד בניית סוכנים אוטונומיים עם ה‑Agent SDK.
 
 **האתר החי:** https://saarnetzer.github.io/ClaudeCode-Tutorial/ · **English version:** https://saarnetzer.github.io/ClaudeCode-Tutorial/en/
 

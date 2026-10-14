@@ -36,7 +36,7 @@
   <h2>מה נלמד בפרק</h2>
   <ul class="checklist">
     <li>העיקרון החשוב ביותר בניסוח בקשות</li>
-    <li>שלושת מצבי ההרשאות, כולל Plan Mode</li>
+    <li>מצבי ההרשאות — מי מאשר מה, וכולל Plan Mode</li>
     <li>פקודות ה‑Slash המובנות שחייבים להכיר</li>
     <li>איך Claude חוקר פרויקט קיים</li>
   </ul>
@@ -68,14 +68,20 @@
   </div>
 
   <h2>מצבי הרשאות: מי מחליט מה מותר</h2>
-  <p>Claude Code בטוח כברירת מחדל: הוא מבקש אישור לפני עריכת קבצים והרצת פקודות. מקש <kbd>Shift+Tab</kbd> מחליף בין מצבים:</p>
+  <p>לפני כל פעולה משמעותית — עריכת קובץ, הרצת פקודה, גישה לרשת — מישהו צריך לאשר אותה. <strong>מצב ההרשאות קובע מי זה ה״מישהו״ הזה.</strong> מקש <kbd>Shift+Tab</kbd> מחליף בין המצבים בזמן אמת, והמצב הנוכחי מופיע בתחתית המסך.</p>
   <div class="table-scroll">
   <table>
-    <tr><th>מצב</th><th>מה קורה</th><th>מתי להשתמש</th></tr>
-    <tr><td><strong>רגיל (default)</strong></td><td>אישור ידני לכל עריכה ופקודה</td><td>פרויקט חדש, פעולות רגישות</td></tr>
-    <tr><td><strong>Auto-accept edits</strong></td><td>עריכות קבצים מאושרות אוטומטית; פקודות עדיין דורשות אישור</td><td>עבודה שוטפת בפרויקט מוכר</td></tr>
-    <tr><td><strong>Plan Mode</strong></td><td>Claude רק קורא וחוקר — אסור לו לשנות כלום. בסוף הוא מציג תוכנית לאישורכם</td><td>משימות גדולות/מסוכנות, למידת פרויקט</td></tr>
+    <tr><th>מצב</th><th>מה עובר בלי לשאול אותכם</th><th>מתי להשתמש</th></tr>
+    <tr><td><strong>Auto</strong> ⬅️ ברירת המחדל</td><td>הכול — אבל מודל שני (״מסווג״) בודק כל פעולה לפני שהיא רצה, במקומכם</td><td>משימות ארוכות, כשאתם לא רוצים לאשר כל צעד</td></tr>
+    <tr><td><strong>Manual</strong> (בהגדרות: <code dir="ltr">default</code>)</td><td>קריאה בלבד — כל עריכה וכל פקודה עוברות אישור ידני שלכם</td><td>קוד לא מוכר, פעולות רגישות, כשאתם רוצים לראות כל צעד</td></tr>
+    <tr><td><strong>Accept edits</strong></td><td>קריאה ועריכות קבצים; פקודות טרמינל עדיין שואלות</td><td>עבודה שוטפת בפרויקט מוכר שאתם סוקרים</td></tr>
+    <tr><td><strong>Plan Mode</strong></td><td>קריאה בלבד, ואסור לו לשנות כלום. בסוף הוא מציג תוכנית לאישורכם</td><td>משימות גדולות או מסוכנות, למידת פרויקט חדש</td></tr>
+    <tr><td><strong>Bypass</strong></td><td>הכול, בלי שום בדיקה</td><td>רק בקונטיינר או במכונה מבודדת — נגיע לזה בפרק 10</td></tr>
   </table>
+  </div>
+  <div class="callout warn">
+    <span class="co-title">⚠️ שימו לב: ברירת המחדל השתנתה</span>
+    בגרסאות החדשות, שיחה שנפתחת בטרמינל מתחילה ב‑<strong>מצב Auto</strong>: במקום שאתם תאשרו כל פעולה, מודל נפרד בודק אותה ומאשר או חוסם. זה נוח מאוד — אבל זה לא אותו דבר כמו שאתם סוקרים בעצמכם. כל עוד אתם לומדים, וכל פעם שאתם נוגעים בקוד אמיתי שחשוב לכם, <strong>עברו ל‑Manual</strong>: <kbd>Shift+Tab</kbd> עד שכתוב Manual, או פתיחה עם <code dir="ltr">claude --permission-mode default</code>. לראות את הפעולות בעיניים שלכם זה חלק מהלמידה.
   </div>
   <p><strong>Plan Mode הוא הכלי הסודי של מקצוענים.</strong> במשימה מורכבת, התהליך הנכון הוא: להיכנס ל‑Plan Mode, לתת ל‑Claude לחקור ולהציג תוכנית, לתקן את התוכנית בדיאלוג — ורק אז לאשר ביצוע. תיקון של משפט בתוכנית זול פי מאה מתיקון של אלף שורות קוד שנכתבו בכיוון הלא נכון.</p>
   <p>כך זה נראה בפעולה (הדגמה):</p>
@@ -83,7 +89,7 @@
     <div class="td-bar"><span class="td-dot"></span><span class="td-dot"></span><span class="td-dot"></span><span class="td-title">demo: plan-mode</span><button class="td-replay">↺ הפעלה מחדש</button></div>
     <pre class="td-screen"></pre>
     <script type="application/json" class="td-script">[
-["out","(Plan Mode \u2014 Shift+Tab pressed twice)"],
+["out","(Plan Mode \u2014 selected with Shift+Tab)"],
 ["cmd","add a saved calculation history to the calculator"],
 ["claude","\u25cf Reading app.js, index.html, style.css..."],
 ["pause",""],
@@ -99,7 +105,7 @@
 
   <div class="callout danger">
     <span class="co-title">🛑 על הדגל המפחיד</span>
-    קיים דגל בשם <code dir="ltr">--dangerously-skip-permissions</code> שמבטל את כל שאלות האישור. אל תשתמשו בו על המחשב האישי שלכם. נדבר עליו בפרק 10 — בסביבות מבודדות (סנדבוקס/קונטיינר) יש לו מקום, ורק שם.
+    המצב האחרון בטבלה, Bypass, זמין גם כדגל: <code dir="ltr">--dangerously-skip-permissions</code>. הוא מבטל כל בדיקה — גם את המסווג של מצב Auto. אל תשתמשו בו על המחשב האישי שלכם. נדבר עליו בפרק 10 — בסביבות מבודדות (סנדבוקס/קונטיינר) יש לו מקום, ורק שם.
   </div>
 
   <h2>פקודות מובנות שכדאי לשנן</h2>
@@ -111,9 +117,16 @@
     <tr><td><code>/compact</code></td><td>מכווץ את היסטוריית השיחה לסיכום — משחרר מקום בזיכרון העבודה</td></tr>
     <tr><td><code>/model</code></td><td>החלפת מודל (חזק ואיטי ↔ מהיר וזול)</td></tr>
     <tr><td><code>/init</code></td><td>יוצר קובץ CLAUDE.md לפרויקט — נלמד לעומק בפרק 4</td></tr>
+    <tr><td><code>/rewind</code></td><td>חזרה לנקודה קודמת בשיחה ובקוד — כפתור ה״בטל״ של Claude Code</td></tr>
+    <tr><td><code>/plan</code></td><td>מעבר למצב תכנון מיד, בלי <kbd>Shift+Tab</kbd></td></tr>
+    <tr><td><code>/usage</code></td><td>כמה השיחה עלתה ואיפה אתם עומדים מול מגבלות המנוי</td></tr>
     <tr><td><code>/review</code></td><td>סקירת קוד על השינויים הנוכחיים</td></tr>
     <tr><td><code>/config</code></td><td>הגדרות: ערכת נושא, התראות ועוד</td></tr>
   </table>
+  </div>
+  <div class="callout tip">
+    <span class="co-title">✅ הפקודה שתחסוך לכם עצבים: /rewind</span>
+    Claude שינה שלושה קבצים ולא אהבתם את התוצאה? אין צורך לשחזר ידנית. <code>/rewind</code> פותח רשימה של נקודות העצירה בשיחה, ואתם בוחרים לאן לחזור — רק לשיחה, רק לקוד, או לשניהם. (הפקודה מופיעה גם כ‑<code>/undo</code> וכ‑<code>/checkpoint</code>.) בפרק 3 נוסיף לזה את רשת הביטחון האמיתית: Git.
   </div>
 
   <h2>עבודה על פרויקט קיים</h2>
@@ -133,7 +146,7 @@
 
   <div class="exercise">
     <div class="ex-head"><span class="ex-badge">תרגיל 2.2</span> Plan Mode בפעולה</div>
-    <p>פתחו פרויקט קיים כלשהו (או שיבשו בכוונה את המחשבון מהתרגיל הקודם). עברו ל‑Plan Mode עם <kbd>Shift+Tab</kbd> (פעמיים), ובקשו: "אני רוצה להוסיף היסטוריית חישובים שנשמרת. תחקור את הקוד ותציג תוכנית". קראו את התוכנית, בקשו שינוי אחד בה ("תשמור רק 10 אחרונים"), ורק אז אשרו ביצוע.</p>
+    <p>פתחו פרויקט קיים כלשהו (או שיבשו בכוונה את המחשבון מהתרגיל הקודם). עברו ל‑Plan Mode עם <kbd>Shift+Tab</kbd> (לוחצים עד שכתוב Plan), ובקשו: "אני רוצה להוסיף היסטוריית חישובים שנשמרת. תחקור את הקוד ותציג תוכנית". קראו את התוכנית, בקשו שינוי אחד בה ("תשמור רק 10 אחרונים"), ורק אז אשרו ביצוע.</p>
     <details class="solution"><summary>מה אמור לקרות</summary>
       <p>ב‑Plan Mode תראו ש‑Claude רק קורא — אין בקשות אישור לעריכה. התוכנית תוצג בסוף, והשינוי שביקשתם ייכנס אליה לפני שנכתבה שורת קוד אחת. זה בדיוק ה‑workflow למשימות רציניות.</p>
     </details>

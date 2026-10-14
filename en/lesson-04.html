@@ -98,6 +98,7 @@
   <ul>
     <li><strong><code>/compact</code></strong> — compresses history into a summary. Use at a natural stopping point (after a commit, before a new subtask).</li>
     <li><strong><code>/clear</code></strong> — full reset. Better than compact when switching to an unrelated task.</li>
+    <li><strong><code>/context</code></strong> — shows exactly what is sitting in the context window right now, as a coloured map: how much the memory file takes, how much the tool results take, and how much room is left. This is how you stop guessing when to run <code>/compact</code>.</li>
     <li><strong>Deliberate interim summaries:</strong> before a long break ask "summarize into PROGRESS.md what we did, what works and what's left" — and open the next conversation with "read PROGRESS.md and let's continue".</li>
   </ul>
   <div class="callout info">
@@ -161,7 +162,7 @@
 
   <h2>Lesson summary</h2>
   <ul class="checklist">
-    <li>The context window is limited — manage it deliberately: <code>/clear</code> between tasks, <code>/compact</code> at stopping points</li>
+    <li>The context window is limited — manage it deliberately: <code>/clear</code> between tasks, <code>/compact</code> at stopping points, <code>/context</code> to see what's inside</li>
     <li>CLAUDE.md = what you'd tell a new developer on day one</li>
     <li>Three levels: project (shared), local (personal per project), global (~/.claude)</li>
     <li>Important knowledge lives in files — not conversation memory</li>
