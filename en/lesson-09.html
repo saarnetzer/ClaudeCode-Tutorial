@@ -46,8 +46,9 @@
   <p>Claude Code doesn't act without approval: before any significant action — editing a file, running a command, reaching the network — someone has to approve it. The only question is <strong>who</strong>. As we saw in Lesson 2, a session you start in a terminal now begins in <strong>Auto mode</strong>, where a separate model reviews the actions in your place. That catches the gross mistakes — but it is not your review.</p>
   <div class="callout warn">
     <span class="co-title">⚠️ Security step one: choose the mode deliberately</span>
-    Before working on code you care about, switch to <strong>Manual</strong> (<kbd>Shift+Tab</kbd>, or <code dir="ltr">claude --permission-mode default</code>). In that mode every edit and every command goes through you, and you see exactly what is happening. You can also set it in advance for the whole project:
+    Before working on code you care about, switch to <strong>Manual</strong> (<kbd>Shift+Tab</kbd>, or <code dir="ltr">claude --permission-mode default</code>). In that mode every edit and every command goes through you, and you see exactly what is happening.
   </div>
+  <p>You can also set that mode in advance for the whole project, so it doesn't depend on you remembering:</p>
   <pre><span class="pre-label">.claude/settings.json</span><code>{
   "permissions": {
     "defaultMode": "default"
