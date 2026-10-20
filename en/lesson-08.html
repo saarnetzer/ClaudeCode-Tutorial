@@ -48,7 +48,7 @@
     <li><strong>Specialization.</strong> Every subagent has its own system prompt: detailed instructions for one role, no noise.</li>
     <li><strong>Its own permissions.</strong> You decide which tools it may use — a code reviewer, for instance, gets read-only.</li>
   </ul>
-  <p>A subagent is defined as a Markdown file in <code dir="ltr">.claude/agents/</code> (per project) or <code dir="ltr">~/.claude/agents/</code> (personal). You can also manage them with the interactive <code>/agents</code> command.</p>
+  <p>A subagent is defined as a Markdown file in <code dir="ltr">.claude/agents/</code> (per project) or <code dir="ltr">~/.claude/agents/</code> (personal). The easiest way to create one is to simply ask: "make me a subagent that reviews code" — Claude writes the file. The <code>/agents</code> command reminds you where they live and what you can ask for.</p>
 
   <h2>First subagent: a code reviewer</h2>
   <pre><span class="pre-label">.claude/agents/code-reviewer.md</span><code>---

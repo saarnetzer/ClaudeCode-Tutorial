@@ -75,7 +75,7 @@
       <tr><td><code>/init</code></td><td>יצירת CLAUDE.md לפרויקט</td></tr>
       <tr><td><code>/permissions</code></td><td>ניהול כללי הרשאות</td></tr>
       <tr><td><code>/hooks</code></td><td>הגדרת hooks אינטראקטיבית</td></tr>
-      <tr><td><code>/agents</code></td><td>ניהול subagents</td></tr>
+      <tr><td><code>/agents</code></td><td>איפה ה-subagents יושבים ומה אפשר לבקש</td></tr>
       <tr><td><code>/review</code></td><td>סקירת קוד על השינויים</td></tr>
       <tr><td><code>/config</code></td><td>הגדרות כלליות</td></tr>
       <tr><td><code dir="ltr">/install-github-app</code></td><td>חיבור @claude לריפו GitHub</td></tr>
@@ -102,7 +102,9 @@
   <div class="cheat-card">
     <h3>🔌 MCP</h3>
     <div class="table-scroll"><table>
-      <tr><td><code dir="ltr">claude mcp add שם -- פקודה</code></td><td>חיבור שרת חדש</td></tr>
+      <tr><td><code dir="ltr">claude mcp add שם -- פקודה</code></td><td>חיבור שרת מקומי</td></tr>
+      <tr><td><code dir="ltr">claude mcp add --transport http שם כתובת</code></td><td>חיבור שירות מרוחק (Notion, Sentry...)</td></tr>
+      <tr><td><code dir="ltr">claude mcp login שם</code></td><td>התחברות מחדש לשרת מרוחק</td></tr>
       <tr><td><code dir="ltr">claude mcp add --scope project ...</code></td><td>שרת משותף לצוות (.mcp.json)</td></tr>
       <tr><td><code dir="ltr">claude mcp list</code></td><td>שרתים מחוברים ומצבם</td></tr>
       <tr><td><code dir="ltr">claude mcp get שם</code></td><td>פרטי שרת</td></tr>
@@ -118,6 +120,7 @@
       <tr><td><code dir="ltr">--output-format json</code></td><td>פלט מובנה לסקריפטים</td></tr>
       <tr><td><code dir="ltr">--allowedTools "Bash(npm test),Read"</code></td><td>אישור מראש לכלים ספציפיים</td></tr>
       <tr><td><code dir="ltr">--max-turns 15</code></td><td>תקרת צעדים לריצה</td></tr>
+      <tr><td><code dir="ltr">--max-budget-usd 2.00</code></td><td>תקרת עלות לריצה</td></tr>
       <tr><td><code dir="ltr">--dangerously-skip-permissions</code></td><td>ביטול אישורים — רק בסביבה מבודדת!</td></tr>
       <tr><td><code dir="ltr">cat file | claude -p "..."</code></td><td>הזרמת קלט (Windows: ‏<code dir="ltr">Get-Content</code>)</td></tr>
     </table></div>

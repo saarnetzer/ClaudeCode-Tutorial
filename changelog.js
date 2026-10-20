@@ -4,6 +4,24 @@
    according to the page's <html lang>. */
 window.COURSE_CHANGELOG = [
   {
+    version: "3.6.0",
+    date: "2026-10-20",
+    title: "שרתי MCP מרוחקים, בלם עלות, ותיקוני דיוק",
+    titleEn: "Remote MCP servers, a cost brake, and accuracy fixes",
+    changes: [
+      "🆕 פרק 7: חיבור שירותים מרוחקים כמו Notion ו-Sentry בפקודה אחת, בלי להתקין כלום — זו הדרך המומלצת היום לכל שירות ענן",
+      "🆕 פרק 10: הדגל --max-budget-usd עוצר ריצה אוטומטית כשהעלות מגיעה לתקרה. יחד עם --max-turns אלו שני הבלמים שכל ריצה מתוזמנת צריכה",
+      "תוקן: הפקודה /agents אינה תפריט אינטראקטיבי יותר — פרק 8 והצ'יט-שיט מעודכנים",
+      "פרק 6: רשימת אירועי ה-Hooks גדלה מאוד; נוספה הפניה לרשימה המלאה ושלושה אירועים שימושיים נוספים"
+    ],
+    changesEn: [
+      "🆕 Lesson 7: connect remote services like Notion and Sentry in one command, with nothing to install — the recommended way to reach any cloud service today",
+      "🆕 Lesson 10: the --max-budget-usd flag stops an automated run once spend hits a ceiling. With --max-turns, these are the two brakes every scheduled run needs",
+      "Fixed: /agents is no longer an interactive menu — Lesson 8 and the cheat sheet are updated",
+      "Lesson 6: the list of Hook events has grown a lot; added a pointer to the full list and three more useful events"
+    ]
+  },
+  {
     version: "3.5.0",
     date: "2026-10-09",
     title: "עדכון מול התיעוד הרשמי: מצבי הרשאות, התקנה ופקודות חדשות",

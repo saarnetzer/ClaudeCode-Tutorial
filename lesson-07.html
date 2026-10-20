@@ -60,7 +60,23 @@
 claude mcp get playwright # פרטי שרת
 claude mcp remove playwright</code></pre>
 
-  <h2>שרת שני: מסד נתונים</h2>
+  <h2>שרת שני: שירות מרוחק (Notion, Sentry, Asana...)</h2>
+  <p>עד כאן חיברנו שרת שרץ אצלכם במחשב. אבל רוב השירותים שאתם כבר עובדים איתם מציעים שרת MCP <strong>מרוחק</strong>, שאין מה להתקין בשבילו — רק כתובת:</p>
+  <pre><code>claude mcp add --transport http notion https://mcp.notion.com/mcp</code></pre>
+  <p>בפעם הראשונה Claude יפתח לכם דפדפן כדי להתחבר לחשבון (OAuth) — בדיוק כמו חיבור אפליקציה רגילה. מאותו רגע אפשר לבקש דברים כמו ״תקרא את מסמך האפיון ב‑Notion ותבנה לפיו שלד קוד״.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>סוג שרת</th><th>איך מחברים</th><th>מתי</th></tr>
+    <tr><td>מקומי (stdio)</td><td><code dir="ltr">claude mcp add שם -- פקודה</code></td><td>כלי שרץ אצלכם: דפדפן, מסד נתונים, קבצים</td></tr>
+    <tr><td>מרוחק (HTTP)</td><td><code dir="ltr">claude mcp add --transport http שם כתובת</code></td><td>שירות ענן שיש לכם בו חשבון</td></tr>
+  </table>
+  </div>
+  <div class="callout tip">
+    <span class="co-title">✅ איפה מוצאים את הכתובת</span>
+    בתיעוד של השירות עצמו, בדרך כלל תחת ״MCP״ או ״Integrations״. אם צריך מפתח במקום התחברות בדפדפן, מוסיפים כותרת: <code dir="ltr">--header "Authorization: Bearer ..."</code>. להתחברות מחדש בלי להיכנס לתפריט: <code dir="ltr">claude mcp login שם</code>.
+  </div>
+
+  <h2>שרת שלישי: מסד נתונים</h2>
   <pre><code>claude mcp add db -- npx -y @modelcontextprotocol/server-postgres "postgresql://readonly_user:pass@localhost:5432/shop"</code></pre>
   <p>ואז בשיחה:</p>
   <pre><code>כמה הזמנות נפתחו החודש לעומת חודש שעבר, בפילוח לפי עיר?
@@ -112,7 +128,7 @@ claude mcp add --scope project github -- npx -y @modelcontextprotocol/server-git
   <h2>סיכום הפרק</h2>
   <ul class="checklist">
     <li>MCP = פרוטוקול סטנדרטי שמוסיף ל‑Claude כלים: דפדפן, DB, שירותי ענן</li>
-    <li>חיבור בפקודה אחת: <code dir="ltr">claude mcp add שם -- פקודה</code></li>
+    <li>חיבור בפקודה אחת: <code dir="ltr">claude mcp add שם -- פקודה</code> לכלי מקומי, <code dir="ltr">--transport http</code> לשירות מרוחק</li>
     <li>‏scope‏ project + קובץ <code dir="ltr">.mcp.json</code> = כלים משותפים לכל הצוות</li>
     <li>הרשאות מינימום תמיד: readonly כשאפשר, ורק שרתים ממקור אמין</li>
   </ul>

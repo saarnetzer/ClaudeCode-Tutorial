@@ -53,6 +53,7 @@
     <tr><td><code>Notification</code></td><td>When Claude waits for approval</td><td>Sound/message when you're needed</td></tr>
   </table>
   </div>
+  <p>These five are the ones you'll actually use, but the full list is far longer — there's an event for almost everything that happens in a session. Particularly useful as you go further: <code>SessionStart</code> (at the start of a session, for injecting context), <code>SubagentStop</code> (when a subagent finishes) and <code>PreCompact</code> (before the context is compacted). The full list is in the <a href="https://code.claude.com/docs/en/hooks" target="_blank" rel="noopener">Hooks documentation</a>.</p>
   <p>The settings live in <code dir="ltr">.claude/settings.json</code> (per project, shared with the team) or <code dir="ltr">~/.claude/settings.json</code> (personal). The convenient way to start: the <code>/hooks</code> command inside Claude Code, which walks you through interactively.</p>
 
   <h2>Example 1: auto-format after every edit</h2>

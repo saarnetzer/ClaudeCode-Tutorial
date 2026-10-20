@@ -56,15 +56,22 @@ claude -p "list all the TODOs in the code" --output-format json</code></pre>
   <p>With <code dir="ltr">--output-format json</code> you get JSON with the result, the run's cost and metadata — perfect for automated processing downstream.</p>
 
   <h2>Permissions with no human at the keyboard</h2>
-  <p>In headless mode nobody clicks "approve". Three levels of control, from fine to coarse:</p>
+  <p>In headless mode nobody clicks "approve". Four levels of control, from fine to coarse:</p>
   <pre><code># 1. pre-approve specific tools only:
 claude -p "run the tests and summarize failures" --allowedTools "Bash(npm test),Read"
 
 # 2. cap the number of turns (a safety brake for any automated run):
 claude -p "..." --max-turns 15
 
-# 3. disable all approvals - only in an isolated environment!
+# 3. cap the cost - the run stops once spend reaches the ceiling:
+claude -p "..." --max-budget-usd 2.00
+
+# 4. disable all approvals - only in an isolated environment!
 claude -p "fix all the lint warnings" --dangerously-skip-permissions</code></pre>
+  <div class="callout tip">
+    <span class="co-title">✅ Two brakes, not one</span>
+    <code dir="ltr">--max-turns</code> protects you from an agent stuck in a loop, and <code dir="ltr">--max-budget-usd</code> protects you from a run that simply turns out expensive. Set the ceiling a little above what you expect: spend is measured from an estimate and can overshoot slightly before the brake engages. On any scheduled run — set both.
+  </div>
   <div class="callout danger">
     <span class="co-title">🛑 The dangerous flag's rule</span>
     <code dir="ltr">--dangerously-skip-permissions</code> is legitimate <strong>only</strong> when all three hold: (1) an isolated environment — a container or VM holding nothing beyond the project; (2) no access to real secrets; (3) the output passes review (a PR) before touching anything important. That's exactly how the CI environments we're about to see work — and how Anthropic's Claude Code on the web works, running every task in an isolated sandbox. You learned all the defense layers in Lesson 9.

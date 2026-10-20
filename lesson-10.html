@@ -56,15 +56,22 @@ claude -p "רשום את כל ה-TODO בקוד" --output-format json</code></pre
   <p>עם <code dir="ltr">--output-format json</code> מקבלים JSON עם התוצאה, עלות הריצה ומטא־נתונים — מושלם לעיבוד אוטומטי בהמשך ה‑pipeline.</p>
 
   <h2>הרשאות כשאין אדם ליד המקלדת</h2>
-  <p>במצב headless אין מי שילחץ "אשר". שלוש רמות שליטה, מהעדינה לגסה:</p>
+  <p>במצב headless אין מי שילחץ "אשר". ארבע רמות שליטה, מהעדינה לגסה:</p>
   <pre><code># 1. לאשר מראש כלים ספציפיים בלבד:
 claude -p "הרץ את הטסטים וסכם כשלים" --allowedTools "Bash(npm test),Read"
 
 # 2. להגביל מספר צעדים (בלם בטיחות לכל ריצה אוטומטית):
 claude -p "..." --max-turns 15
 
-# 3. לבטל את כל האישורים - רק בסביבה מבודדת!
+# 3. להגביל את העלות - הריצה נעצרת כשההוצאה מגיעה לתקרה:
+claude -p "..." --max-budget-usd 2.00
+
+# 4. לבטל את כל האישורים - רק בסביבה מבודדת!
 claude -p "תקן את כל אזהרות ה-lint" --dangerously-skip-permissions</code></pre>
+  <div class="callout tip">
+    <span class="co-title">✅ שני בלמים, לא אחד</span>
+    ‏<code dir="ltr">--max-turns</code> שומר מפני סוכן שנתקע בלופ, ו‑<code dir="ltr">--max-budget-usd</code> שומר מפני ריצה שפשוט יוצאת יקרה. שימו תקרה מעט גבוהה ממה שאתם מצפים: ההוצאה נמדדת באמידה, ויכולה לחרוג קצת לפני שהבלם נכנס. בכל ריצה מתוזמנת — שימו את שניהם.
+  </div>
   <div class="callout danger">
     <span class="co-title">🛑 הכלל של הדגל המסוכן</span>
     ‏<code dir="ltr">--dangerously-skip-permissions</code> לגיטימי <strong>רק</strong> כשמתקיימים שלושת התנאים: (1) סביבה מבודדת — קונטיינר או VM שאין בו כלום מעבר לפרויקט; (2) בלי גישה לסודות אמיתיים; (3) התוצר עובר דרך ביקורת (PR) לפני שהוא נוגע במשהו חשוב. בדיוק כך עובדות סביבות ה‑CI שנראה עכשיו — וכך גם Claude Code on the web של Anthropic, שמריץ כל משימה בסנדבוקס מבודד. את כל שכבות ההגנה למדתם ב<a href="lesson-09.html">פרק 9</a>.

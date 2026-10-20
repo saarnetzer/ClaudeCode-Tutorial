@@ -75,7 +75,7 @@
       <tr><td><code>/init</code></td><td>Create a CLAUDE.md for the project</td></tr>
       <tr><td><code>/permissions</code></td><td>Manage permission rules</td></tr>
       <tr><td><code>/hooks</code></td><td>Configure hooks interactively</td></tr>
-      <tr><td><code>/agents</code></td><td>Manage subagents</td></tr>
+      <tr><td><code>/agents</code></td><td>Where subagents live and what to ask for</td></tr>
       <tr><td><code>/review</code></td><td>Code review of current changes</td></tr>
       <tr><td><code>/config</code></td><td>General settings</td></tr>
       <tr><td><code dir="ltr">/install-github-app</code></td><td>Connect @claude to a GitHub repo</td></tr>
@@ -117,7 +117,9 @@
   <div class="cheat-card">
     <h3>🔌 MCP</h3>
     <div class="table-scroll"><table>
-      <tr><td><code dir="ltr">claude mcp add name -- command</code></td><td>Connect a new server</td></tr>
+      <tr><td><code dir="ltr">claude mcp add name -- command</code></td><td>Connect a local server</td></tr>
+      <tr><td><code dir="ltr">claude mcp add --transport http name url</code></td><td>Connect a remote service (Notion, Sentry...)</td></tr>
+      <tr><td><code dir="ltr">claude mcp login name</code></td><td>Sign in to a remote server again</td></tr>
       <tr><td><code dir="ltr">claude mcp add --scope project ...</code></td><td>Team-shared server (.mcp.json)</td></tr>
       <tr><td><code dir="ltr">claude mcp list</code></td><td>Connected servers and status</td></tr>
       <tr><td><code dir="ltr">claude mcp get name</code></td><td>Server details</td></tr>
@@ -133,6 +135,7 @@
       <tr><td><code dir="ltr">--output-format json</code></td><td>Structured output for scripts</td></tr>
       <tr><td><code dir="ltr">--allowedTools "Bash(npm test),Read"</code></td><td>Pre-approve specific tools</td></tr>
       <tr><td><code dir="ltr">--max-turns 15</code></td><td>Turn cap per run</td></tr>
+      <tr><td><code dir="ltr">--max-budget-usd 2.00</code></td><td>Cost cap per run</td></tr>
       <tr><td><code dir="ltr">--dangerously-skip-permissions</code></td><td>Disable approvals — isolated environments only!</td></tr>
       <tr><td><code dir="ltr">cat file | claude -p "..."</code></td><td>Pipe input (Windows: <code dir="ltr">Get-Content</code>)</td></tr>
     </table></div>

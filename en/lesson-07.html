@@ -60,7 +60,23 @@ with sample data, submit, and screenshot the result. if something is broken - fi
 claude mcp get playwright # server details
 claude mcp remove playwright</code></pre>
 
-  <h2>Second server: a database</h2>
+  <h2>Second server: a remote service (Notion, Sentry, Asana...)</h2>
+  <p>So far we connected a server that runs on your own machine. But most services you already use offer a <strong>remote</strong> MCP server, with nothing to install — just an address:</p>
+  <pre><code>claude mcp add --transport http notion https://mcp.notion.com/mcp</code></pre>
+  <p>The first time, Claude opens a browser so you can sign in to the account (OAuth) — exactly like connecting any other app. From then on you can ask things like "read the spec document in Notion and scaffold the code from it".</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Server type</th><th>How you connect it</th><th>When</th></tr>
+    <tr><td>Local (stdio)</td><td><code dir="ltr">claude mcp add name -- command</code></td><td>A tool that runs on your machine: browser, database, files</td></tr>
+    <tr><td>Remote (HTTP)</td><td><code dir="ltr">claude mcp add --transport http name url</code></td><td>A cloud service you have an account with</td></tr>
+  </table>
+  </div>
+  <div class="callout tip">
+    <span class="co-title">✅ Where to find the address</span>
+    In the service's own docs, usually under "MCP" or "Integrations". If it wants a key instead of a browser sign-in, add a header: <code dir="ltr">--header "Authorization: Bearer ..."</code>. To sign in again without opening the menu: <code dir="ltr">claude mcp login name</code>.
+  </div>
+
+  <h2>Third server: a database</h2>
   <pre><code>claude mcp add db -- npx -y @modelcontextprotocol/server-postgres "postgresql://readonly_user:pass@localhost:5432/shop"</code></pre>
   <p>Then in conversation:</p>
   <pre><code>how many orders were opened this month versus last month, broken down by city?
@@ -138,7 +154,7 @@ claude mcp add --scope project github -- npx -y @modelcontextprotocol/server-git
   <h2>Lesson summary</h2>
   <ul class="checklist">
     <li>MCP = a standard protocol adding tools to Claude: browser, DB, cloud services</li>
-    <li>Connecting is one command: <code dir="ltr">claude mcp add name -- command</code></li>
+    <li>Connecting is one command: <code dir="ltr">claude mcp add name -- command</code> for a local tool, <code dir="ltr">--transport http</code> for a remote service</li>
     <li>project scope + <code dir="ltr">.mcp.json</code> = shared tools for the whole team</li>
     <li>Always least privilege: readonly when possible, trusted servers only</li>
   </ul>
