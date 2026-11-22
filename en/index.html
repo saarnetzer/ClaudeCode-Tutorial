@@ -23,17 +23,19 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> Claude Code Course</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" aria-label="Toggle theme" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
 </header>
 
-<main class="wrap">
+<main id="main" class="wrap">
   <section class="hero">
     <h1>From zero to <span class="grad">autonomous agent squads</span></h1>
     <p class="lead">A practical, step-by-step course on Claude Code — Anthropic's AI coding agent. From your very first install to agents that work for you on their own: plain explanations, real examples, and exercises in every lesson.</p>
     <div class="badges">
       <span class="badge">🎯 13 hands-on lessons</span>
+      <span class="badge">⏱ about 6 hours in total</span>
       <span class="badge">🏋️ 39 exercises with solutions</span>
       <span class="badge">🤖 no prior AI knowledge needed</span>
       <span class="badge">🇮🇱 גם בעברית</span>
@@ -79,13 +81,13 @@
         <span class="num">1</span>
         <span><span class="ch-title">What is Claude Code? Install and first run</span>
         <span class="ch-desc">What this tool actually does, how to install it, sign in, and run a first conversation that really builds something.</span></span>
-        <span class="ch-meta">~20 min</span>
+        <span class="ch-meta">~25 min</span>
       </a>
       <a class="chapter" href="lesson-02.html" data-lesson="l02">
         <span class="num">2</span>
         <span><span class="ch-title">Everyday fundamentals</span>
         <span class="ch-desc">How to phrase requests well, how Claude reads and edits files, permission modes, and the commands you must know.</span></span>
-        <span class="ch-meta">~30 min</span>
+        <span class="ch-meta">~25 min</span>
       </a>
       <a class="chapter" href="lesson-03.html" data-lesson="l03">
         <span class="num">3</span>
@@ -97,31 +99,31 @@
         <span class="num">4</span>
         <span><span class="ch-title">Memory and context: CLAUDE.md</span>
         <span class="ch-desc">Teach Claude your project once, keep conversations sharp — and pick the right model and effort level.</span></span>
-        <span class="ch-meta">~25 min</span>
+        <span class="ch-meta">~30 min</span>
       </a>
       <a class="chapter" href="lesson-05.html" data-lesson="l05">
         <span class="num">5</span>
         <span><span class="ch-title">Custom commands and Skills</span>
         <span class="ch-desc">Turn repeated tasks into a one-word slash command, build skills Claude pulls in on its own, and package it all as a plugin.</span></span>
-        <span class="ch-meta">~30 min</span>
+        <span class="ch-meta">~25 min</span>
       </a>
       <a class="chapter" href="lesson-06.html" data-lesson="l06">
         <span class="num">6</span>
         <span><span class="ch-title">Hooks — automating your workflow</span>
         <span class="ch-desc">Your code running automatically around Claude's actions: auto-format, safety blocks, notifications.</span></span>
-        <span class="ch-meta">~30 min</span>
+        <span class="ch-meta">~25 min</span>
       </a>
       <a class="chapter" href="lesson-07.html" data-lesson="l07">
         <span class="num">7</span>
         <span><span class="ch-title">MCP — connecting Claude to the world</span>
         <span class="ch-desc">Give Claude new tools: a real browser, databases, Slack and more — via the MCP protocol.</span></span>
-        <span class="ch-meta">~30 min</span>
+        <span class="ch-meta">~25 min</span>
       </a>
       <a class="chapter" href="lesson-08.html" data-lesson="l08">
         <span class="num">8</span>
         <span><span class="ch-title">Subagents — a team of specialists</span>
         <span class="ch-desc">Build specialist agents (code reviewer, test writer, researcher) that Claude delegates to on its own.</span></span>
-        <span class="ch-meta">~30 min</span>
+        <span class="ch-meta">~25 min</span>
       </a>
       <a class="chapter" href="lesson-09.html" data-lesson="l13">
         <span class="num">9</span>
@@ -133,25 +135,25 @@
         <span class="num">10</span>
         <span><span class="ch-title">Headless mode and CI automation</span>
         <span class="ch-desc">Run Claude without an interactive screen: scripts, GitHub Actions, and tagging @claude on Pull Requests.</span></span>
-        <span class="ch-meta">~35 min</span>
+        <span class="ch-meta">~25 min</span>
       </a>
       <a class="chapter" href="lesson-11.html" data-lesson="l10">
         <span class="num">11</span>
         <span><span class="ch-title">Fully autonomous agents — the Agent SDK</span>
         <span class="ch-desc">Build your own agent with the Claude Agent SDK, and learn the principles that let it run alone — safely.</span></span>
-        <span class="ch-meta">~45 min</span>
+        <span class="ch-meta">~25 min</span>
       </a>
       <a class="chapter" href="lesson-12.html" data-lesson="l11">
         <span class="num">12</span>
         <span><span class="ch-title">Building an agent squad — principles and patterns</span>
         <span class="ch-desc">From a single agent to a whole team: roles, deliverable contracts, three organizational patterns — and running agents in parallel without code.</span></span>
-        <span class="ch-meta">~40 min</span>
+        <span class="ch-meta">~30 min</span>
       </a>
       <a class="chapter" href="lesson-13.html" data-lesson="l12">
         <span class="num">13</span>
         <span><span class="ch-title">Agent squads across five industries</span>
         <span class="ch-desc">A dev team, a magazine desk, a data team, a night-shift ops crew and a support team — with 100 downloadable agents.</span></span>
-        <span class="ch-meta">~45 min</span>
+        <span class="ch-meta">~35 min</span>
       </a>
     </div>
   </section>

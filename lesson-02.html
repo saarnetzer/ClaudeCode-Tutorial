@@ -23,13 +23,14 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">דילוג לתוכן הראשי</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> קורס Claude Code</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/lesson-02.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/lesson-02.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" aria-label="החלפת ערכת נושא" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
 </header>
 
-<main class="wrap">
-  <span class="kicker">פרק 2 מתוך 13</span>
+<main id="main" class="wrap">
+  <span class="kicker">פרק 2 מתוך 13</span><span class="readtime">⏱ כ-25 דק'</span>
   <h1>יסודות העבודה היומיומית</h1>
   <p class="lead">הפרק הזה הופך אתכם ממשתמשים מהוססים למשתמשים שוטפים: איך לנסח בקשות שמביאות תוצאות מעולות, איך לשלוט במה ש‑Claude מורשה לעשות, ואילו פקודות ומקשים חוסכים המון זמן.</p>
 
@@ -123,6 +124,8 @@
     <tr><td><code>/usage</code></td><td>כמה השיחה עלתה ואיפה אתם עומדים מול מגבלות המנוי</td></tr>
     <tr><td><code dir="ltr">/code-review</code></td><td>סקירת קוד על השינויים הנוכחיים. <code dir="ltr">--fix</code> גם מתקן, <code dir="ltr">--comment</code> מפרסם כתגובה ב-PR. כינוי: <code>/review</code></td></tr>
     <tr><td><code dir="ltr">/security-review</code></td><td>סקירת אבטחה לשינויים בענף שלכם — פרק 9</td></tr>
+    <tr><td><code>/verify</code></td><td>בונה ומריץ את האפליקציה כדי לוודא שהשינוי באמת עובד — לא רק שהטסטים עוברים</td></tr>
+    <tr><td><code>/run</code></td><td>מפעיל את האפליקציה כדי לראות את השינוי בפעולה</td></tr>
     <tr><td><code>/config</code></td><td>הגדרות: ערכת נושא, התראות ועוד</td></tr>
   </table>
   </div>

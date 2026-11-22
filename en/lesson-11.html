@@ -23,13 +23,14 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> Claude Code Course</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-11.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-11.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" aria-label="Toggle theme" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
 </header>
 
-<main class="wrap">
-  <span class="kicker">Lesson 11 of 13</span>
+<main id="main" class="wrap">
+  <span class="kicker">Lesson 11 of 13</span><span class="readtime">⏱ about 25 min</span>
   <h1>Fully autonomous agents — the Agent SDK and working principles</h1>
   <p class="lead">In this lesson we build our own agent in code with the Claude Agent SDK — the same engine that powers Claude Code itself — and learn the five principles that separate an autonomous agent that creates value from one that creates chaos.</p>
 
@@ -137,6 +138,11 @@ const result = query({
   <div class="callout tip">
     <span class="co-title">✅ The final test</span>
     Before releasing an agent to run alone, ask: "what's the worst that could happen in this run?" If the answer is "a messy git branch I'll delete" — go. If the answer includes a real database, money or customers — principle 2 is missing. Go back and strengthen boundaries.
+  </div>
+
+  <div class="callout tip">
+    <span class="co-title">✅ Define a finish condition, not just a task</span>
+    The <code>/goal</code> command turns the first principle into a command: you set a <strong>condition</strong>, and Claude keeps working across turns until it's met. For example <code dir="ltr">/goal all tests pass and lint is clean</code>. The difference from "fix the tests" is that the agent doesn't decide for itself when it's done — there's an external criterion. To cancel: <code dir="ltr">/goal clear</code>.
   </div>
 
   <h2>Running it again and again: /loop and scheduled tasks</h2>

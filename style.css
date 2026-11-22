@@ -447,8 +447,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visibl
 /* Hero: soft glow behind the title */
 .hero { position: relative; }
 .hero::before {
-  content: ""; position: absolute; inset-inline: 50%; top: 1rem;
-  width: min(560px, 90%); height: 220px; transform: translateX(50%);
+  content: ""; position: absolute; left: 50%; top: 1rem;
+  width: min(560px, 90%); height: 220px; transform: translateX(-50%);
   background: radial-gradient(ellipse at center,
               color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%);
   filter: blur(18px); pointer-events: none; z-index: -1;
@@ -538,3 +538,92 @@ ul.checklist li::marker { content: ""; }
 .cc-status.note { color: var(--text2); }
 /* honeypot stays out of sight and out of the tab order */
 .cc-hp { position: absolute; inset-inline-start: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* ===== Diagrams ================================================ */
+.ccdiag {
+  margin: 1.4rem 0;
+  padding: 1.1rem .8rem;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow-x: auto;
+}
+.ccdiag svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+.ccdiag figcaption {
+  margin-top: .7rem;
+  font-size: .86rem;
+  color: var(--text2);
+  text-align: center;
+}
+.ccdiag .d-box { fill: var(--card); stroke: var(--border); stroke-width: 1.5; }
+.ccdiag .d-box-accent { fill: var(--card); stroke: var(--accent); stroke-width: 2; }
+.ccdiag .d-label { fill: var(--text); font-size: 13px; font-weight: 600; }
+.ccdiag .d-sub { fill: var(--text2); font-size: 11px; }
+.ccdiag .d-arrow { stroke: var(--text3); stroke-width: 1.8; fill: none; }
+.ccdiag .d-arrow-accent { stroke: var(--accent); stroke-width: 1.8; fill: none; }
+.ccdiag .d-head { fill: var(--text3); }
+.ccdiag .d-head-accent { fill: var(--accent); }
+.ccdiag text { font-family: "Segoe UI", "Heebo", "Assistant", system-ui, sans-serif; }
+
+/* ===== Reading time ============================================ */
+.readtime {
+  display: inline-block;
+  margin-inline-start: .5rem;
+  font-size: .8rem;
+  color: var(--text2);
+  font-weight: 400;
+}
+.ch-time {
+  display: inline-block;
+  margin-inline-start: .4rem;
+  font-size: .78rem;
+  color: var(--text3);
+  white-space: nowrap;
+}
+
+/* ===== Accessibility =========================================== */
+.skip-link {
+  position: absolute;
+  inset-inline-start: 50%;
+  transform: translateX(-50%) translateY(-200%);
+  z-index: 200;
+  background: var(--accent);
+  color: #fff;
+  padding: .6rem 1.2rem;
+  border-radius: 0 0 10px 10px;
+  font-weight: 700;
+  transition: transform .15s;
+}
+.skip-link:focus { transform: translateX(-50%) translateY(0); }
+
+/* ===== Print =================================================== */
+@media print {
+  :root {
+    --bg: #fff; --bg2: #fff; --card: #fff; --code-bg: #f6f6f6;
+    --text: #000; --text2: #333; --text3: #555; --border: #bbb;
+    --shadow: none;
+  }
+  html, body { background: #fff !important; color: #000 !important; }
+  header.site, footer.site, nav, .skip-link,
+  #readProgress, #toTop, #copyToast, .search-wrap,
+  .td-replay, .copy-btn, .lesson-nav, #whatsNew,
+  .quiz, #certRow, #continueRow, .progress-outer, .progress-label,
+  .cc-form, .cc-status { display: none !important; }
+  main.wrap { max-width: 100%; padding: 0; }
+  a { color: #000 !important; text-decoration: underline; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .75em; color: #555; }
+  pre, .callout, .cheat-card, table, .ccdiag, .exercise {
+    border: 1px solid #bbb !important;
+    background: #fff !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  pre, code { background: #f6f6f6 !important; color: #000 !important; }
+  h1, h2, h3 { break-after: avoid; page-break-after: avoid; color: #000 !important; }
+  .cheat-grid { display: block !important; }
+  .cheat-card { margin-bottom: .8rem; }
+  details { display: block; }
+  details > summary { font-weight: 700; }
+  details[open] > summary ~ * { display: block; }
+  .table-scroll { overflow: visible !important; }
+}

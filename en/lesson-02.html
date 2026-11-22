@@ -23,13 +23,14 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> Claude Code Course</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-02.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-02.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" aria-label="Toggle theme" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
 </header>
 
-<main class="wrap">
-  <span class="kicker">Lesson 2 of 13</span>
+<main id="main" class="wrap">
+  <span class="kicker">Lesson 2 of 13</span><span class="readtime">⏱ about 25 min</span>
   <h1>Everyday fundamentals</h1>
   <p class="lead">This lesson turns you from a hesitant user into a fluent one: how to phrase requests that get excellent results, how to control what Claude is allowed to do, and which commands and keys save serious time.</p>
 
@@ -122,6 +123,8 @@
     <tr><td><code>/usage</code></td><td>What the session cost, and where you stand against your plan limits</td></tr>
     <tr><td><code dir="ltr">/code-review</code></td><td>Code review of the current changes. <code dir="ltr">--fix</code> also applies them, <code dir="ltr">--comment</code> posts them on the PR. Alias: <code>/review</code></td></tr>
     <tr><td><code dir="ltr">/security-review</code></td><td>Security review of the changes on your branch — Lesson 9</td></tr>
+    <tr><td><code>/verify</code></td><td>Builds and runs the app to confirm the change really works — not just that tests pass</td></tr>
+    <tr><td><code>/run</code></td><td>Launches the app so you can see the change in action</td></tr>
     <tr><td><code>/config</code></td><td>Settings: theme, notifications and more</td></tr>
   </table>
   </div>

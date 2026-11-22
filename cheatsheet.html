@@ -23,12 +23,13 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">דילוג לתוכן הראשי</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> קורס Claude Code</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/cheatsheet.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/cheatsheet.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" aria-label="החלפת ערכת נושא" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
 </header>
 
-<main class="wrap">
+<main id="main" class="wrap">
   <span class="kicker">דף עזר מרוכז</span>
   <h1>צ'יט-שיט: כל מה שצריך, בעמוד אחד</h1>
   <p class="lead">כל הפקודות, הקיצורים והמיקומים מהקורס — מרוכזים לשליפה מהירה. שמרו את העמוד בסימניות. <strong>לחיצה על כל פקודה מעתיקה אותה</strong> — גם בנייד.</p>
@@ -78,6 +79,13 @@
       <tr><td><code>/loop</code></td><td>הרצת פרומפט שוב ושוב (<code dir="ltr">/loop 5m ...</code>)</td></tr>
       <tr><td><code>/background</code></td><td>ניתוק השיחה לרקע</td></tr>
       <tr><td><code>/batch</code></td><td>פירוק שינוי רחב לסוכני רקע מקבילים</td></tr>
+      <tr><td><code>/memory</code></td><td>עריכת קובצי הזיכרון וכיבוי הזיכרון האוטומטי</td></tr>
+      <tr><td><code>/goal</code></td><td>תנאי סיום שהסוכן עובד עד שהוא מתקיים</td></tr>
+      <tr><td><code>/btw</code></td><td>שאלת צד בלי להיכנס להיסטוריה</td></tr>
+      <tr><td><code dir="ltr">/fewer-permission-prompts</code></td><td>בניית רשימת allow מההיסטוריה שלכם</td></tr>
+      <tr><td><code dir="ltr">/output-style</code></td><td>סגנון התשובות (למשל concise)</td></tr>
+      <tr><td><code>/import</code></td><td>ייבוא הגדרות מ-Cursor / Codex / Gemini</td></tr>
+      <tr><td><code>/verify</code> · <code>/run</code></td><td>בנייה והרצה של האפליקציה כדי לראות שהשינוי עובד</td></tr>
       <tr><td><code dir="ltr">ultrathink</code></td><td>לא פקודה — מילה בפרומפט שמבקשת חשיבה עמוקה לתור הזה</td></tr>
       <tr><td><code>/model</code></td><td>החלפת מודל</td></tr>
       <tr><td><code>/init</code></td><td>יצירת CLAUDE.md לפרויקט</td></tr>
@@ -98,6 +106,8 @@
       <tr><td><code dir="ltr">./CLAUDE.md</code></td><td>זיכרון הפרויקט (משותף, ב-git)</td></tr>
       <tr><td><code dir="ltr">./CLAUDE.local.md</code></td><td>זיכרון אישי לפרויקט (מחוץ ל-git)</td></tr>
       <tr><td><code dir="ltr">~/.claude/CLAUDE.md</code></td><td>זיכרון גלובלי (כל הפרויקטים)</td></tr>
+      <tr><td><code dir="ltr">.claude/rules/*.md</code></td><td>כללים לפי נושא; <code dir="ltr">paths</code> מצמיד כלל לקבצים</td></tr>
+      <tr><td><code dir="ltr">AGENTS.md</code></td><td>נקרא רק כשאין CLAUDE.md</td></tr>
       <tr><td><code dir="ltr">.claude/commands/*.md</code></td><td>פקודות Slash מותאמות</td></tr>
       <tr><td><code dir="ltr">.claude/skills/*/SKILL.md</code></td><td>Skills — ידע שנשלף אוטומטית</td></tr>
       <tr><td><code dir="ltr">.claude/agents/*.md</code></td><td>Subagents — סוכני משנה</td></tr>

@@ -23,13 +23,14 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> Claude Code Course</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-06.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-06.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" aria-label="Toggle theme" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
 </header>
 
-<main class="wrap">
-  <span class="kicker">Lesson 6 of 13</span>
+<main id="main" class="wrap">
+  <span class="kicker">Lesson 6 of 13</span><span class="readtime">⏱ about 25 min</span>
   <h1>Hooks — automating your workflow</h1>
   <p class="lead">Until now we asked Claude to do things. Hooks are the opposite: <em>your</em> code running automatically around Claude's actions — no asking, no relying on memory, one hundred percent of the time. It's the difference between "please run the formatter" and "the formatter always runs, period".</p>
 
@@ -55,6 +56,11 @@
   </div>
   <p>These five are the ones you'll actually use, but the full list is far longer — there's an event for almost everything that happens in a session. Particularly useful as you go further: <code>SessionStart</code> (at the start of a session, for injecting context), <code>SubagentStop</code> (when a subagent finishes) and <code>PreCompact</code> (before the context is compacted). The full list is in the <a href="https://code.claude.com/docs/en/hooks" target="_blank" rel="noopener">Hooks documentation</a>.</p>
   <p>The settings live in <code dir="ltr">.claude/settings.json</code> (per project, shared with the team) or <code dir="ltr">~/.claude/settings.json</code> (personal). The convenient way to start: the <code>/hooks</code> command inside Claude Code, which walks you through interactively.</p>
+
+  <figure class="ccdiag">
+    <svg viewBox="0 0 540 380" role="img" aria-label="The path of a turn and its hook points: UserPromptSubmit before planning, PreToolUse before a tool, PostToolUse after it, and Stop at the end of the turn"><defs><marker id="ccah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" class="d-head"/></marker></defs><defs><marker id="ccah-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" class="d-head-accent"/></marker></defs><rect x="40" y="12" width="230" height="44" rx="9" class="d-box"/><text x="155" y="39" class="d-label" text-anchor="middle">The message you send</text><rect x="40" y="90" width="230" height="44" rx="9" class="d-box"/><text x="155" y="117" class="d-label" text-anchor="middle">Claude plans</text><rect x="40" y="168" width="230" height="44" rx="9" class="d-box"/><text x="155" y="195" class="d-label" text-anchor="middle">A tool runs (edit, command)</text><rect x="40" y="246" width="230" height="44" rx="9" class="d-box"/><text x="155" y="273" class="d-label" text-anchor="middle">Claude continues</text><rect x="40" y="324" width="230" height="44" rx="9" class="d-box"/><text x="155" y="351" class="d-label" text-anchor="middle">End of the turn</text><line x1="155" y1="56" x2="155" y2="83" class="d-arrow" marker-end="url(#ccah)"/><line x1="155" y1="69" x2="294" y2="69" class="d-arrow" stroke-dasharray="3 3"/><rect x="294" y="54" width="196" height="30" rx="15" class="d-box-accent"/><text x="392" y="68" class="d-label" text-anchor="middle" font-size="11">UserPromptSubmit</text><text x="392" y="80" class="d-sub" text-anchor="middle" font-size="10">Inject context, validate</text><line x1="155" y1="134" x2="155" y2="161" class="d-arrow" marker-end="url(#ccah)"/><line x1="155" y1="147" x2="294" y2="147" class="d-arrow" stroke-dasharray="3 3"/><rect x="294" y="132" width="196" height="30" rx="15" class="d-box-accent"/><text x="392" y="146" class="d-label" text-anchor="middle" font-size="11">PreToolUse</text><text x="392" y="158" class="d-sub" text-anchor="middle" font-size="10">Can block the action</text><line x1="155" y1="212" x2="155" y2="239" class="d-arrow" marker-end="url(#ccah)"/><line x1="155" y1="225" x2="294" y2="225" class="d-arrow" stroke-dasharray="3 3"/><rect x="294" y="210" width="196" height="30" rx="15" class="d-box-accent"/><text x="392" y="224" class="d-label" text-anchor="middle" font-size="11">PostToolUse</text><text x="392" y="236" class="d-sub" text-anchor="middle" font-size="10">Format, lint, log</text><line x1="155" y1="290" x2="155" y2="317" class="d-arrow" marker-end="url(#ccah)"/><line x1="155" y1="303" x2="294" y2="303" class="d-arrow" stroke-dasharray="3 3"/><rect x="294" y="288" width="196" height="30" rx="15" class="d-box-accent"/><text x="392" y="302" class="d-label" text-anchor="middle" font-size="11">Stop</text><text x="392" y="314" class="d-sub" text-anchor="middle" font-size="10">Notify, or nudge to continue</text></svg>
+    <figcaption>The path of a single turn, and the four points where you can plant code of your own.</figcaption>
+  </figure>
 
   <h2>Example 1: auto-format after every edit</h2>
   <pre><span class="pre-label">.claude/settings.json</span><code>{

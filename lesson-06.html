@@ -23,13 +23,14 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">דילוג לתוכן הראשי</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> קורס Claude Code</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/lesson-06.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/lesson-06.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" aria-label="החלפת ערכת נושא" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
 </header>
 
-<main class="wrap">
-  <span class="kicker">פרק 6 מתוך 13</span>
+<main id="main" class="wrap">
+  <span class="kicker">פרק 6 מתוך 13</span><span class="readtime">⏱ כ-25 דק'</span>
   <h1>Hooks — אוטומציה של תהליך העבודה</h1>
   <p class="lead">עד עכשיו ביקשנו מ‑Claude לעשות דברים. Hooks הם ההפך: קוד <em>שלכם</em> שרץ אוטומטית סביב הפעולות של Claude — בלי לבקש, בלי לסמוך על זיכרון, במאה אחוז מהמקרים. זה ההבדל בין "בבקשה תריץ פורמט" לבין "פורמט רץ תמיד, נקודה".</p>
 
@@ -55,6 +56,11 @@
   </div>
   <p>אלו החמישה שתשתמשו בהם בפועל, אבל הרשימה המלאה ארוכה בהרבה — יש אירוע כמעט לכל דבר שקורה בשיחה. שימושיים במיוחד כשתתקדמו: <code>SessionStart</code> (בתחילת שיחה — להזרקת הקשר), <code>SubagentStop</code> (כשסוכן משנה מסיים) ו‑<code>PreCompact</code> (לפני כיווץ ההקשר). את הרשימה המלאה תמצאו ב<a href="https://code.claude.com/docs/en/hooks" target="_blank" rel="noopener">תיעוד ה‑Hooks</a>.</p>
   <p>ההגדרות יושבות ב‑<code dir="ltr">.claude/settings.json</code> (לפרויקט, משותף בצוות) או <code dir="ltr">~/.claude/settings.json</code> (אישי). הדרך הנוחה להתחיל: הפקודה <code>/hooks</code> בתוך Claude Code, שמדריכה אתכם אינטראקטיבית.</p>
+
+  <figure class="ccdiag">
+    <svg viewBox="0 0 540 380" role="img" aria-label="מסלול התור ונקודות ה-Hooks: UserPromptSubmit לפני התכנון, PreToolUse לפני כלי, PostToolUse אחריו, ו-Stop בסוף התור"><defs><marker id="ccah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" class="d-head"/></marker></defs><defs><marker id="ccah-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" class="d-head-accent"/></marker></defs><rect x="40" y="12" width="230" height="44" rx="9" class="d-box"/><text x="155" y="39" class="d-label" text-anchor="middle">ההודעה שאתם שולחים</text><rect x="40" y="90" width="230" height="44" rx="9" class="d-box"/><text x="155" y="117" class="d-label" text-anchor="middle">Claude מתכנן</text><rect x="40" y="168" width="230" height="44" rx="9" class="d-box"/><text x="155" y="195" class="d-label" text-anchor="middle">הפעלת כלי (עריכה, פקודה)</text><rect x="40" y="246" width="230" height="44" rx="9" class="d-box"/><text x="155" y="273" class="d-label" text-anchor="middle">Claude ממשיך</text><rect x="40" y="324" width="230" height="44" rx="9" class="d-box"/><text x="155" y="351" class="d-label" text-anchor="middle">סוף התור</text><line x1="155" y1="56" x2="155" y2="83" class="d-arrow" marker-end="url(#ccah)"/><line x1="155" y1="69" x2="294" y2="69" class="d-arrow" stroke-dasharray="3 3"/><rect x="294" y="54" width="196" height="30" rx="15" class="d-box-accent"/><text x="392" y="68" class="d-label" text-anchor="middle" font-size="11">UserPromptSubmit</text><text x="392" y="80" class="d-sub" text-anchor="middle" font-size="10">הזרקת הקשר, ולידציה</text><line x1="155" y1="134" x2="155" y2="161" class="d-arrow" marker-end="url(#ccah)"/><line x1="155" y1="147" x2="294" y2="147" class="d-arrow" stroke-dasharray="3 3"/><rect x="294" y="132" width="196" height="30" rx="15" class="d-box-accent"/><text x="392" y="146" class="d-label" text-anchor="middle" font-size="11">PreToolUse</text><text x="392" y="158" class="d-sub" text-anchor="middle" font-size="10">יכול לחסום את הפעולה</text><line x1="155" y1="212" x2="155" y2="239" class="d-arrow" marker-end="url(#ccah)"/><line x1="155" y1="225" x2="294" y2="225" class="d-arrow" stroke-dasharray="3 3"/><rect x="294" y="210" width="196" height="30" rx="15" class="d-box-accent"/><text x="392" y="224" class="d-label" text-anchor="middle" font-size="11">PostToolUse</text><text x="392" y="236" class="d-sub" text-anchor="middle" font-size="10">פורמט, lint, לוג</text><line x1="155" y1="290" x2="155" y2="317" class="d-arrow" marker-end="url(#ccah)"/><line x1="155" y1="303" x2="294" y2="303" class="d-arrow" stroke-dasharray="3 3"/><rect x="294" y="288" width="196" height="30" rx="15" class="d-box-accent"/><text x="392" y="302" class="d-label" text-anchor="middle" font-size="11">Stop</text><text x="392" y="314" class="d-sub" text-anchor="middle" font-size="10">התראה, ״באמת סיימת?״</text></svg>
+    <figcaption>מסלול תור אחד, וארבע הנקודות שבהן אפשר להשתיל קוד משלכם.</figcaption>
+  </figure>
 
   <h2>דוגמה 1: פורמט אוטומטי אחרי כל עריכה</h2>
   <pre><span class="pre-label">.claude/settings.json</span><code>{

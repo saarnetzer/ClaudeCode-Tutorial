@@ -23,13 +23,14 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">דילוג לתוכן הראשי</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> קורס Claude Code</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/lesson-09.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/lesson-09.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" aria-label="החלפת ערכת נושא" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
 </header>
 
-<main class="wrap">
-  <span class="kicker">פרק 9 מתוך 13</span>
+<main id="main" class="wrap">
+  <span class="kicker">פרק 9 מתוך 13</span><span class="readtime">⏱ כ-30 דק'</span>
   <h1>לשלוט במה שמותר — אבטחה בעבודה עם סוכן</h1>
   <p class="lead">נתנו ל‑Claude יותר ויותר כוח לאורך הקורס: כלים, שרתים, סוכני משנה. בפרק הבא נעשה את הצעד הגדול — נריץ אותו בלי להיות ליד המקלדת. אבל רגע לפני שמורידים ידיים מההגה, לומדים איפה הבלמים. העיקרון של כל הפרק במשפט אחד: <strong>מה שאסור לסוכן לעשות — שיהיה בלתי אפשרי, לא רק "לא מומלץ".</strong></p>
 
@@ -86,6 +87,11 @@
     <li><strong>deny</strong> — פעולות שנחסמות תמיד, <em>גם אם תאשרו בטעות</em>. כלל deny גובר על כלל allow. זה המקום לקובצי סודות ולפקודות הרסניות.</li>
   </ul>
   <p>מנהלים את הכללים בנוחות עם הפקודה <code>/permissions</code>, והם נשמרים ב-<code dir="ltr">.claude/settings.json</code> — שנכנס ל-git ומשותף לכל הצוות. זו בדיוק הרוח של פרק 6: לא הבטחות, מנגנונים.</p>
+
+  <div class="callout tip">
+    <span class="co-title">✅ לתת ל-Claude לבנות לכם את רשימת ה-allow</span>
+    לכתוב כללי allow ביד זה ניחוש: אתם מנסים להיזכר מה אתם מריצים. הפקודה <code dir="ltr">/fewer-permission-prompts</code> עושה את זה נכון — היא סורקת את ההיסטוריה שלכם, מוצאת את פקודות הקריאה שחוזרות על עצמן, ומוסיפה רשימה מדורגת ל-<code dir="ltr">.claude/settings.json</code> של הפרויקט. פחות שאלות, ועל בסיס מה שבאמת קרה ולא מה שנדמה לכם.
+  </div>
 
   <h2>סנדבוקס: גבול שמערכת ההפעלה אוכפת</h2>
   <p>כל מה שראינו עד כה עונה על השאלה ״האם הפעולה תרוץ?״. הסנדבוקס עונה על שאלה אחרת לגמרי: <strong>לאן הפעולה יכולה להגיע אחרי שהיא כבר רצה?</strong> זו שכבה נפרדת, ומערכת ההפעלה אוכפת אותה — לא Claude.</p>

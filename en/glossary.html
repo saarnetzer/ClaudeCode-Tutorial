@@ -23,12 +23,13 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> Claude Code Course</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../glossary.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../glossary.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" aria-label="Toggle theme" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
 </header>
 
-<main class="wrap">
+<main id="main" class="wrap">
   <span class="kicker">Quick reference</span>
   <h1>Glossary</h1>
   <p class="lead">Every term from the course in one place, explained in a line or two. Next to each term — the lesson that covers it in depth.</p>
@@ -60,6 +61,12 @@
 
     <dt>Skill</dt>
     <dd>A knowledge package Claude loads by itself when the task fits — based on its description. You don't have to remember to ask. <a href="lesson-05.html">Lesson 5</a></dd>
+
+    <dt>Auto memory</dt>
+    <dd>Notes Claude writes for itself about your preferences and corrections, loaded in later sessions. <strong>On by default</strong>; view and disable it with <code>/memory</code>. <a href="lesson-04.html">Lesson 4</a></dd>
+
+    <dt>Rules files (<code dir="ltr">.claude/rules/</code>)</dt>
+    <dd>Splitting project instructions into files by topic. A <code dir="ltr">paths</code> field ties a rule to specific files, so it loads only when it's needed. <a href="lesson-04.html">Lesson 4</a></dd>
 
     <dt>Plugin</dt>
     <dd>One package bundling Skills, agents, hooks and MCP servers, installed with a single command. There's an official marketplace, connected from your first run. <a href="lesson-05.html">Lesson 5</a></dd>

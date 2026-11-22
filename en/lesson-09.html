@@ -23,13 +23,14 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> Claude Code Course</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-09.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-09.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" aria-label="Toggle theme" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
 </header>
 
-<main class="wrap">
-  <span class="kicker">Lesson 9 of 13</span>
+<main id="main" class="wrap">
+  <span class="kicker">Lesson 9 of 13</span><span class="readtime">⏱ about 30 min</span>
   <h1>Controlling what's allowed — agent security</h1>
   <p class="lead">We've given Claude more and more power through the course: tools, servers, subagents. In the next lesson we take the big step — running it without sitting at the keyboard. But right before letting go of the wheel, you learn where the brakes are. The whole lesson in one sentence: <strong>whatever the agent must not do — make it impossible, not merely "not recommended".</strong></p>
 
@@ -86,6 +87,11 @@
     <li><strong>deny</strong> — actions blocked always, <em>even if you approve by mistake</em>. A deny rule beats an allow rule. This is the place for secret files and destructive commands.</li>
   </ul>
   <p>Manage the rules comfortably with <code>/permissions</code>; they're stored in <code dir="ltr">.claude/settings.json</code> — which goes into git and is shared with the whole team. Exactly the spirit of Lesson 6: not promises, mechanisms.</p>
+
+  <div class="callout tip">
+    <span class="co-title">✅ Let Claude build your allow list for you</span>
+    Writing allow rules by hand is guesswork: you're trying to recall what you run. The <code dir="ltr">/fewer-permission-prompts</code> command does it properly — it scans your own transcripts, finds the read-only calls you make repeatedly, and adds a prioritized list to the project's <code dir="ltr">.claude/settings.json</code>. Fewer prompts, based on what actually happened rather than what you think you do.
+  </div>
 
   <h2>The sandbox: a boundary the operating system enforces</h2>
   <p>Everything so far answers "will this action run?". The sandbox answers a completely different question: <strong>once it has run, how far can it reach?</strong> It's a separate layer, and the operating system enforces it — not Claude.</p>

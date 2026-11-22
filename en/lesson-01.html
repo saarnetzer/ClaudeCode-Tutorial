@@ -23,13 +23,14 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> Claude Code Course</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-01.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-01.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" aria-label="Toggle theme" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
 </header>
 
-<main class="wrap">
-  <span class="kicker">Lesson 1 of 13</span>
+<main id="main" class="wrap">
+  <span class="kicker">Lesson 1 of 13</span><span class="readtime">⏱ about 25 min</span>
   <h1>What is Claude Code? Install and first run</h1>
   <p class="lead">In this lesson you'll understand what Claude Code actually does, install it on your machine, and within fifteen minutes run your first conversation — one that really produces working code.</p>
 
@@ -48,6 +49,11 @@
     <li>Claude Code <em>does</em>: it reads your files, writes and edits them, runs commands, runs tests, fixes the errors it sees — and keeps going, step by step, until the job is done.</li>
   </ul>
   <p>The key word here is <strong>"agent"</strong>: software that takes a goal, plans, uses tools (reading files, the terminal, search), checks its own results — and repeats until it succeeds. This whole course is really a journey: from using an agent, to building agents of your own that run on their own.</p>
+
+  <figure class="ccdiag">
+    <svg viewBox="0 0 520 374" role="img" aria-label="The agentic loop: a goal, planning, using a tool, checking the result — and back to planning until the task is complete"><defs><marker id="ccah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" class="d-head"/></marker></defs><defs><marker id="ccah-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" class="d-head-accent"/></marker></defs><rect x="60" y="12" width="210" height="46" rx="9" class="d-box"/><text x="165" y="40" class="d-label" text-anchor="middle">The goal you give</text><rect x="60" y="88" width="210" height="46" rx="9" class="d-box"/><text x="165" y="116" class="d-label" text-anchor="middle">Plan the next step</text><rect x="60" y="164" width="210" height="46" rx="9" class="d-box"/><text x="165" y="192" class="d-label" text-anchor="middle">Use a tool</text><rect x="60" y="240" width="210" height="46" rx="9" class="d-box-accent"/><text x="165" y="268" class="d-label" text-anchor="middle">Check the result</text><rect x="60" y="316" width="210" height="46" rx="9" class="d-box"/><text x="165" y="344" class="d-label" text-anchor="middle">Task complete ✓</text><line x1="165" y1="58" x2="165" y2="81" class="d-arrow" marker-end="url(#ccah)"/><line x1="165" y1="134" x2="165" y2="157" class="d-arrow" marker-end="url(#ccah)"/><line x1="165" y1="210" x2="165" y2="233" class="d-arrow" marker-end="url(#ccah)"/><line x1="165" y1="286" x2="165" y2="309" class="d-arrow" marker-end="url(#ccah)"/><path d="M 270 263 H 330 V 111 H 277" class="d-arrow-accent" marker-end="url(#ccah-a)"/><text x="344" y="191" class="d-sub" text-anchor="middle" transform="rotate(90 344 191)">Not there? Again</text></svg>
+    <figcaption>The agentic loop: an agent doesn't answer once — it repeats until the result passes its own check.</figcaption>
+  </figure>
 
   <div class="callout info">
     <span class="co-title">💡 The terminal is home — but not the only address</span>
@@ -87,6 +93,11 @@
   <div class="callout warn">
     <span class="co-title">⚠️ Command not recognized?</span>
     Close and reopen your terminal (or PowerShell). The installer adds the tool to your system path, and the change only loads in a new window.
+  </div>
+
+  <div class="callout tip">
+    <span class="co-title">✅ Coming from another tool?</span>
+    If you already work with Cursor, with OpenAI's Codex or with the Gemini CLI — don't start from scratch. The <code>/import</code> command brings over what you've already configured: instruction files, MCP servers, commands, agents and Skills. You can look first without changing anything with <code dir="ltr">/import --dry-run</code>.
   </div>
 
   <h2>First run and signing in</h2>

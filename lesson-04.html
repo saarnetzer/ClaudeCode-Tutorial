@@ -23,13 +23,14 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">דילוג לתוכן הראשי</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> קורס Claude Code</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/lesson-04.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/lesson-04.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" aria-label="החלפת ערכת נושא" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
 </header>
 
-<main class="wrap">
-  <span class="kicker">פרק 4 מתוך 13</span>
+<main id="main" class="wrap">
+  <span class="kicker">פרק 4 מתוך 13</span><span class="readtime">⏱ כ-30 דק'</span>
   <h1>זיכרון והקשר: CLAUDE.md וניהול קונטקסט</h1>
   <p class="lead">ההבדל בין "Claude שעובד בסדר" ל"Claude שמרגיש כמו חבר צוות ותיק" הוא כמעט תמיד קובץ אחד קטן: CLAUDE.md. בפרק הזה נלמד ללמד את Claude את הפרויקט שלנו פעם אחת — ולשמור על השיחות חדות וממוקדות.</p>
 
@@ -93,13 +94,64 @@
     <span class="co-title">💡 איפה זה ב‑Windows?</span>
     הסימן <code dir="ltr">~</code> מציין את תיקיית הבית של המשתמש. ב‑Windows זו <code dir="ltr">C:\Users\&lt;שם המשתמש&gt;</code> — כלומר <code dir="ltr">~/.claude/CLAUDE.md</code> הוא <code dir="ltr">C:\Users\&lt;שם המשתמש&gt;\.claude\CLAUDE.md</code>.
   </div>
-  <p>בפרויקט גדול אפשר גם לשים קובצי CLAUDE.md בתתי־תיקיות — Claude טוען אותם כשעובדים באזור הרלוונטי.</p>
+  <p>בפרויקט גדול אפשר גם לשים קובצי CLAUDE.md בתתי־תיקיות — Claude טוען אותם כשעובדים באזור הרלוונטי. ואפשר לפצל: שורה בצורת <code dir="ltr">@נתיב/לקובץ.md</code> בתוך CLAUDE.md מייבאת קובץ אחר לתוכו.</p>
+
+  <h3>כשהקובץ מתנפח: תיקיית <code dir="ltr">.claude/rules/</code></h3>
+  <p>‏CLAUDE.md אחד שמנסה לכסות הכול הופך לקיר טקסט שאף אחד לא מתחזק. הפתרון הוא לפצל לפי נושא: כל קובץ <code dir="ltr">.md</code> בתוך <code dir="ltr">.claude/rules/</code> נטען כחלק מהוראות הפרויקט. התיקייה נסרקת לעומק, אז אפשר גם לסדר בתתי־תיקיות:</p>
+  <pre><code>.claude/rules/
+├── testing.md
+├── frontend/
+│   └── rtl.md
+└── backend/
+    └── api.md</code></pre>
+  <p>והנה החלק המעניין: אפשר לקשור כלל <strong>לקבצים מסוימים בלבד</strong>, עם שדה <code dir="ltr">paths</code> בכותרת:</p>
+  <pre><span class="pre-label">.claude/rules/frontend/rtl.md</span><code>---
+paths:
+  - "src/components/**/*.tsx"
+---
+
+בכל רכיב UI: dir="rtl" על אלמנט השורש,
+margin-inline-start במקום margin-left,
+ומספרים וקוד נשארים LTR.</code></pre>
+  <p>כלל עם <code dir="ltr">paths</code> נטען רק כש‑Claude נוגע בקובץ שמתאים לתבנית. כלל בלי <code dir="ltr">paths</code> נטען בתחילת השיחה, בדיוק כמו CLAUDE.md. כך ההקשר נשאר רזה: כללי ה‑RTL לא תופסים מקום כשעובדים על השרת.</p>
+  <p>יש גם <code dir="ltr">~/.claude/rules/</code> לכללים אישיים שלכם בכל הפרויקטים.</p>
+
+  <h3>‏AGENTS.md — התקן המשותף</h3>
+  <p>כלים אחרים בשוק משתמשים בקובץ בשם <code dir="ltr">AGENTS.md</code> לאותה מטרה. ‏Claude קורא אותו — אבל <strong>רק אם אין CLAUDE.md</strong> בתיקיית העבודה או מעליה. כלומר אם אתם מגיעים מכלי אחר, הקובץ הקיים שלכם פשוט יעבוד; ואם תוסיפו CLAUDE.md, הוא זה שיקבע.</p>
+
+  <h2>זיכרון אוטומטי — מה ש‑Claude כותב על עצמו</h2>
+  <p>עד כאן עסקנו בזיכרון <em>שאתם</em> כותבים. אבל יש שכבה שנייה, ו<strong>היא דולקת כברירת מחדל</strong>: Claude שומר לעצמו הערות על ההעדפות שלכם ועל התיקונים שנתתם לו, וטוען אותן בשיחות הבאות. לכן הוא זוכר דברים שלא כתבתם בשום קובץ.</p>
+  <p>ארבעה סוגי הערות נשמרים:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>סוג</th><th>מה נשמר בו</th></tr>
+    <tr><td><code>user</code></td><td>התפקיד שלכם, תחומי המומחיות ודרך העבודה המועדפת</td></tr>
+    <tr><td><code>feedback</code></td><td>תיקונים שנתתם, וגישות שאישרתם</td></tr>
+    <tr><td><code>project</code></td><td>עבודה מתמשכת, תאריכי יעד והחלטות שלא ניתן להסיק מהקוד או מההיסטוריה</td></tr>
+    <tr><td><code>reference</code></td><td>איפה נמצא מידע מחוץ לפרויקט — מערכת כרטיסים, דשבורד</td></tr>
+  </table>
+  </div>
+  <p>הפקודה <code>/memory</code> היא המקום לראות מה נשמר, ולכבות אם לא בא לכם. הנתונים נטענים מקובץ אינדקס בשם <code dir="ltr">MEMORY.md</code> — ‏Claude קורא ממנו את 200 השורות הראשונות (או 25KB) בתחילת כל שיחה.</p>
+  <div class="callout warn">
+    <span class="co-title">⚠️ שווה שתדעו שזה קיים</span>
+    זה נוח מאוד — וגם אומר שנאסף עליכם מידע שלא כתבתם במפורש. לכבות לגמרי אצלכם במחשב: פתחו <code>/memory</code> והשתמשו במתג. לכבות בפרויקט אחד בלבד, בהגדרות של אותו פרויקט:
+  </div>
+  <pre><span class="pre-label">.claude/settings.json</span><code>{
+  "autoMemoryEnabled": false
+}</code></pre>
+  <div class="callout info">
+    <span class="co-title">💡 זיכרון אינו אכיפה</span>
+    הבחנה שתחזור בפרק 9: גם CLAUDE.md וגם הזיכרון האוטומטי הם <strong>הקשר</strong>, לא תצורה שנאכפת. הם משפיעים על מה ש‑Claude יודע ונוטה לעשות — אבל כלל שחייב להיאכף שייך ל‑<code dir="ltr">permissions</code> או ל‑hook, לא לקובץ זיכרון.
+  </div>
 
   <h2>ניהול שיחות ארוכות</h2>
+
   <ul>
     <li><strong><code>/compact</code></strong> — מכווץ את ההיסטוריה לסיכום. השתמשו בנקודת עצירה טבעית (אחרי קומיט, לפני תת־משימה חדשה).</li>
     <li><strong><code>/clear</code></strong> — איפוס מלא. עדיף על compact כשעוברים למשימה שלא קשורה.</li>
     <li><strong><code>/context</code></strong> — מציג מה בדיוק יושב בחלון ההקשר כרגע, כמפה צבעונית: כמה תופס קובץ הזיכרון, כמה תופסות תוצאות הכלים, וכמה מקום נשאר. זו הדרך להפסיק לנחש מתי להריץ <code>/compact</code>.</li>
+    <li><strong><code>/btw</code></strong> — שאלת צד על השיחה (״רגע, מה זה הקובץ הזה?״) בלי שהיא נכנסת להיסטוריה. בדיוק בשביל סקרנות שלא צריכה לעלות לכם בהקשר.</li>
+    <li><strong><code dir="ltr">/add-dir נתיב</code></strong> — להוסיף תיקיית עבודה נוספת באמצע שיחה, כשמסתבר שהמשימה נוגעת גם בריפו השכן.</li>
     <li><strong>סיכום ביניים יזום:</strong> לפני הפסקה ארוכה בקשו "סכם בקובץ PROGRESS.md מה עשינו, מה עובד ומה נשאר" — ובשיחה הבאה פתחו עם "קרא את PROGRESS.md ונמשיך".</li>
   </ul>
   <div class="callout info">
@@ -143,6 +195,7 @@
   <pre><code>ultrathink — למה הטסט הזה נכשל רק ב-CI ולא אצלי?</code></pre>
 
   <h3>לראות לאן הכסף הולך</h3>
+  <p>ואם מעניין אתכם לראות דפוסים לאורך זמן — <code>/insights</code> מייצר דוח HTML על השיחות האחרונות שלכם במחשב הזה: באילו פרויקטים אתם עובדים, איך אתם משתמשים בכלי, ואיפה דברים נתקעים.</p>
   <p>ולבסוף, המדידה: <code>/usage</code> (גם <code>/cost</code>) מציג כמה השיחה עלתה ואיפה אתם עומדים מול מגבלות המנוי. שווה הצצה אחרי משימה גדולה — זו הדרך לפתח אינטואיציה למה יקר ומה לא.</p>
 
   <h2>תרגילים</h2>

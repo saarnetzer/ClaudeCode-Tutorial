@@ -4,6 +4,30 @@
    according to the page's <html lang>. */
 window.COURSE_CHANGELOG = [
   {
+    version: "3.9.0",
+    date: "2026-11-22",
+    title: "זיכרון אוטומטי, דיאגרמות, וגיליון הדפסה",
+    titleEn: "Auto memory, diagrams, and a print stylesheet",
+    changes: [
+      "⚠️ פרק 4: Claude כותב לעצמו זיכרון עליכם — והתכונה דולקת כברירת מחדל. הפרק מסביר מה נשמר, איך רואים את זה עם /memory ואיך מכבים. חשוב לדעת שזה קיים",
+      "🆕 פרק 4: תיקיית .claude/rules/ לפיצול ההוראות לפי נושא, כולל שדה paths שמצמיד כלל לקבצים מסוימים · AGENTS.md · ייבוא קבצים עם @",
+      "🆕 שלוש דיאגרמות: הלולאה הסוכנית (פרק 1), מסלול ה-Hooks (פרק 6) ושלוש תבניות הצוות (פרק 12)",
+      "🆕 פקודות: /goal, /btw, /add-dir, /insights, /import, /output-style, /fewer-permission-prompts, /verify, /run והדגל --json-schema",
+      "⏱ זמן משוער לכל פרק, מחושב מחדש לפי אורך התוכן בפועל",
+      "🖨️ הדפסה נקייה של כל עמוד — במיוחד הצ'יט-שיט · קישור ״דילוג לתוכן״ לנגישות",
+      "תוקן באג RTL: הזוהר מאחורי הכותרת בעמוד הבית היה ממורכז בעברית אבל גלש אל מחוץ למסך בעמוד האנגלי"
+    ],
+    changesEn: [
+      "⚠️ Lesson 4: Claude writes memory about you — and the feature is on by default. The lesson covers what it saves, how to see it with /memory and how to turn it off. Worth knowing it exists",
+      "🆕 Lesson 4: the .claude/rules/ directory for splitting instructions by topic, including the paths field that ties a rule to specific files · AGENTS.md · importing files with @",
+      "🆕 Three diagrams: the agentic loop (Lesson 1), the hooks path (Lesson 6) and the three squad patterns (Lesson 12)",
+      "🆕 Commands: /goal, /btw, /add-dir, /insights, /import, /output-style, /fewer-permission-prompts, /verify, /run and the --json-schema flag",
+      "⏱ An estimated time for every lesson, recomputed from the actual length of the content",
+      "🖨️ Clean printing of every page — the cheat sheet especially · a skip-to-content link for accessibility",
+      "Fixed an RTL bug: the glow behind the home page heading was centred in Hebrew but overflowed off-screen on the English page"
+    ]
+  },
+  {
     version: "3.8.0",
     date: "2026-11-22",
     title: "פלאגינים, סנדבוקס, סוכנים במקביל, ובחירת מודל",

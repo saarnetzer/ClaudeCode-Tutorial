@@ -23,13 +23,14 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">דילוג לתוכן הראשי</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> קורס Claude Code</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/lesson-01.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/lesson-01.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" aria-label="החלפת ערכת נושא" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
 </header>
 
-<main class="wrap">
-  <span class="kicker">פרק 1 מתוך 13</span>
+<main id="main" class="wrap">
+  <span class="kicker">פרק 1 מתוך 13</span><span class="readtime">⏱ כ-25 דק'</span>
   <h1>מה זה Claude Code? התקנה והרצה ראשונה</h1>
   <p class="lead">בפרק הזה תבינו מה Claude Code בעצם עושה, תתקינו אותו על המחשב שלכם, ותוך רבע שעה תריצו את השיחה הראשונה שלכם — כזו שבאמת יוצרת קוד עובד.</p>
 
@@ -48,6 +49,11 @@
     <li>Claude Code <em>עושה</em>: הוא קורא את הקבצים שלכם, כותב ועורך אותם, מריץ פקודות, מריץ טסטים, מתקן שגיאות שהוא רואה — ומתקדם צעד־צעד עד שהמשימה גמורה.</li>
   </ul>
   <p>המילה החשובה כאן היא <strong>"סוכן" (Agent)</strong>: תוכנה שמקבלת מטרה, מתכננת, מפעילה כלים (קריאת קבצים, טרמינל, חיפוש), בודקת את התוצאה של עצמה — וחוזרת על התהליך עד להצלחה. כל הקורס הזה הוא בעצם מסע: מלהשתמש בסוכן, ועד לבנות סוכנים משלכם שרצים לבד.</p>
+
+  <figure class="ccdiag">
+    <svg viewBox="0 0 520 374" role="img" aria-label="הלולאה הסוכנית: מטרה, תכנון, הפעלת כלי, בדיקת התוצאה — וחזרה לתכנון עד שהמשימה הושלמה"><defs><marker id="ccah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" class="d-head"/></marker></defs><defs><marker id="ccah-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" class="d-head-accent"/></marker></defs><rect x="60" y="12" width="210" height="46" rx="9" class="d-box"/><text x="165" y="40" class="d-label" text-anchor="middle">מטרה שאתם נותנים</text><rect x="60" y="88" width="210" height="46" rx="9" class="d-box"/><text x="165" y="116" class="d-label" text-anchor="middle">תכנון הצעד הבא</text><rect x="60" y="164" width="210" height="46" rx="9" class="d-box"/><text x="165" y="192" class="d-label" text-anchor="middle">הפעלת כלי</text><rect x="60" y="240" width="210" height="46" rx="9" class="d-box-accent"/><text x="165" y="268" class="d-label" text-anchor="middle">בדיקת התוצאה</text><rect x="60" y="316" width="210" height="46" rx="9" class="d-box"/><text x="165" y="344" class="d-label" text-anchor="middle">✓ המשימה הושלמה</text><line x1="165" y1="58" x2="165" y2="81" class="d-arrow" marker-end="url(#ccah)"/><line x1="165" y1="134" x2="165" y2="157" class="d-arrow" marker-end="url(#ccah)"/><line x1="165" y1="210" x2="165" y2="233" class="d-arrow" marker-end="url(#ccah)"/><line x1="165" y1="286" x2="165" y2="309" class="d-arrow" marker-end="url(#ccah)"/><path d="M 270 263 H 330 V 111 H 277" class="d-arrow-accent" marker-end="url(#ccah-a)"/><text x="344" y="191" class="d-sub" text-anchor="middle" transform="rotate(90 344 191)">לא עבר? שוב</text></svg>
+    <figcaption>הלולאה הסוכנית: הסוכן לא עונה פעם אחת — הוא חוזר על עצמו עד שהתוצאה עומדת בבדיקה.</figcaption>
+  </figure>
 
   <div class="callout info">
     <span class="co-title">💡 הטרמינל הוא הבית — אבל לא הכתובת היחידה</span>
@@ -105,6 +111,11 @@
   <div class="callout warn">
     <span class="co-title">⚠️ הפקודה לא מזוהה?</span>
     סגרו ופתחו מחדש את הטרמינל (או את PowerShell). סקריפט ההתקנה מוסיף את הכלי לנתיב המערכת, והשינוי נטען רק בחלון חדש.
+  </div>
+
+  <div class="callout tip">
+    <span class="co-title">✅ מגיעים מכלי אחר?</span>
+    אם אתם כבר עובדים עם Cursor, עם Codex של OpenAI או עם Gemini CLI — אל תתחילו מאפס. הפקודה <code>/import</code> מייבאת את מה שכבר הגדרתם: קובצי הוראות, שרתי MCP, פקודות, סוכנים ו‑Skills. אפשר להציץ קודם בלי לשנות כלום עם <code dir="ltr">/import --dry-run</code>.
   </div>
 
   <h2>הרצה ראשונה והתחברות</h2>

@@ -23,12 +23,13 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> Claude Code Course</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../cheatsheet.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../cheatsheet.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" aria-label="Toggle theme" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
 </header>
 
-<main class="wrap">
+<main id="main" class="wrap">
   <span class="kicker">Quick reference</span>
   <h1>Cheat sheet: everything you need, on one page</h1>
   <p class="lead">All the commands, shortcuts and locations from the course — collected for fast lookup. Bookmark this page. <strong>Tap any command to copy it</strong> — works on mobile too.</p>
@@ -78,6 +79,13 @@
       <tr><td><code>/loop</code></td><td>Run a prompt repeatedly (<code dir="ltr">/loop 5m ...</code>)</td></tr>
       <tr><td><code>/background</code></td><td>Detach the session to the background</td></tr>
       <tr><td><code>/batch</code></td><td>Split a broad change into parallel background agents</td></tr>
+      <tr><td><code>/memory</code></td><td>Edit memory files and switch auto memory off</td></tr>
+      <tr><td><code>/goal</code></td><td>A finish condition the agent works toward</td></tr>
+      <tr><td><code>/btw</code></td><td>A side question that stays out of the history</td></tr>
+      <tr><td><code dir="ltr">/fewer-permission-prompts</code></td><td>Build an allow list from your own transcripts</td></tr>
+      <tr><td><code dir="ltr">/output-style</code></td><td>How answers are phrased (e.g. concise)</td></tr>
+      <tr><td><code>/import</code></td><td>Import settings from Cursor / Codex / Gemini</td></tr>
+      <tr><td><code>/verify</code> · <code>/run</code></td><td>Build and run the app to see the change working</td></tr>
       <tr><td><code dir="ltr">ultrathink</code></td><td>Not a command — a word in your prompt asking for deeper reasoning this turn</td></tr>
       <tr><td><code>/model</code></td><td>Switch model</td></tr>
       <tr><td><code>/init</code></td><td>Create a CLAUDE.md for the project</td></tr>
@@ -98,6 +106,8 @@
       <tr><td><code dir="ltr">./CLAUDE.md</code></td><td>Project memory (shared, in git)</td></tr>
       <tr><td><code dir="ltr">./CLAUDE.local.md</code></td><td>Personal project memory (outside git)</td></tr>
       <tr><td><code dir="ltr">~/.claude/CLAUDE.md</code></td><td>Global memory (all projects)</td></tr>
+      <tr><td><code dir="ltr">.claude/rules/*.md</code></td><td>Rules by topic; <code dir="ltr">paths</code> ties a rule to files</td></tr>
+      <tr><td><code dir="ltr">AGENTS.md</code></td><td>Read only when there is no CLAUDE.md</td></tr>
       <tr><td><code dir="ltr">.claude/commands/*.md</code></td><td>Custom slash commands</td></tr>
       <tr><td><code dir="ltr">.claude/skills/*/SKILL.md</code></td><td>Skills — auto-loaded knowledge</td></tr>
       <tr><td><code dir="ltr">.claude/agents/*.md</code></td><td>Subagents</td></tr>

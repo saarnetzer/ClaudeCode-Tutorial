@@ -23,13 +23,14 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> Claude Code Course</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-10.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-10.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" aria-label="Toggle theme" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
 </header>
 
-<main class="wrap">
-  <span class="kicker">Lesson 10 of 13</span>
+<main id="main" class="wrap">
+  <span class="kicker">Lesson 10 of 13</span><span class="readtime">⏱ about 25 min</span>
   <h1>Headless mode and CI automation</h1>
   <p class="lead">So far you've sat facing Claude. In this lesson you get up from the chair: we'll run it as a command in a script, plug it into GitHub Actions, and learn to tag <code dir="ltr">@claude</code> on a Pull Request — so it works even while you sleep. This is the first step to real autonomy.</p>
 
@@ -54,6 +55,17 @@ Get-Content error.log | claude -p "what are the 3 most common errors and how to 
 # structured output for scripts (same on every OS)
 claude -p "list all the TODOs in the code" --output-format json</code></pre>
   <p>With <code dir="ltr">--output-format json</code> you get JSON with the result, the run's cost and metadata — perfect for automated processing downstream.</p>
+
+  <h3>When you need output you can rely on</h3>
+  <p><code dir="ltr">--output-format json</code> hands you the answer inside a JSON envelope — but <em>the answer itself</em> is still free text. If the next script in the chain needs defined fields, you can demand a shape:</p>
+  <pre><code>claude -p "summarize the three open incidents" \
+  --json-schema '{"type":"object","properties":{
+      "issues":{"type":"array","items":{
+        "type":"object","properties":{
+          "title":{"type":"string"},
+          "severity":{"type":"string"},
+          "file":{"type":"string"}}}}}}'</code></pre>
+  <p>The result is validated against the schema before it comes back to you. That's the difference between hoping the model returned valid JSON and having a contract. In an automated run, always prefer the contract.</p>
 
   <h2>Permissions with no human at the keyboard</h2>
   <p>In headless mode nobody clicks "approve". Four levels of control, from fine to coarse:</p>

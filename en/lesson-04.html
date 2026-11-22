@@ -23,13 +23,14 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> Claude Code Course</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-04.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-04.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" aria-label="Toggle theme" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
 </header>
 
-<main class="wrap">
-  <span class="kicker">Lesson 4 of 13</span>
+<main id="main" class="wrap">
+  <span class="kicker">Lesson 4 of 13</span><span class="readtime">⏱ about 30 min</span>
   <h1>Memory and context: CLAUDE.md and context management</h1>
   <p class="lead">The difference between "Claude that works okay" and "Claude that feels like a veteran teammate" is almost always one small file: CLAUDE.md. In this lesson we'll teach Claude our project once — and keep conversations sharp and focused.</p>
 
@@ -93,13 +94,64 @@
     <span class="co-title">💡 Where's that on Windows?</span>
     The <code dir="ltr">~</code> symbol means your home folder. On Windows that's <code dir="ltr">C:\Users\&lt;username&gt;</code> — so <code dir="ltr">~/.claude/CLAUDE.md</code> is <code dir="ltr">C:\Users\&lt;username&gt;\.claude\CLAUDE.md</code>.
   </div>
-  <p>In a large project you can also put CLAUDE.md files in subfolders — Claude loads them when working in the relevant area.</p>
+  <p>In a large project you can also put CLAUDE.md files in subfolders — Claude loads them when working in the relevant area. And you can split things up: a line of the form <code dir="ltr">@path/to/file.md</code> inside CLAUDE.md imports another file into it.</p>
+
+  <h3>When the file bloats: the <code dir="ltr">.claude/rules/</code> directory</h3>
+  <p>A single CLAUDE.md trying to cover everything becomes a wall of text nobody maintains. The answer is to split it by topic: every <code dir="ltr">.md</code> file inside <code dir="ltr">.claude/rules/</code> loads as part of the project's instructions. The directory is scanned recursively, so you can organize into subdirectories:</p>
+  <pre><code>.claude/rules/
+├── testing.md
+├── frontend/
+│   └── rtl.md
+└── backend/
+    └── api.md</code></pre>
+  <p>And here's the interesting part: a rule can be tied to <strong>specific files only</strong>, with a <code dir="ltr">paths</code> field in its frontmatter:</p>
+  <pre><span class="pre-label">.claude/rules/frontend/rtl.md</span><code>---
+paths:
+  - "src/components/**/*.tsx"
+---
+
+In every UI component: dir="rtl" on the root element,
+margin-inline-start instead of margin-left,
+and numbers and code stay LTR.</code></pre>
+  <p>A rule with <code dir="ltr">paths</code> loads only when Claude touches a file matching the pattern. A rule without it loads at the start of the session, exactly like CLAUDE.md. That keeps the context lean: your RTL rules take up no room while you're working on the backend.</p>
+  <p>There's also <code dir="ltr">~/.claude/rules/</code> for your personal rules across every project.</p>
+
+  <h3>AGENTS.md — the shared standard</h3>
+  <p>Other tools on the market use a file called <code dir="ltr">AGENTS.md</code> for the same purpose. Claude reads it — but <strong>only if there is no CLAUDE.md</strong> in the working directory or above it. So if you're coming from another tool, your existing file simply works; and if you add a CLAUDE.md, that one wins.</p>
+
+  <h2>Auto memory — what Claude writes by itself</h2>
+  <p>So far we've dealt with the memory <em>you</em> write. But there's a second layer, and <strong>it's on by default</strong>: Claude keeps its own notes about your preferences and the corrections you've given it, and loads them in later sessions. That's why it remembers things you never wrote in any file.</p>
+  <p>Four kinds of note are saved:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Type</th><th>What it holds</th></tr>
+    <tr><td><code>user</code></td><td>Your role, your areas of expertise and how you prefer to work</td></tr>
+    <tr><td><code>feedback</code></td><td>Corrections you gave, and approaches you confirmed</td></tr>
+    <tr><td><code>project</code></td><td>Ongoing work, deadlines and decisions that can't be derived from the code or the history</td></tr>
+    <tr><td><code>reference</code></td><td>Where information lives outside the project — an issue tracker, a dashboard</td></tr>
+  </table>
+  </div>
+  <p>The <code>/memory</code> command is where you see what's been saved, and turn it off if you'd rather. The notes load from an index file called <code dir="ltr">MEMORY.md</code> — Claude reads its first 200 lines (or 25KB) at the start of every session.</p>
+  <div class="callout warn">
+    <span class="co-title">⚠️ Worth knowing this exists</span>
+    It's genuinely convenient — and it also means information is being collected about you that you never wrote down explicitly. To turn it off entirely on your machine: open <code>/memory</code> and use the toggle. To turn it off for one project only, in that project's settings:
+  </div>
+  <pre><span class="pre-label">.claude/settings.json</span><code>{
+  "autoMemoryEnabled": false
+}</code></pre>
+  <div class="callout info">
+    <span class="co-title">💡 Memory is not enforcement</span>
+    A distinction that returns in Lesson 9: both CLAUDE.md and auto memory are <strong>context</strong>, not enforced configuration. They shape what Claude knows and tends to do — but a rule that must be enforced belongs in <code dir="ltr">permissions</code> or a hook, not in a memory file.
+  </div>
 
   <h2>Managing long conversations</h2>
+
   <ul>
     <li><strong><code>/compact</code></strong> — compresses history into a summary. Use at a natural stopping point (after a commit, before a new subtask).</li>
     <li><strong><code>/clear</code></strong> — full reset. Better than compact when switching to an unrelated task.</li>
     <li><strong><code>/context</code></strong> — shows exactly what is sitting in the context window right now, as a coloured map: how much the memory file takes, how much the tool results take, and how much room is left. This is how you stop guessing when to run <code>/compact</code>.</li>
+    <li><strong><code>/btw</code></strong> — a side question about the session ("hang on, what is this file?") that never enters the history. Exactly right for curiosity that shouldn't cost you context.</li>
+    <li><strong><code dir="ltr">/add-dir path</code></strong> — add another working directory mid-session, when it turns out the task touches the neighbouring repo too.</li>
     <li><strong>Deliberate interim summaries:</strong> before a long break ask "summarize into PROGRESS.md what we did, what works and what's left" — and open the next conversation with "read PROGRESS.md and let's continue".</li>
   </ul>
   <div class="callout info">
@@ -143,6 +195,7 @@
   <pre><code>ultrathink — why does this test fail only in CI and not on my machine?</code></pre>
 
   <h3>Seeing where the money goes</h3>
+  <p>And if you'd like to see patterns over time — <code>/insights</code> generates an HTML report on your recent sessions on this machine: which projects you work in, how you use the tool, and where things get stuck.</p>
   <p>And finally, measurement: <code>/usage</code> (also <code>/cost</code>) shows what the session cost and where you stand against your plan limits. Worth a look after a big task — it's how you build intuition for what's expensive and what isn't.</p>
 
   <h2>Exercises</h2>

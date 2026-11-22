@@ -23,13 +23,14 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">דילוג לתוכן הראשי</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> קורס Claude Code</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/lesson-05.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/lesson-05.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" aria-label="החלפת ערכת נושא" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
 </header>
 
-<main class="wrap">
-  <span class="kicker">פרק 5 מתוך 13</span>
+<main id="main" class="wrap">
+  <span class="kicker">פרק 5 מתוך 13</span><span class="readtime">⏱ כ-25 דק'</span>
   <h1>פקודות מותאמות אישית ו‑Skills</h1>
   <p class="lead">כל בקשה שמצאתם את עצמכם מקלידים בפעם השלישית — ראויה להפוך לפקודה של מילה אחת. בפרק הזה נבנה פקודות Slash משלנו, ואז נעלה שלב ל‑Skills: חבילות ידע ש‑Claude שולף בעצמו ברגע הנכון.</p>
 
@@ -98,6 +99,11 @@ description: כללים לבניית ממשקים בעברית עם RTL תקין
     <span class="co-title">💡 מתי פקודה ומתי Skill?</span>
     <strong>פקודה</strong> — כשאתם רוצים שליטה: "עכשיו תעשה X" (‏<code>/check</code>, <code dir="ltr">/fix-issue</code>).<br>
     <strong>Skill</strong> — כשאתם רוצים שהידע יחול אוטומטית בכל פעם שהוא רלוונטי, בלי שתזכרו לבקש (כללי RTL, סטנדרטים של API, נהלי deploy).
+  </div>
+
+  <div class="callout info">
+    <span class="co-title">💡 קרוב משפחה: סגנון פלט</span>
+    פקודה משנה מה Claude עושה; <strong>סגנון פלט</strong> משנה איך הוא מדבר אליכם — והוא נשמר בין שיחות. <code dir="ltr">/output-style</code> מציג את הסגנונות הזמינים ומחליף ביניהם, למשל <code dir="ltr">/output-style concise</code> לתשובות קצרות. שימושי כשהפירוט המלא מפריע יותר משהוא עוזר.
   </div>
 
   <h2>Plugins — לארוז את הכול, ולהתקין של אחרים</h2>

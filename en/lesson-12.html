@@ -23,13 +23,14 @@
         async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to main content</a>
 <header class="site">
   <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> Claude Code Course</span></a></div>
-  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-12.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../lesson-12.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" aria-label="Toggle theme" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
 </header>
 
-<main class="wrap">
-  <span class="kicker">Lesson 12 of 13</span>
+<main id="main" class="wrap">
+  <span class="kicker">Lesson 12 of 13</span><span class="readtime">⏱ about 30 min</span>
   <h1>Building an agent squad — principles, patterns and infrastructure</h1>
   <p class="lead">In Lesson 8 you met subagents — helpers one agent activates. Now we level up: an <strong>agent squad</strong> — a group of agents with defined roles, divided work and a shared deliverable. Like the difference between one talented employee and a whole department working for you.</p>
 
@@ -71,6 +72,11 @@
   </div>
 
   <h2>Three organizational patterns</h2>
+  <figure class="ccdiag">
+    <svg viewBox="0 0 660 262" role="img" aria-label="Three organizational patterns: a pipeline in fixed order, an orchestrator dispatching to workers by judgement, and parallel work that fans out and merges"><defs><marker id="ccah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" class="d-head"/></marker></defs><defs><marker id="ccah-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" class="d-head-accent"/></marker></defs><text x="100" y="18" class="d-label" text-anchor="middle" font-size="12">Pipeline</text><rect x="40" y="38" width="120" height="38" rx="9" class="d-box"/><text x="100" y="62" class="d-label" text-anchor="middle">Planner</text><rect x="40" y="110" width="120" height="38" rx="9" class="d-box"/><text x="100" y="134" class="d-label" text-anchor="middle">Builder</text><rect x="40" y="182" width="120" height="38" rx="9" class="d-box"/><text x="100" y="206" class="d-label" text-anchor="middle">Reviewer</text><line x1="100" y1="76" x2="100" y2="103" class="d-arrow" marker-end="url(#ccah)"/><line x1="100" y1="148" x2="100" y2="175" class="d-arrow" marker-end="url(#ccah)"/><text x="330" y="18" class="d-label" text-anchor="middle" font-size="12">Orchestrator and workers</text><rect x="270" y="38" width="120" height="38" rx="9" class="d-box-accent"/><text x="330" y="62" class="d-label" text-anchor="middle">Orchestrator</text><rect x="236" y="150" width="56" height="38" rx="9" class="d-box"/><text x="264" y="174" class="d-label" text-anchor="middle">Worker</text><path d="M 330 76 V 120 H 264 V 143" class="d-arrow" marker-end="url(#ccah)"/><rect x="302" y="150" width="56" height="38" rx="9" class="d-box"/><text x="330" y="174" class="d-label" text-anchor="middle">Worker</text><path d="M 330 76 V 120 H 330 V 143" class="d-arrow" marker-end="url(#ccah)"/><rect x="368" y="150" width="56" height="38" rx="9" class="d-box"/><text x="396" y="174" class="d-label" text-anchor="middle">Worker</text><path d="M 330 76 V 120 H 396 V 143" class="d-arrow" marker-end="url(#ccah)"/><text x="560" y="18" class="d-label" text-anchor="middle" font-size="12">Parallel work</text><rect x="500" y="38" width="120" height="38" rx="9" class="d-box"/><text x="560" y="62" class="d-label" text-anchor="middle">Split the task</text><rect x="466" y="122" width="56" height="38" rx="9" class="d-box"/><text x="494" y="146" class="d-label" text-anchor="middle">Agent</text><path d="M 560 76 V 108 H 494 V 115" class="d-arrow" marker-end="url(#ccah)"/><path d="M 494 160 V 196 H 560 V 209" class="d-arrow-accent" marker-end="url(#ccah-a)"/><rect x="532" y="122" width="56" height="38" rx="9" class="d-box"/><text x="560" y="146" class="d-label" text-anchor="middle">Agent</text><path d="M 560 76 V 108 H 560 V 115" class="d-arrow" marker-end="url(#ccah)"/><path d="M 560 160 V 196 H 560 V 209" class="d-arrow-accent" marker-end="url(#ccah-a)"/><rect x="598" y="122" width="56" height="38" rx="9" class="d-box"/><text x="626" y="146" class="d-label" text-anchor="middle">Agent</text><path d="M 560 76 V 108 H 626 V 115" class="d-arrow" marker-end="url(#ccah)"/><path d="M 626 160 V 196 H 560 V 209" class="d-arrow-accent" marker-end="url(#ccah-a)"/><rect x="500" y="209" width="120" height="38" rx="9" class="d-box-accent"/><text x="560" y="233" class="d-label" text-anchor="middle">Merge the results</text></svg>
+    <figcaption>Three ways to organize a squad. The difference isn't the tools — it's who decides what happens next.</figcaption>
+  </figure>
+
 
   <h3>1. Pipeline</h3>
   <p>Agents work <strong>one after another</strong>, each receiving its predecessor's deliverable: planner → builder → checker → documenter. Simple, predictable, easy to debug — when something breaks, it's clear at which station.</p>
