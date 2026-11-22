@@ -85,6 +85,11 @@
     For destructive actions (discarding changes, hard reset) Claude will always ask for explicit approval and explain what will be deleted. Read the explanation before approving — this is exactly where the "normal" permission mode is worth gold.
   </div>
 
+  <div class="callout info">
+    <span class="co-title">💡 Separate branch, separate folder: the worktree</span>
+    Git has a lesser-known capability that fits agents beautifully: a <code dir="ltr">worktree</code> — another working directory of the same repo, on a different branch, side by side. You can start a session straight inside one with <code dir="ltr">claude -w branch-name</code>. It becomes critical when you run several agents at once, and we'll come back to it in <a href="lesson-12.html">Lesson 12</a>.
+  </div>
+
   <h2>Exercises</h2>
   <div class="exercise">
     <div class="ex-head"><span class="ex-badge">Exercise 3.1</span> A first managed repo</div>

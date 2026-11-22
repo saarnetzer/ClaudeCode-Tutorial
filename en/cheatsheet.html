@@ -71,6 +71,14 @@
       <tr><td><code>/plan</code></td><td>Enter plan mode</td></tr>
       <tr><td><code>/usage</code></td><td>Session cost and plan limits (also <code>/cost</code>)</td></tr>
       <tr><td><code>/doctor</code></td><td>Check the health of your install and settings</td></tr>
+      <tr><td><code>/effort</code></td><td>Effort level: low ↔ max</td></tr>
+      <tr><td><code>/plugin</code></td><td>Plugins: browse, install, disable</td></tr>
+      <tr><td><code>/sandbox</code></td><td>Turn on the sandbox for terminal commands</td></tr>
+      <tr><td><code dir="ltr">/security-review</code></td><td>Security review of the branch's changes</td></tr>
+      <tr><td><code>/loop</code></td><td>Run a prompt repeatedly (<code dir="ltr">/loop 5m ...</code>)</td></tr>
+      <tr><td><code>/background</code></td><td>Detach the session to the background</td></tr>
+      <tr><td><code>/batch</code></td><td>Split a broad change into parallel background agents</td></tr>
+      <tr><td><code dir="ltr">ultrathink</code></td><td>Not a command — a word in your prompt asking for deeper reasoning this turn</td></tr>
       <tr><td><code>/model</code></td><td>Switch model</td></tr>
       <tr><td><code>/init</code></td><td>Create a CLAUDE.md for the project</td></tr>
       <tr><td><code>/permissions</code></td><td>Manage permission rules</td></tr>
@@ -95,6 +103,8 @@
       <tr><td><code dir="ltr">.claude/agents/*.md</code></td><td>Subagents</td></tr>
       <tr><td><code dir="ltr">.claude/settings.json</code></td><td>Project settings, permissions and hooks</td></tr>
       <tr><td><code dir="ltr">.mcp.json</code></td><td>MCP servers shared with the team</td></tr>
+      <tr><td><code dir="ltr">.claude-plugin/plugin.json</code></td><td>A plugin's manifest</td></tr>
+      <tr><td><code dir="ltr">.claude/worktrees/</code></td><td>Isolated working directories for parallel agents</td></tr>
       <tr><td><code dir="ltr">~/</code> on Windows</td><td><code dir="ltr">C:\Users\&lt;username&gt;</code></td></tr>
     </table></div>
   </div>
@@ -125,6 +135,32 @@
       <tr><td><code dir="ltr">claude mcp get name</code></td><td>Server details</td></tr>
       <tr><td><code dir="ltr">claude mcp remove name</code></td><td>Remove a server</td></tr>
       <tr><td><code dir="ltr">npx @playwright/mcp@latest</code></td><td>Browser server (Playwright)</td></tr>
+    </table></div>
+  </div>
+
+  <div class="cheat-card">
+    <h3>🧠 Model, effort and cost</h3>
+    <div class="table-scroll"><table>
+      <tr><td><code dir="ltr">/model haiku</code></td><td>Fast and cheap — simple tasks</td></tr>
+      <tr><td><code dir="ltr">/model sonnet</code></td><td>Day-to-day coding</td></tr>
+      <tr><td><code dir="ltr">/model opus</code></td><td>Complex reasoning</td></tr>
+      <tr><td><code dir="ltr">/model opusplan</code></td><td>opus to plan, sonnet to execute</td></tr>
+      <tr><td><code dir="ltr">/model fable</code></td><td>The hardest, longest problems</td></tr>
+      <tr><td><code dir="ltr">/effort medium</code></td><td>The default. Raise it only when needed</td></tr>
+      <tr><td><code>/usage</code></td><td>Session cost and plan limits</td></tr>
+    </table></div>
+  </div>
+
+  <div class="cheat-card">
+    <h3>👥 Agents in parallel</h3>
+    <div class="table-scroll"><table>
+      <tr><td><code dir="ltr">claude --bg "task"</code></td><td>A session straight to the background</td></tr>
+      <tr><td><code dir="ltr">claude agents</code></td><td>The board of all active sessions</td></tr>
+      <tr><td><code dir="ltr">claude attach id</code></td><td>Attach to a background session</td></tr>
+      <tr><td><code dir="ltr">claude logs id</code></td><td>Its recent output</td></tr>
+      <tr><td><code dir="ltr">claude -w branch</code></td><td>A session in an isolated worktree</td></tr>
+      <tr><td><code dir="ltr">/batch instruction</code></td><td>Split into 5–30 parallel units</td></tr>
+      <tr><td><code>/fork</code></td><td>Copy the session into a new background one</td></tr>
     </table></div>
   </div>
 

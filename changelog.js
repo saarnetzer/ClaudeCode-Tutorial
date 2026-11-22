@@ -4,6 +4,28 @@
    according to the page's <html lang>. */
 window.COURSE_CHANGELOG = [
   {
+    version: "3.8.0",
+    date: "2026-11-22",
+    title: "פלאגינים, סנדבוקס, סוכנים במקביל, ובחירת מודל",
+    titleEn: "Plugins, the sandbox, parallel agents, and picking a model",
+    changes: [
+      "🆕 פרק 12: הרצת סוכנים במקביל בלי לכתוב קוד — סוכני רקע, worktrees שמונעים התנגשויות, /batch שמפרק שינוי רחב לעשרות סוכנים, וצוותי סוכנים שמתכתבים ביניהם",
+      "🆕 פרק 5: פלאגינים — לארוז Skills, סוכנים, hooks ושרתי MCP לחבילה אחת, ולהתקין חבילות מוכנות מהמרקטפלייס הרשמי",
+      "🆕 פרק 9: סנדבוקס שמערכת ההפעלה אוכפת — מגביל לאן פקודה מגיעה אחרי שהיא רצה, ובמצב auto-allow גם מצמצם שאלות אישור בלי להוריד הגנה",
+      "🆕 פרק 4: בחירת מודל ורמת מאמץ — הידית שחוסכת הכי הרבה. כולל מיתוס שכדאי להכיר: ״תחשוב טוב״ לא עושה כלום, ultrathink כן",
+      "🆕 פרק 11: /loop להרצת פרומפט שוב ושוב, ומשימות מתוזמנות",
+      "פרק 3: הכרות עם worktree של git · פרק 2: /code-review עם --fix ו---comment, ו-/security-review"
+    ],
+    changesEn: [
+      "🆕 Lesson 12: running agents in parallel without writing code — background agents, worktrees that prevent collisions, /batch to split a broad change across dozens of agents, and agent teams that message each other",
+      "🆕 Lesson 5: plugins — bundle Skills, agents, hooks and MCP servers into one package, and install ready-made ones from the official marketplace",
+      "🆕 Lesson 9: an OS-enforced sandbox — it bounds how far a command reaches once it runs, and in auto-allow mode cuts approval prompts without lowering your guard",
+      "🆕 Lesson 4: picking a model and an effort level — the lever that saves most. Including a myth worth knowing: \"think hard\" does nothing, ultrathink does",
+      "🆕 Lesson 11: /loop to run a prompt repeatedly, and scheduled tasks",
+      "Lesson 3: an introduction to git worktrees · Lesson 2: /code-review with --fix and --comment, plus /security-review"
+    ]
+  },
+  {
     version: "3.7.0",
     date: "2026-11-22",
     title: "איפה Claude Code רץ היום, ותיקוני דיוק במצבי הרשאות",

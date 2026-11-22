@@ -39,6 +39,7 @@
     <li>A first agent in TypeScript and Python</li>
     <li>Adding custom tools and programmatic permissions</li>
     <li>The five principles of safe autonomy</li>
+    <li>Running it again and again: <code>/loop</code> and scheduled tasks</li>
     <li>Where to go next</li>
   </ul>
 
@@ -136,6 +137,21 @@ const result = query({
   <div class="callout tip">
     <span class="co-title">✅ The final test</span>
     Before releasing an agent to run alone, ask: "what's the worst that could happen in this run?" If the answer is "a messy git branch I'll delete" — go. If the answer includes a real database, money or customers — principle 2 is missing. Go back and strengthen boundaries.
+  </div>
+
+  <h2>Running it again and again: /loop and scheduled tasks</h2>
+  <p>An autonomous agent isn't only one that works on its own — it's also one that comes back to work without you reminding it. There are two ways, and neither needs code.</p>
+  <p><strong>Inside an open session</strong> — the <code>/loop</code> command runs a prompt repeatedly:</p>
+  <pre><code># every five minutes, until you stop it:
+/loop 5m check if the deploy finished
+
+# with no interval — Claude paces itself according to the task:
+/loop go through the logs and report only if something new broke</code></pre>
+  <p>This is the tool for anything that is "keep an eye on this": waiting for CI, tracking a long process, re-checking some external state.</p>
+  <p><strong>Without an open session</strong> — that's where scheduled tasks come in, and you've already seen their basic form: <code dir="ltr">claude -p</code> inside cron or GitHub Actions, from <a href="lesson-10.html">Lesson 10</a>. The same idea also exists as cloud scheduled tasks, which run without your machine being on at all.</p>
+  <div class="callout tip">
+    <span class="co-title">✅ Notice what this demands</span>
+    An agent that runs again with nobody watching is exactly where the five principles above stop being theory. There's no point in <code>/loop</code> without an objective feedback loop (principle 1) — otherwise the agent comes back every five minutes and "feels" that all is well. And on any scheduled run, set both <code dir="ltr">--max-turns</code> and <code dir="ltr">--max-budget-usd</code>: a loop with no brake is a loop that can also spend money all night.
   </div>
 
   <h2>Exercises</h2>

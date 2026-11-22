@@ -39,7 +39,7 @@
     <li>Allow/deny rules: what's always allowed, what's never allowed</li>
     <li>Protecting secrets: keys, passwords and ‎.env files</li>
     <li>Prompt injection — and how to defend against it</li>
-    <li>When a sandbox is mandatory</li>
+    <li>The sandbox: a boundary the OS enforces — and when it's mandatory</li>
   </ul>
 
   <h2>The protection you already have — if you use it right</h2>
@@ -86,6 +86,33 @@
     <li><strong>deny</strong> — actions blocked always, <em>even if you approve by mistake</em>. A deny rule beats an allow rule. This is the place for secret files and destructive commands.</li>
   </ul>
   <p>Manage the rules comfortably with <code>/permissions</code>; they're stored in <code dir="ltr">.claude/settings.json</code> — which goes into git and is shared with the whole team. Exactly the spirit of Lesson 6: not promises, mechanisms.</p>
+
+  <h2>The sandbox: a boundary the operating system enforces</h2>
+  <p>Everything so far answers "will this action run?". The sandbox answers a completely different question: <strong>once it has run, how far can it reach?</strong> It's a separate layer, and the operating system enforces it — not Claude.</p>
+  <p>With it on, terminal commands run inside a boundary with two walls:</p>
+  <ul>
+    <li><strong>Files</strong> — writes are limited to the working directory (and directories you added explicitly). Reads stay broad.</li>
+    <li><strong>Network</strong> — no direct route out. Traffic goes through a proxy that checks every address against an allowlist, which starts empty.</li>
+  </ul>
+  <p>Turn it on with the <code>/sandbox</code> command, or in the settings file:</p>
+  <pre><span class="pre-label">~/.claude/settings.json</span><code>{
+  "sandbox": {
+    "enabled": true
+  }
+}</code></pre>
+  <p>And there's a bonus here that changes daily life: in <strong>auto-allow</strong> mode, a command that runs inside the sandbox doesn't ask for approval — because the boundary already holds it. Fewer approval prompts <em>without</em> lowering your guard. That's the exact opposite of <code dir="ltr">--dangerously-skip-permissions</code>, which lowers the guard precisely in order to stop asking.</p>
+  <div class="callout tip">
+    <span class="co-title">✅ Protections that still work inside a sandbox</span>
+    A <strong>deny</strong> rule still blocks there. <code dir="ltr">rm</code> on a critical path still prompts. And an ask rule written against a specific command (say <code dir="ltr">Bash(git push *)</code>) still prompts. The layers stack — the sandbox doesn't replace them.
+  </div>
+  <div class="callout warn">
+    <span class="co-title">⚠️ Three limits you have to know</span>
+    <strong>(1)</strong> The sandbox wraps <em>only</em> terminal commands. Reading and writing files through the built-in tools, MCP servers and hooks all run outside it. <strong>(2)</strong> It works on macOS, Linux and WSL2 — on native Windows, commands run unsandboxed. On Linux you need two dependencies: <code dir="ltr">sudo apt-get install bubblewrap socat</code>. <strong>(3)</strong> Too broad an allowlist brings the risk back: blanket approval for a domain that accepts uploads is a way to get data out through it.
+  </div>
+  <div class="callout info">
+    <span class="co-title">💡 A security review in one command</span>
+    On top of all these protections, there's a built-in Skill that reviews the code itself: <code dir="ltr">/security-review</code>. Run it on a change before it lands — especially on code that touches outside input, permissions or secrets.
+  </div>
 
   <h2>Secrets: the asset you defend hardest</h2>
   <p>A deleted file? There's git. A leaked secret? <strong>No way back</strong> — an exposed API key must be rotated immediately. Hence four rules:</p>
@@ -181,6 +208,7 @@
     <li>Deny beats everything — secrets and destructive commands stay blocked even by mistake</li>
     <li>Secrets: out of git, out of the conversation, out of reading reach</li>
     <li>Foreign content may carry planted instructions — boundaries in code, not trust</li>
+    <li>The sandbox bounds how far a command reaches once it runs — and in auto-allow mode it also cuts prompts without lowering your guard</li>
     <li>Running without approvals = sandbox + no secrets + review of the output</li>
   </ul>
 

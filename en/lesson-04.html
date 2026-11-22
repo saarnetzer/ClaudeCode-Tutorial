@@ -39,6 +39,7 @@
     <li>The CLAUDE.md file: what goes in and what doesn't</li>
     <li>Three memory levels: project, personal, and global</li>
     <li>Techniques for managing long conversations</li>
+    <li>Choosing a model and an effort level — quality, time and cost</li>
   </ul>
 
   <h2>First, a concept: the context window</h2>
@@ -106,6 +107,44 @@
     Context is a precious resource: every wasted token reduces focus. Agents work best when the context holds exactly what's relevant — no less, and no more. Think of yourselves as the agent's context managers.
   </div>
 
+  <h2>Model and effort — the lever that saves you most</h2>
+  <p>Context isn't the only resource you manage. There are two more levers, both of which directly affect quality, time and cost — and most people never touch them.</p>
+
+  <h3>Which model</h3>
+  <p>The <code>/model</code> command switches models. You don't need to remember version names — there are <strong>aliases</strong> that always point at the current one:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Alias</th><th>What it's for</th></tr>
+    <tr><td><code>haiku</code></td><td>Fast and cheap — for simple tasks</td></tr>
+    <tr><td><code>sonnet</code></td><td>Day-to-day coding. A sensible starting point for most things</td></tr>
+    <tr><td><code>opus</code></td><td>Tasks that need complex reasoning</td></tr>
+    <tr><td><code>opusplan</code></td><td>A neat hybrid: opus while planning, then sonnet to execute</td></tr>
+    <tr><td><code>fable</code></td><td>The hardest, longest problems — root-cause investigation, outage debugging, architecture decisions</td></tr>
+    <tr><td><code>default</code></td><td>Clear your choice and go back to your account's default</td></tr>
+  </table>
+  </div>
+  <p><code>opusplan</code> deserves particular attention: it puts the stronger reasoning exactly where it matters most — the planning — and the efficient model on the writing itself. That's the Plan Mode workflow from Lesson 2, automated.</p>
+
+  <h3>How much effort</h3>
+  <p>The same model can work shallow or deep. That's the <strong>effort level</strong>, switched with <code>/effort</code>:</p>
+  <pre><code>/effort low      # short exchanges you review yourself: a rename, brainstorming
+/effort medium   # the default on current models. Day-to-day work with clear scope
+/effort high     # when verification matters or edge cases are likely — a bug in existing code
+/effort xhigh    # deeper reasoning, at higher cost
+/effort max      # hard problems the agent should crack unattended, e.g. hunting vulnerabilities
+/effort status   # what the level is right now</code></pre>
+  <div class="callout warn">
+    <span class="co-title">⚠️ More effort is not always better</span>
+    The documentation itself warns that <code>max</code> shows diminishing returns and is prone to overthinking, and that you should test before adopting it broadly. The practical rule: start at <code>medium</code>, and raise it only once you've seen the result fall short — not "just to be safe".
+  </div>
+
+  <h3>The word that actually works — and two that don't</h3>
+  <p>There's a common myth that writing "think hard" or "think more" in a prompt triggers something. <strong>It doesn't.</strong> Those phrases pass through as ordinary text. What does work is one specific word: <code dir="ltr">ultrathink</code>. If it appears in your prompt, it requests deeper reasoning <em>for that turn only</em>, without changing the session's effort level:</p>
+  <pre><code>ultrathink — why does this test fail only in CI and not on my machine?</code></pre>
+
+  <h3>Seeing where the money goes</h3>
+  <p>And finally, measurement: <code>/usage</code> (also <code>/cost</code>) shows what the session cost and where you stand against your plan limits. Worth a look after a big task — it's how you build intuition for what's expensive and what isn't.</p>
+
   <h2>Exercises</h2>
   <div class="exercise">
     <div class="ex-head"><span class="ex-badge">Exercise 4.1</span> A first CLAUDE.md</div>
@@ -166,6 +205,7 @@
     <li>CLAUDE.md = what you'd tell a new developer on day one</li>
     <li>Three levels: project (shared), local (personal per project), global (~/.claude)</li>
     <li>Important knowledge lives in files — not conversation memory</li>
+    <li><code>/model</code> and <code>/effort</code> are the most practical levers — start at sonnet and medium, raise only when needed</li>
   </ul>
 
   <div class="complete-row"><button id="completeBtn" data-lesson="l04"></button></div>

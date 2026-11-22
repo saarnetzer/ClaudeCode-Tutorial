@@ -39,6 +39,7 @@
     <li>The difference between a command (you invoke) and a Skill (the model invokes)</li>
     <li>Building a complete Skill with helper files</li>
     <li>Organizing and sharing with your team</li>
+    <li>Plugins: package it all into one bundle, and install other people's</li>
   </ul>
 
   <h2>Custom slash commands</h2>
@@ -97,6 +98,34 @@ description: Rules for building Hebrew UIs with correct RTL. Use every
     <span class="co-title">💡 When a command, and when a Skill?</span>
     <strong>Command</strong> — when you want control: "do X now" (<code>/check</code>, <code dir="ltr">/fix-issue</code>).<br>
     <strong>Skill</strong> — when you want knowledge applied automatically whenever it's relevant, without remembering to ask (RTL rules, API standards, deploy procedures).
+  </div>
+
+  <h2>Plugins — package it all up, and install other people's</h2>
+  <p>So far we've built each piece separately: a command here, a Skill there, and the next lessons add hooks, MCP servers and agents. <strong>A plugin is one wrapper around all of them.</strong> Instead of telling a new teammate "copy this folder, add these lines to your settings", they run one command and get the lot.</p>
+  <p>The other direction is more interesting: there's an <strong>official marketplace</strong>, connected automatically on your first run, with ready-made plugins in it. To see what's there:</p>
+  <pre><code>/plugin</code></pre>
+  <p>That opens a panel with a Discover tab for browsing, installing and removing. You can also go straight at it:</p>
+  <pre><code># install from the official marketplace:
+/plugin install commit-commands@claude-plugins-official
+
+# from the terminal, for the current project only:
+claude plugin install formatter@your-org --scope project
+
+# add an organization's or a community marketplace:
+/plugin marketplace add anthropics/claude-plugins-official</code></pre>
+  <p>A "marketplace" is just a repo with a catalog file — not a managed store. So an organization can stand one up for itself, and plugins are identified as <code dir="ltr">name@marketplace</code>.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>/plugin</code></td><td>The panel: browse, install, enable and disable</td></tr>
+    <tr><td><code dir="ltr">claude plugin list</code></td><td>What you have installed</td></tr>
+    <tr><td><code dir="ltr">claude plugin disable name@marketplace</code></td><td>Turn one off without removing it</td></tr>
+    <tr><td><code dir="ltr">claude plugin uninstall name@marketplace</code></td><td>Remove it</td></tr>
+  </table>
+  </div>
+  <div class="callout danger">
+    <span class="co-title">🛑 A plugin runs code with your privileges</span>
+    A plugin can contain hooks and MCP servers — that is, <strong>code that runs on your machine</strong> as your user, without asking you each time. So: install only from a source you trust, and look at what's inside first. It's the same judgement we'll apply to MCP servers in Lesson 7 and to security in Lesson 9. Note too that an enabled plugin adds its descriptions to the context on every turn, so a plugin you don't use is worth turning off.
   </div>
 
   <h2>Exercises</h2>
@@ -161,6 +190,7 @@ Keep it short and clear.</code></pre>
     <li>A Skill = a folder with SKILL.md that Claude loads by itself based on the description</li>
     <li>Commands: you invoke; Skills: the model invokes — each has its role</li>
     <li>Everything goes into git, shared with the team and future agents</li>
+    <li>A plugin bundles every piece into one command-line install — but it runs code as you, so only from a source you trust</li>
   </ul>
 
   <div class="complete-row"><button id="completeBtn" data-lesson="l05"></button></div>

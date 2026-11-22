@@ -71,6 +71,14 @@
       <tr><td><code>/plan</code></td><td>מעבר למצב תכנון</td></tr>
       <tr><td><code>/usage</code></td><td>עלות השיחה ומצב מגבלות המנוי (גם <code>/cost</code>)</td></tr>
       <tr><td><code>/doctor</code></td><td>בדיקת תקינות ההתקנה וההגדרות</td></tr>
+      <tr><td><code>/effort</code></td><td>רמת מאמץ: low ↔ max</td></tr>
+      <tr><td><code>/plugin</code></td><td>פלאגינים: עיון, התקנה, כיבוי</td></tr>
+      <tr><td><code>/sandbox</code></td><td>הפעלת סנדבוקס לפקודות טרמינל</td></tr>
+      <tr><td><code dir="ltr">/security-review</code></td><td>סקירת אבטחה לשינויים בענף</td></tr>
+      <tr><td><code>/loop</code></td><td>הרצת פרומפט שוב ושוב (<code dir="ltr">/loop 5m ...</code>)</td></tr>
+      <tr><td><code>/background</code></td><td>ניתוק השיחה לרקע</td></tr>
+      <tr><td><code>/batch</code></td><td>פירוק שינוי רחב לסוכני רקע מקבילים</td></tr>
+      <tr><td><code dir="ltr">ultrathink</code></td><td>לא פקודה — מילה בפרומפט שמבקשת חשיבה עמוקה לתור הזה</td></tr>
       <tr><td><code>/model</code></td><td>החלפת מודל</td></tr>
       <tr><td><code>/init</code></td><td>יצירת CLAUDE.md לפרויקט</td></tr>
       <tr><td><code>/permissions</code></td><td>ניהול כללי הרשאות</td></tr>
@@ -95,6 +103,8 @@
       <tr><td><code dir="ltr">.claude/agents/*.md</code></td><td>Subagents — סוכני משנה</td></tr>
       <tr><td><code dir="ltr">.claude/settings.json</code></td><td>הגדרות ו-hooks של הפרויקט</td></tr>
       <tr><td><code dir="ltr">.mcp.json</code></td><td>שרתי MCP משותפים לצוות</td></tr>
+      <tr><td><code dir="ltr">.claude-plugin/plugin.json</code></td><td>מניפסט של פלאגין</td></tr>
+      <tr><td><code dir="ltr">.claude/worktrees/</code></td><td>תיקיות עבודה מבודדות לסוכנים מקבילים</td></tr>
       <tr><td><code dir="ltr">~/</code> ב-Windows</td><td><code dir="ltr">C:\Users\&lt;שם המשתמש&gt;</code></td></tr>
     </table></div>
   </div>
@@ -110,6 +120,32 @@
       <tr><td><code dir="ltr">claude mcp get שם</code></td><td>פרטי שרת</td></tr>
       <tr><td><code dir="ltr">claude mcp remove שם</code></td><td>הסרת שרת</td></tr>
       <tr><td><code dir="ltr">npx @playwright/mcp@latest</code></td><td>שרת דפדפן (Playwright)</td></tr>
+    </table></div>
+  </div>
+
+  <div class="cheat-card">
+    <h3>🧠 מודל, מאמץ ועלות</h3>
+    <div class="table-scroll"><table>
+      <tr><td><code dir="ltr">/model haiku</code></td><td>מהיר וחסכוני — משימות פשוטות</td></tr>
+      <tr><td><code dir="ltr">/model sonnet</code></td><td>עבודת הקוד היומיומית</td></tr>
+      <tr><td><code dir="ltr">/model opus</code></td><td>חשיבה מורכבת</td></tr>
+      <tr><td><code dir="ltr">/model opusplan</code></td><td>opus לתכנון, sonnet לביצוע</td></tr>
+      <tr><td><code dir="ltr">/model fable</code></td><td>הבעיות הקשות והארוכות</td></tr>
+      <tr><td><code dir="ltr">/effort medium</code></td><td>ברירת המחדל. להעלות רק כשצריך</td></tr>
+      <tr><td><code>/usage</code></td><td>עלות השיחה ומצב המגבלות</td></tr>
+    </table></div>
+  </div>
+
+  <div class="cheat-card">
+    <h3>👥 סוכנים במקביל</h3>
+    <div class="table-scroll"><table>
+      <tr><td><code dir="ltr">claude --bg "משימה"</code></td><td>שיחה שהולכת ישר לרקע</td></tr>
+      <tr><td><code dir="ltr">claude agents</code></td><td>לוח כל השיחות הפעילות</td></tr>
+      <tr><td><code dir="ltr">claude attach מזהה</code></td><td>להתחבר לשיחת רקע</td></tr>
+      <tr><td><code dir="ltr">claude logs מזהה</code></td><td>הפלט האחרון שלה</td></tr>
+      <tr><td><code dir="ltr">claude -w שם-ענף</code></td><td>שיחה ב-worktree מבודד</td></tr>
+      <tr><td><code dir="ltr">/batch הוראה</code></td><td>פירוק ל-5–30 יחידות מקבילות</td></tr>
+      <tr><td><code>/fork</code></td><td>העתקת השיחה לשיחת רקע חדשה</td></tr>
     </table></div>
   </div>
 

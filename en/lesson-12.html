@@ -39,6 +39,7 @@
     <li>The anatomy of a squad: roles, an orchestrator, shared memory and deliverable contracts</li>
     <li>Three organizational patterns: pipeline, orchestrator–workers, parallel</li>
     <li>Building it for real: in Claude Code and in the Agent SDK</li>
+    <li>Running in parallel without code: background agents, worktrees, <code>/batch</code> and agent teams</li>
   </ul>
 
   <h2>Why a squad at all?</h2>
@@ -123,6 +124,59 @@ The working process, step by step:
 5. Send code-reviewer for review; a critical finding goes back to coder
 6. Summarize: what was built, what was tested, what remains open</code></pre>
   <p>Note step 2: <strong>a stop for human approval</strong> at the decision point — principle 5 from Lesson 11, now at squad level.</p>
+
+  <h2>Running in parallel — without writing a line of code</h2>
+  <p>In way 1 the squad works <strong>in series</strong>: the coordinator sends an agent, waits for the answer, sends the next. That's right for plenty of cases — but when the tasks really are independent, it wastes time. Claude Code has a built-in answer for this, and it needs no SDK.</p>
+
+  <h3>Background agents: a session that keeps working without you</h3>
+  <p>A session can detach from the terminal and keep running in the background, and you come back to it when it suits you:</p>
+  <pre><code># start a session that goes straight to the background:
+claude --bg "investigate why the login test fails intermittently"
+
+# detach the live session to the background and free the terminal:
+/background
+
+# see every active session and manage them:
+claude agents</code></pre>
+  <p><code dir="ltr">claude agents</code> opens a board showing each session, what it's doing, and lets you dispatch a new task. Other useful commands:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code dir="ltr">claude attach id</code></td><td>Attach to a background session in this terminal</td></tr>
+    <tr><td><code dir="ltr">claude logs id</code></td><td>Print its recent output</td></tr>
+    <tr><td><code dir="ltr">claude stop id</code></td><td>Stop it</td></tr>
+  </table>
+  </div>
+
+  <h3>Worktrees: how you stop agents colliding</h3>
+  <p>Two agents editing the same files at once is a recipe for disaster. The answer is a <strong>git worktree</strong>: another working directory of the same repo, on its own branch. Each agent in its own directory, zero collisions:</p>
+  <pre><code>claude -w feature-auth</code></pre>
+  <p>That starts a session inside an isolated worktree under <code dir="ltr">.claude/worktrees/</code>. Sessions dispatched from the agent board get a worktree of their own automatically — this is exactly why.</p>
+
+  <h3>/batch: one broad change, split across dozens of agents</h3>
+  <p>This is the command that turns "agent squad" from an idea into a tool. You give it a broad task; it researches the code, decomposes it into 5 to 30 independent units, and presents a plan for approval. Once you approve, each unit gets its own background agent, in its own worktree:</p>
+  <pre><code>/batch migrate src/ from JavaScript to TypeScript</code></pre>
+  <p>Each agent implements its unit, runs tests, and opens a PR or reports what happened. Notice how precisely this applies the principles from Lesson 11: a plan for human approval before execution (principle 5), a feedback loop in the form of tests (principle 1), and worktree isolation that bounds the damage (principle 2).</p>
+
+  <h3>Agent teams: teammates that talk to each other</h3>
+  <p>And finally the capability closest to what this lesson describes: an <strong>agent team</strong>. Here your session is the "lead", and it spawns teammates, each a full session with its own context window. They share a task list and <strong>message each other directly</strong> — not just report back to a coordinator. That's the key difference from the subagents of Lesson 8.</p>
+  <p>The feature is experimental and off by default. You turn it on like this:</p>
+  <pre><span class="pre-label">~/.claude/settings.json</span><code>{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  }
+}</code></pre>
+  <p>And then you simply ask, in plain language:</p>
+  <pre><code>spawn three teammates to examine this proposal from different angles:
+one on user experience, one on architecture, and one playing devil's advocate</code></pre>
+  <div class="callout warn">
+    <span class="co-title">⚠️ What to know before you get excited</span>
+    This is an <strong>experimental</strong> feature, and two things will surprise you. <strong>(1) The cost.</strong> Every teammate is a full session, and consumption scales with them — the docs suggest starting with three to five. <strong>(2) The advice to start with research and review</strong>, not parallel implementation: two agents editing the same file still collide. On top of that, <code>/resume</code> and <code>/rewind</code> don't restore teammates, there are no teams inside teams, and the lead role can't be handed over.
+  </div>
+  <div class="callout tip">
+    <span class="co-title">✅ So which do you pick?</span>
+    <strong>Tasks in series with approval points</strong> — way 1, a custom command. <strong>A broad, repetitive change</strong> (a migration, a dependency upgrade, adding tests) — <code>/batch</code>, which is exactly what it was built for. <strong>Research from several angles</strong> — an agent team. <strong>A squad running inside a system of yours, scheduled or event-driven</strong> — the SDK, which is way 2, coming up next.
+  </div>
 
   <h2>Building it, way 2: a squad in code with the Agent SDK</h2>
   <p>In the SDK you define the team members inside the options, and the model delegates to them exactly like subagents:</p>
@@ -221,6 +275,7 @@ for await (const message of result) {
     <li>Three patterns: pipeline (fixed order), orchestrator–workers (judgment), parallel (speed)</li>
     <li>Start with one agent; split only on a real limit</li>
     <li>A deliverable not written to a file — didn't happen; at least one critic per squad</li>
+    <li>Parallelism has a built-in answer: <code dir="ltr">claude --bg</code> for the background, <code dir="ltr">claude -w</code> for an isolated worktree, <code>/batch</code> for a broad change, and agent teams (experimental) for teammates that message each other</li>
   </ul>
 
   <div class="complete-row"><button id="completeBtn" data-lesson="l11"></button></div>
