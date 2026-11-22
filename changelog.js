@@ -4,6 +4,24 @@
    according to the page's <html lang>. */
 window.COURSE_CHANGELOG = [
   {
+    version: "3.7.0",
+    date: "2026-11-22",
+    title: "איפה Claude Code רץ היום, ותיקוני דיוק במצבי הרשאות",
+    titleEn: "Where Claude Code runs today, and permission-mode accuracy fixes",
+    changes: [
+      "🆕 פרק 1: הכלי לא רץ רק בטרמינל — נוספה הבהרה שהוא זמין גם בתוך VS Code ו-JetBrains, כאפליקציית דסקטופ, בדפדפן ללא התקנה, ב-Slack וב-GitHub Actions. כל מה שהקורס מלמד עובד בכולם",
+      "תוקן: טבלת מצבי ההרשאות בפרק 2 החמיצה מצב — Don't ask, שדוחה כל מה שלא אושר מראש במקום לשאול. זה המצב של ריצות CI",
+      "פרק 9: הבהרה שקובץ ההגדרות של הפרויקט לא יכול לכפות מצב auto או bypass — הערך מתעלם. הגנה מכוונת מפני ריפו זר",
+      "עודכן מספר הגרסה בהדגמת ההרצה הראשונה"
+    ],
+    changesEn: [
+      "🆕 Lesson 1: the tool doesn't only run in a terminal — added that it's also available inside VS Code and JetBrains, as a desktop app, in the browser with nothing installed, in Slack and in GitHub Actions. Everything the course teaches works in all of them",
+      "Fixed: the permission-mode table in Lesson 2 was missing a mode — Don't ask, which denies anything not pre-approved instead of asking. That's the mode CI runs in",
+      "Lesson 9: clarified that a project settings file cannot force auto or bypass mode — the value is ignored. Deliberate protection against an unfamiliar repo",
+      "Updated the version number shown in the first-run demo"
+    ]
+  },
+  {
     version: "3.6.0",
     date: "2026-10-20",
     title: "שרתי MCP מרוחקים, בלם עלות, ותיקוני דיוק",

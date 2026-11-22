@@ -54,6 +54,10 @@
     "defaultMode": "default"
   }
 }</code></pre>
+  <div class="callout info">
+    <span class="co-title">💡 What a project settings file <em>cannot</em> set</span>
+    The <code dir="ltr">"default"</code> value above does take effect. But if someone writes <code dir="ltr">"defaultMode": "auto"</code> or <code dir="ltr">"bypassPermissions"</code> in a project settings file, that value is <strong>simply ignored</strong>. That's deliberate protection: a repo you clone off the internet can't quietly lower your guard. Worth knowing, so you don't believe you configured something that never took effect.
+  </div>
   <p>And here the first law comes in, which holds in every mode: when an approval prompt appears — read it.</p>
   <div class="callout danger">
     <span class="co-title">🛑 The law you must not break</span>
