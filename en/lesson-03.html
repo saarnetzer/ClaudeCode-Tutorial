@@ -39,7 +39,7 @@
     <li>Why Git matters especially when working with AI agents</li>
     <li>Commits and branches in plain language</li>
     <li>Creating a Pull Request from the terminal</li>
-    <li>Recovering from mistakes — your strongest card</li>
+    <li>Recovering from mistakes — and the two safety nets: git and checkpoints</li>
   </ul>
 
   <h2>Why Git + agent = a winning pair</h2>
@@ -84,6 +84,19 @@
   <div class="callout warn">
     <span class="co-title">⚠️ Destructive operations</span>
     For destructive actions (discarding changes, hard reset) Claude will always ask for explicit approval and explain what will be deleted. Read the explanation before approving — this is exactly where the "normal" permission mode is worth gold.
+  </div>
+
+  <h2>The second safety net: checkpoints</h2>
+  <p>Git is your safety net. But there's another one, entirely automatic, running under the radar: before <strong>every message you send</strong>, Claude Code saves a checkpoint of your files and the conversation. You don't have to do anything for it.</p>
+  <p>To go back: <code>/rewind</code>, or <kbd>Esc</kbd> twice from an empty prompt. A menu opens and lets you choose exactly what to restore:</p>
+  <ul>
+    <li><strong>The code only</strong> — the conversation stays, so you can ask again differently without losing the context</li>
+    <li><strong>The conversation only</strong> — the files stay as they are</li>
+    <li><strong>Both</strong> — a full return to that point</li>
+  </ul>
+  <div class="callout warn">
+    <span class="co-title">⚠️ It is not a substitute for git — and it matters why</span>
+    Checkpoints cover what Claude edited <strong>with its own editing tools</strong>. They do <em>not</em> cover: changes made through a terminal command, edits you make outside Claude Code, or work done by subagents. They're also deleted after about a month. In other words: <code>/rewind</code> is an undo button for the current session. <strong>Git is the history.</strong> Commit before a big task — that's still the rule.
   </div>
 
   <div class="callout info">

@@ -30,7 +30,7 @@
 </header>
 
 <main id="main" class="wrap">
-  <span class="kicker">Lesson 12 of 13</span><span class="readtime">⏱ about 30 min</span>
+  <span class="kicker">Lesson 12 of 13</span><span class="readtime">⏱ about 35 min</span>
   <h1>Building an agent squad — principles, patterns and infrastructure</h1>
   <p class="lead">In Lesson 8 you met subagents — helpers one agent activates. Now we level up: an <strong>agent squad</strong> — a group of agents with defined roles, divided work and a shared deliverable. Like the difference between one talented employee and a whole department working for you.</p>
 
@@ -183,6 +183,18 @@ one on user experience, one on architecture, and one playing devil's advocate</c
     <span class="co-title">✅ So which do you pick?</span>
     <strong>Tasks in series with approval points</strong> — way 1, a custom command. <strong>A broad, repetitive change</strong> (a migration, a dependency upgrade, adding tests) — <code>/batch</code>, which is exactly what it was built for. <strong>Research from several angles</strong> — an agent team. <strong>A squad running inside a system of yours, scheduled or event-driven</strong> — the SDK, which is way 2, coming up next.
   </div>
+
+  <h3>When three agents isn't enough: dynamic workflows</h3>
+  <p>Everything so far is limited in one way: <strong>every agent's results land in the coordinator's context</strong>. With ten agents that works; with a hundred the context window chokes. The answer is to move the coordination out of the conversation and into a <strong>script</strong>: Claude writes code that orchestrates the agents, and the results live in the script's variables rather than in its context.</p>
+  <p>The simple way to trigger it: write "use a workflow" in your request, or run the built-in <code dir="ltr">/deep-research</code> workflow. You watch progress with <code>/workflows</code>, and a script that worked can be saved and re-run as a command.</p>
+  <div class="callout info">
+    <span class="co-title">💡 When this is the right tool</span>
+    When you have <strong>dozens or hundreds of similar units of work</strong> — a pass over every file in the repo, research cross-checking many sources, a broad migration. For a task with three or four distinct roles, the ordinary squad is simpler and far easier to debug.
+  </div>
+
+  <h3>Sessions that talk to each other</h3>
+  <p>And finally a small piece that completes the picture: separate Claude Code sessions can <strong>send each other messages</strong>. <code dir="ltr">/list-agents</code> shows who's reachable, and you address one by name with <code dir="ltr">@name</code>. A session can also ask to be told when another goes idle.</p>
+  <p>This is useful when you're running several worktrees in parallel and want them to coordinate — for instance, the session that finished building an API telling the one working on the interface. <strong>A message is information, not a command:</strong> slash commands inside one don't run, and it never counts as your approval for anything.</p>
 
   <h2>Building it, way 2: a squad in code with the Agent SDK</h2>
   <p>In the SDK you define the team members inside the options, and the model delegates to them exactly like subagents:</p>

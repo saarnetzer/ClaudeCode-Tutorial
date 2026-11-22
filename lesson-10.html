@@ -134,6 +134,16 @@ jobs:
     ‏CLAUDE.md (פרק 4), פקודות ו‑Skills (פרק 5), Hooks (פרק 6), שרתי MCP בפרויקט (פרק 7) ו‑subagents (פרק 8) — כולם בתוך הריפו, ולכן הסוכן שרץ ב‑CI מקבל אותם אוטומטית. עכשיו ברור למה השקענו בתשתית: היא בדיוק מה שהופך סוכן מרוחק מ"זר" ל"חבר צוות שמכיר את הפרויקט".
   </div>
 
+  <div class="callout info">
+    <span class="co-title">💡 לא על GitHub? גם ב-GitLab זה עובד</span>
+    הרעיון זהה, רק התחביר משתנה: מוסיפים משתנה CI/CD מסוג masked בשם <code dir="ltr">ANTHROPIC_API_KEY</code>, ובונים job שמתקין את Claude Code ומריץ אותו ב‑<code dir="ltr">-p</code>:
+    <pre><code>script:
+  - claude -p "סקור את ה-MR הזה ויישם את ההערות"
+      --permission-mode acceptEdits
+      --allowedTools "Bash Read Edit Write"</code></pre>
+    שימו לב שזה בדיוק אותו <code dir="ltr">-p</code> ואותם דגלי הרשאות מהסעיף הקודם — מה שלמדתם עובר כמו שהוא. את העלות מגבילים עם <code dir="ltr">--max-turns</code> ועם ה‑<code dir="ltr">timeout</code> של ה‑job. האינטגרציה בבטא ומתוחזקת על ידי GitLab.
+  </div>
+
   <h2>תבנית לסקריפט אוטומציה מקומי</h2>
   <p>דפוס שימושי לעבודות תחזוקה תקופתיות:</p>
   <pre><span class="pre-label">nightly-deps.sh</span><code>#!/bin/bash

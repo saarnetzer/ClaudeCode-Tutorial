@@ -39,6 +39,7 @@
     <li>How Claude Code differs from a regular AI chat</li>
     <li>Installing on macOS / Linux / Windows</li>
     <li>Signing in and running for the first time</li>
+    <li>How to start with nothing installed — in the browser</li>
     <li>Three ways to exit, stop, and start over</li>
   </ul>
 
@@ -63,6 +64,23 @@
   <div class="callout info">
     <span class="co-title">💡 Not just for code</span>
     People use Claude Code for writing documents, analyzing data, automating files and more. But its natural home is software projects — and that's where we'll focus.
+  </div>
+
+  <h2>Before you install: you don't have to install anything</h2>
+  <p>If you just want to see what the fuss is about, or installing in a terminal puts you off — there's a short path. Go to <a href="https://claude.ai/code" target="_blank" rel="noopener">claude.ai/code</a>, sign in with your Claude account, connect GitHub when asked, pick a repo and describe a task. That's it.</p>
+  <p>What happens behind the scenes: Claude clones the repo into an isolated virtual machine, works on it there, and pushes a branch for you to review. Your own machine isn't involved at all — you can close the laptop.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th></th><th>In the browser</th><th>In the terminal</th></tr>
+    <tr><td>Install</td><td>None</td><td>One command</td></tr>
+    <tr><td>What it works on</td><td>A GitHub repo only</td><td>Any folder on your machine</td></tr>
+    <tr><td>Your configuration</td><td>Only what's in the repo</td><td>Everything, including your personal settings</td></tr>
+    <tr><td>Permission modes</td><td>Some of them</td><td>All of them</td></tr>
+  </table>
+  </div>
+  <div class="callout tip">
+    <span class="co-title">✅ So why learn the terminal at all?</span>
+    Because that's where you see most clearly what the agent is doing — and because almost everything this course builds (hooks, agents, automation) starts there. The browser is an excellent way to <strong>start and get a feel for it</strong>, then come back here. You can also move between the two: a session that started in the cloud can be pulled into your terminal with <code dir="ltr">claude --teleport</code>, and a new task can be sent up with <code dir="ltr">claude --cloud "the task"</code>.
   </div>
 
   <h2>Installation</h2>
@@ -92,7 +110,7 @@
 
   <div class="callout warn">
     <span class="co-title">⚠️ Command not recognized?</span>
-    Close and reopen your terminal (or PowerShell). The installer adds the tool to your system path, and the change only loads in a new window.
+    Close and reopen your terminal (or PowerShell). The installer adds the tool to your system path, and the change only loads in a new window. Still not working? The <a href="troubleshooting.html">troubleshooting guide</a> walks through it step by step.
   </div>
 
   <div class="callout tip">

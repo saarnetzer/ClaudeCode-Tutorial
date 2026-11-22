@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מדריך עזר · כשמשהו לא עובד</title>
+<meta name="description" content="פתרון בעיות ב-Claude Code: הפקודה לא מזוהה, בעיות התקנה והתחברות, שרת MCP שלא מתחבר, hooks שלא רצים, Skills שלא נטענים — וסדר הבדיקה שפותר את רוב המקרים.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/troubleshooting.html">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="מדריך עזר · כשמשהו לא עובד">
+<meta property="og:description" content="פתרון בעיות ב-Claude Code: הפקודה לא מזוהה, בעיות התקנה והתחברות, שרת MCP שלא מתחבר, hooks שלא רצים, Skills שלא נטענים — וסדר הבדיקה שפותר את רוב המקרים.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/troubleshooting.html">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/og-image.png">
+<meta property="og:locale" content="he_IL">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" hreflang="he" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/troubleshooting.html">
+<link rel="alternate" hreflang="en" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/troubleshooting.html">
+<link rel="stylesheet" href="style.css">
+<script src="changelog.js" defer></script>
+<script src="app.js" defer></script>
+<script data-goatcounter="https://saarnetzer.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">דילוג לתוכן הראשי</a>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> קורס Claude Code</span></a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">צ'יט-שיט</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">מילון</span></a><a class="hlink hlink-en" href="en/troubleshooting.html" title="English">🇺🇸 <span class="hlink-text">English</span></a><button id="themeBtn" class="hbtn" aria-label="החלפת ערכת נושא" title="ערכת נושא">🌓<span class="hbtn-text"> ערכת נושא</span></button></nav>
+</header>
+
+<main id="main" class="wrap">
+  <span class="kicker">מדריך עזר · לכל שלב בקורס</span>
+  <h1>כשמשהו לא עובד</h1>
+  <p class="lead">לפני שמוותרים: רוב התקלות ב‑Claude Code הן אחת מחמש, ולכולן יש תיקון קצר. העמוד הזה בנוי לפי סדר בדיקה — מתחילים מלמעלה, ועוצרים ברגע שמצאתם. שמרו אותו בסימניות; הוא יחסוך לכם ערב שלם.</p>
+
+  <h2>סדר הבדיקה: שלוש פקודות שפותרות את רוב המקרים</h2>
+  <p>אל תנחשו. שלוש הפקודות האלה אומרות לכם מה שבור, לפי הסדר הזה:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>#</th><th>פקודה</th><th>מה היא אומרת לכם</th></tr>
+    <tr><td>1</td><td><code dir="ltr">claude --version</code></td><td>האם ההתקנה בכלל תקינה. מריצים ב<strong>חלון טרמינל חדש</strong>.</td></tr>
+    <tr><td>2</td><td><code dir="ltr">claude doctor</code></td><td>אבחון מההרצה בטרמינל, גם כשהכלי לא מצליח לעלות: קובצי הגדרות שבורים, מצב החיפוש, בעיות הרשאה.</td></tr>
+    <tr><td>3</td><td><code>/doctor</code></td><td>בדיקה מלאה <em>מתוך</em> שיחה — והיא גם מציעה תיקונים ומבקשת את אישורכם לפני שהיא נוגעת במשהו.</td></tr>
+  </table>
+  </div>
+  <div class="callout tip">
+    <span class="co-title">✅ הקלף המנצח: מצב בטוח</span>
+    חושדים שמשהו <em>שהוספתם</em> שובר את זה — hook, שרת MCP, פלאגין, Skill? הריצו:
+    <pre><code>claude --safe-mode</code></pre>
+    זה מפעיל שיחה בלי CLAUDE.md, בלי Skills, בלי פלאגינים, בלי hooks, בלי שרתי MCP ובלי פקודות מותאמות. ההתחברות, המודל והכלים המובנים עובדים רגיל. <strong>אם הבעיה נעלמה — היא אצלכם בהגדרות</strong>, ועכשיו רק צריך לצמצם איזו. זו הבדיקה הכי שימושית בכל העמוד.
+  </div>
+
+  <h2>1. ‏״הפקודה claude לא מזוהה״</h2>
+  <p>התקלה הנפוצה ביותר, ובדרך כלל היא לא באמת בעיית התקנה — הכלי הותקן, פשוט המערכת לא יודעת איפה הוא. קודם כול, סגרו ופתחו טרמינל חדש; שינוי נתיב נטען רק בחלון חדש. עדיין לא עובד?</p>
+  <h3>מוודאים שהקובץ בכלל קיים</h3>
+  <pre><span class="pre-label">macOS / Linux</span><code>ls -la ~/.local/bin/claude</code></pre>
+  <pre><span class="pre-label">Windows (PowerShell)</span><code>Test-Path "$env:USERPROFILE\.local\bin\claude.exe"</code></pre>
+  <p>אם הקובץ לא קיים — ההתקנה לא הושלמה, חזרו ל<a href="lesson-01.html">פרק 1</a> והריצו אותה שוב. אם הוא קיים, הבעיה היא ב‑PATH:</p>
+  <h3>מוסיפים לנתיב המערכת</h3>
+  <pre><span class="pre-label">macOS (zsh — ברירת המחדל)</span><code>echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.zshrc
+source ~/.zshrc</code></pre>
+  <pre><span class="pre-label">Linux (bash)</span><code>echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.bashrc
+source ~/.bashrc</code></pre>
+  <pre><span class="pre-label">Windows (PowerShell, ואז לפתוח טרמינל חדש)</span><code>$currentPath = [Environment]::GetEnvironmentVariable('PATH', 'User')
+[Environment]::SetEnvironmentVariable('PATH', "$currentPath;$env:USERPROFILE\.local\bin", 'User')</code></pre>
+  <div class="callout info">
+    <span class="co-title">💡 שלוש מלכודות שכדאי להכיר</span>
+    <strong>(1)</strong> אם אתם עובדים בטרמינל <em>בתוך</em> עורך קוד — הוא יורש את הנתיב מהעורך, אז צריך לסגור ולפתוח את העורך עצמו, לא רק את הטרמינל. <strong>(2)</strong> לא בטוחים איזה shell אתם מריצים? <code dir="ltr">echo $0</code> יגיד לכם, כדי שתערכו את הקובץ הנכון. <strong>(3)</strong> התוסף ל‑VS Code <strong>אינו</strong> מוסיף את <code>claude</code> לנתיב — צריך גם את ההתקנה הרגילה.
+  </div>
+  <h3>יש לכם שתי התקנות שמתנגשות?</h3>
+  <pre><code>which -a claude</code></pre>
+  <p>אם חוזרות כמה שורות — השאירו אחת. להסרת העודפות: <code dir="ltr">npm uninstall -g @anthropic-ai/claude-code</code>, <code dir="ltr">rm -rf ~/.claude/local</code>, <code dir="ltr">brew uninstall --cask claude-code</code> או <code dir="ltr">winget uninstall Anthropic.ClaudeCode</code>, לפי איך שהתקנתם.</p>
+
+  <h2>2. ההתקנה עצמה נכשלת</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>מה שאתם רואים</th><th>מה זה אומר ומה עושים</th></tr>
+    <tr><td><code dir="ltr">403</code> או <code dir="ltr">syntax error near unexpected token '&lt;'</code></td><td>קיבלתם דף אינטרנט במקום סקריפט — בדרך כלל חומת אש או פרוקסי ארגוני. בדקו עם <code dir="ltr">curl -sI https://downloads.claude.ai/claude-code-releases/latest</code> (מצפים ל‑200). עוקפים עם Homebrew או WinGet.</td></tr>
+    <tr><td><code dir="ltr">EACCES</code> / permission denied</td><td>אין הרשאת כתיבה. <code dir="ltr">sudo mkdir -p ~/.local/bin</code> ואז <code dir="ltr">sudo chown -R $(whoami) ~/.local</code>. אם התקנתם דרך npm וקיבלתם שגיאות הרשאה — עברו להתקנה הרגילה, ואל תריצו npm עם sudo.</td></tr>
+    <tr><td><code dir="ltr">Killed</code> (לינוקס)</td><td>נגמר הזיכרון. ההתקנה צריכה כחצי ג׳יגה פנוי, והכלי עצמו 4 ג׳יגה. הוסיפו קובץ swap או שדרגו את המכונה.</td></tr>
+    <tr><td>שגיאות תעודה / <code dir="ltr">unable to get local issuer certificate</code></td><td>באובונטו: <code dir="ltr">sudo apt-get install ca-certificates</code>. מאחורי פרוקסי ארגוני — בקשו מ‑IT קובץ PEM של תעודת השורש והגדירו <code dir="ltr">CURL_CA_BUNDLE</code> ו‑<code dir="ltr">NODE_EXTRA_CA_CERTS</code> אליו.</td></tr>
+    <tr><td><code dir="ltr">'irm' is not recognized</code> / שגיאה על <code dir="ltr">&amp;&amp;</code></td><td>אתם בחלון הלא נכון. <code dir="ltr">irm</code> הוא PowerShell; הפקודה עם <code dir="ltr">&amp;&amp;</code> היא CMD. ראו <a href="lesson-01.html">פרק 1</a>.</td></tr>
+  </table>
+  </div>
+  <div class="callout warn">
+    <span class="co-title">⚠️ למשתמשי Windows: שתי שגיאות ייחודיות</span>
+    <strong>״requires either Git for Windows or PowerShell״</strong> — התקינו את <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">Git for Windows</a> ובחרו באפשרות להוסיף לנתיב.<br>
+    <strong>״does not support 32-bit Windows״</strong> — פתחתם בטעות <code dir="ltr">Windows PowerShell (x86)</code>. פתחו את הרגיל.
+  </div>
+
+  <h2>3. בעיות התחברות</h2>
+  <p>האיפוס שפותר את רוב מקרי ההתחברות: <code>/logout</code>, לסגור את Claude Code לגמרי, להריץ <code>claude</code> ולהתחבר מחדש.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>מה שאתם רואים</th><th>מה עושים</th></tr>
+    <tr><td><code dir="ltr">403 Request not allowed</code></td><td>בדקו שהמנוי שלכם פעיל ב‑<a href="https://claude.ai/settings" target="_blank" rel="noopener">claude.ai/settings</a>. אם אתם על Console — ודאו שלתפקיד שלכם יש גישה ל‑Claude Code.</td></tr>
+    <tr><td><code dir="ltr">This organization has been disabled</code></td><td>כמעט תמיד: משתנה סביבה ישן <code dir="ltr">ANTHROPIC_API_KEY</code> דורס את המנוי. הריצו <code dir="ltr">unset ANTHROPIC_API_KEY</code>, ומחקו את השורה מקובץ ה‑shell שלכם. אמתו עם <code>/status</code>.</td></tr>
+    <tr><td>הדפדפן לא נפתח (SSH, WSL, קונטיינר)</td><td>הקישו <kbd>c</kbd> כדי להעתיק את הכתובת, פתחו אותה בדפדפן המקומי, והדביקו את הקוד חזרה בטרמינל.</td></tr>
+    <tr><td>״זה לא נראה כמו הקוד המלא״</td><td>העתיקו את הקוד <strong>כולו, כולל ה‑#</strong>, והדביקו מהר — הוא פג.</td></tr>
+    <tr><td>הטוקן פג שוב ושוב</td><td>בדקו את שעון המערכת. אימות הטוקן תלוי בו.</td></tr>
+  </table>
+  </div>
+
+  <h2>4. שרת MCP לא מתחבר</h2>
+  <p>הפקודה <code>/mcp</code> מציגה את מצב כל השרתים. שלוש הסיבות הנפוצות, לפי השכיחות:</p>
+  <ul>
+    <li><strong>לא אישרתם את השרת.</strong> שרת שמוגדר ב‑<code dir="ltr">.mcp.json</code> של פרויקט דורש אישור חד־פעמי. אם סגרתם את ההודעה בטעות: <code dir="ltr">claude mcp reset-project-choices</code>, להפעיל מחדש, ולאשר.</li>
+    <li><strong>נתיב יחסי.</strong> זו המלכודת הגדולה: נתיבים ב‑<code dir="ltr">.mcp.json</code> נפתרים ביחס <em>למקום שממנו הרצתם את Claude</em>, לא ביחס לקובץ. לסקריפטים מקומיים — השתמשו תמיד בנתיב מלא.</li>
+    <li><strong>הקובץ במקום הלא נכון.</strong> הוא חייב להיקרא <code dir="ltr">.mcp.json</code> ולשבת בשורש הריפו — <em>לא</em> בתוך <code dir="ltr">.claude/</code>. ושרתים שתכתבו בתוך <code dir="ltr">settings.json</code> פשוט יתעלמו מהם.</li>
+  </ul>
+  <p>השרת מחובר אבל אין ממנו כלים? בחרו <strong>Reconnect</strong> בתוך <code>/mcp</code>. אם זה לא עוזר, הריצו <code dir="ltr">claude --debug=mcp</code> וקראו את הלוג ב‑<code dir="ltr">~/.claude/debug/</code>.</p>
+
+  <h2>5. ‏Hooks לא רצים, Skills לא נטענים</h2>
+  <p>שתי התקלות האלה נראות מסתוריות כי <strong>הן נכשלות בשקט</strong> — אין הודעת שגיאה. הבדיקה הראשונה היא תמיד לראות אם הדבר בכלל נטען: <code>/hooks</code> ו‑<code>/skills</code>.</p>
+  <h3>‏Hook שלא רץ</h3>
+  <ul>
+    <li>ה‑<code dir="ltr">matcher</code> חייב להיות <strong>מחרוזת</strong>, לא מערך.</li>
+    <li>שמות הכלים הם ב‑<strong>אות גדולה</strong>: <code dir="ltr">Bash</code>, <code dir="ltr">Edit</code>, <code dir="ltr">Write</code>, <code dir="ltr">Read</code>. <code dir="ltr">"bash"</code> לא יתפוס כלום.</li>
+    <li>לכמה כלים ביחד משתמשים בקו אנכי: <code dir="ltr">"Edit|Write"</code>.</li>
+    <li>שם כלי עם שגיאת כתיב לא תואם לכלום — ובשקט.</li>
+    <li>ההגדרות חייבות לשבת תחת המפתח <code dir="ltr">"hooks"</code> בתוך <code dir="ltr">settings.json</code>. אין קובץ hooks נפרד.</li>
+  </ul>
+  <p>לראות את ההערכה בזמן אמת: <code dir="ltr">claude --debug</code>, ואז להפעיל את הכלי.</p>
+  <h3>‏Skill שלא נטען</h3>
+  <ul>
+    <li>המבנה חייב להיות <code dir="ltr">.claude/skills/שם/SKILL.md</code> — תיקייה עם קובץ בתוכה, ולא <code dir="ltr">.claude/skills/שם.md</code>.</li>
+    <li>ה‑<code>description</code> חייב להתאים לאופן שבו אתם מנסחים בקשות — זו הדרך היחידה של המודל להחליט להפעיל אותו. ראו <a href="lesson-05.html">פרק 5</a>.</li>
+    <li>תג ״user-only״ ברשימה אומר ש‑Claude לא יפעיל אותו לבד. בדקו אם יש <code dir="ltr">disable-model-invocation: true</code> בכותרת.</li>
+  </ul>
+  <h3>‏CLAUDE.md שמתעלמים ממנו</h3>
+  <p>הריצו <code>/context</code> — הוא מראה מה באמת נטען. קובץ CLAUDE.md בתת־תיקייה נטען רק כשעובדים באזור שלו. ולגבי הגדרות: <code dir="ltr">settings.local.json</code> גובר על זה של הפרויקט, שגובר על האישי.</p>
+
+  <h2>6. איטיות, זיכרון, ותקיעות</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>התופעה</th><th>מה עושים</th></tr>
+    <tr><td>איטי, או שהשיחה ״שוכחת״</td><td>חלון ההקשר מלא. <code>/compact</code> בנקודת עצירה, <code>/clear</code> בין משימות, <code>/context</code> כדי לראות מה תופס מקום. <a href="lesson-04.html">פרק 4</a>.</td></tr>
+    <tr><td>צריכת זיכרון או מעבד גבוהה</td><td>להפעיל מחדש בין משימות גדולות. לבדוק אם זו תוספת שלכם עם <code dir="ltr">claude --safe-mode</code>.</td></tr>
+    <tr><td>הפקודה תקועה ולא מגיבה</td><td><kbd>Ctrl+C</kbd>. אם גם זה לא — לסגור את הטרמינל ולהריץ <code dir="ltr">claude --resume</code> באותה תיקייה. <strong>השיחה נשמרת.</strong></td></tr>
+    <tr><td>חיפוש איטי או חלקי</td><td>התקינו <code>ripgrep</code> במערכת. ב‑WSL — החזיקו את הפרויקט תחת <code dir="ltr">/home/</code> ולא תחת <code dir="ltr">/mnt/c/</code>; זה הבדל דרמטי.</td></tr>
+  </table>
+  </div>
+
+  <h2>כשכלום לא עוזר</h2>
+  <p>בשלב הזה כדאי לתת ל‑Claude לאבחן את עצמו: הפקודה <code>/debug</code> מפעילה רישום מפורט ואז מבקשת ממנו לקרוא את הלוג ולהסביר מה קרה. הלוגים יושבים ב‑<code dir="ltr">~/.claude/debug/</code>.</p>
+  <p>ואם זה נראה כמו באג אמיתי — <code>/bug</code> שולח דיווח ל‑Anthropic, עם מסך אישור שמראה לכם בדיוק מה נשלח לפני ששולחים.</p>
+  <div class="callout info">
+    <span class="co-title">💡 מצאתם תקלה שחסרה כאן?</span>
+    העמוד הזה נבנה מהמקרים הנפוצים. אם נתקעתם במשהו אחר ופתרתם — <a href="feedback.html">ספרו לנו</a> ונוסיף אותו, כדי שהבא בתור לא יבזבז את אותו ערב.
+  </div>
+
+  <nav class="lesson-nav">
+    <a href="index.html"><span class="dir-label">→ חזרה</span>לתוכן הקורס</a>
+    <a href="cheatsheet.html"><span class="dir-label">גם שימושי ←</span>הצ'יט-שיט</a>
+  </nav>
+</main>
+
+<footer class="site">קורס קהילתי ללימוד Claude Code · התיעוד הרשמי: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="feedback.html">מצאתם טעות? שלחו משוב</a><br>© 2026 סער נצר (<a href="https://github.com/saarnetzer" target="_blank" rel="noopener">Saar Netzer</a>) · התוכן ברישיון <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.he" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> · נבנה באמצעות Claude Code</footer>
+</body>
+</html>

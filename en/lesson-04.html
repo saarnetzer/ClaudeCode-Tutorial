@@ -30,7 +30,7 @@
 </header>
 
 <main id="main" class="wrap">
-  <span class="kicker">Lesson 4 of 13</span><span class="readtime">⏱ about 30 min</span>
+  <span class="kicker">Lesson 4 of 13</span><span class="readtime">⏱ about 35 min</span>
   <h1>Memory and context: CLAUDE.md and context management</h1>
   <p class="lead">The difference between "Claude that works okay" and "Claude that feels like a veteran teammate" is almost always one small file: CLAUDE.md. In this lesson we'll teach Claude our project once — and keep conversations sharp and focused.</p>
 
@@ -41,6 +41,7 @@
     <li>Three memory levels: project, personal, and global</li>
     <li>Techniques for managing long conversations</li>
     <li>Choosing a model and an effort level — quality, time and cost</li>
+    <li>What actually consumes your allowance, and working in a large project</li>
   </ul>
 
   <h2>First, a concept: the context window</h2>
@@ -162,20 +163,32 @@ and numbers and code stay LTR.</code></pre>
   <h2>Model and effort — the lever that saves you most</h2>
   <p>Context isn't the only resource you manage. There are two more levers, both of which directly affect quality, time and cost — and most people never touch them.</p>
 
-  <h3>Which model</h3>
-  <p>The <code>/model</code> command switches models. You don't need to remember version names — there are <strong>aliases</strong> that always point at the current one:</p>
+  <h3>Which model — and why</h3>
+  <p>The <code>/model</code> command switches models. You don't need to remember version names: there are <strong>aliases</strong> that always point at the current one in the family. The difference between them isn't "smarter" versus "dumber" — it's <strong>how much they investigate before acting, and how much they verify themselves afterwards</strong>. That's what should decide your choice:</p>
   <div class="table-scroll">
   <table>
-    <tr><th>Alias</th><th>What it's for</th></tr>
-    <tr><td><code>haiku</code></td><td>Fast and cheap — for simple tasks</td></tr>
-    <tr><td><code>sonnet</code></td><td>Day-to-day coding. A sensible starting point for most things</td></tr>
-    <tr><td><code>opus</code></td><td>Tasks that need complex reasoning</td></tr>
-    <tr><td><code>opusplan</code></td><td>A neat hybrid: opus while planning, then sonnet to execute</td></tr>
-    <tr><td><code>fable</code></td><td>The hardest, longest problems — root-cause investigation, outage debugging, architecture decisions</td></tr>
-    <tr><td><code>default</code></td><td>Clear your choice and go back to your account's default</td></tr>
+    <tr><th>Alias</th><th>When to choose it</th><th>What you get for it</th></tr>
+    <tr><td><code>haiku</code></td><td>A simple task whose shape you already know: a rename, formatting, a short summary</td><td>Very fast and cheap. It won't investigate — and doesn't need to</td></tr>
+    <tr><td><code>sonnet</code></td><td>Day-to-day coding — a feature with clear scope, a fix you understand</td><td>The best balance. This is the right starting point for most things</td></tr>
+    <tr><td><code>opus</code></td><td>When reasoning matters: architecture, code you don't know, a problem with many edge cases</td><td>Deeper planning and fewer misses — in exchange for time and cost</td></tr>
+    <tr><td><code>opusplan</code></td><td>A big task that starts with planning and then turns into a lot of writing</td><td>opus while planning, then an automatic switch to sonnet to execute</td></tr>
+    <tr><td><code>fable</code></td><td>Problems that don't resolve in one sitting: root-cause investigation, outage debugging, an ambiguous architecture decision</td><td>Holds long runs without losing the thread, investigates before acting, and verifies its own work</td></tr>
+    <tr><td><code>default</code></td><td>Clear your choice and go back to your account's default</td><td>—</td></tr>
   </table>
   </div>
-  <p><code>opusplan</code> deserves particular attention: it puts the stronger reasoning exactly where it matters most — the planning — and the efficient model on the writing itself. That's the Plan Mode workflow from Lesson 2, automated.</p>
+  <p><strong>The practical rule:</strong> start at <code>sonnet</code>. Move up to <code>opus</code> once you've seen the result fall short — not in advance. And <code>haiku</code> isn't a compromise: for a genuinely simple task it's the right answer, and spending a large model on it is waste.</p>
+  <div class="callout tip">
+    <span class="co-title">✅ opusplan — the trick worth knowing</span>
+    It puts the stronger reasoning exactly where it matters most — <strong>the planning</strong> — and the efficient model on the writing itself. That's the Plan Mode workflow from <a href="lesson-02.html">Lesson 2</a>, automated. For a large task it's usually the smartest choice on value for money.
+  </div>
+  <div class="callout info">
+    <span class="co-title">💡 How to work with the stronger models</span>
+    The stronger the model, <strong>the more the way you should talk to it changes</strong>. With a strong model, don't dictate steps — <em>describe the outcome</em> you want and let it plan the path. Give it the ambiguous problems, the ones where you don't know where to start. And don't bother reminding it to check its work — it already does. That's the exact opposite of working with a small model, where detailed step-by-step instruction genuinely helps.
+  </div>
+  <div class="callout warn">
+    <span class="co-title">⚠️ The aliases move</span>
+    <code>sonnet</code> and <code>opus</code> point at the current version, and that changes over time. Usually that's what you want. But if you're building automation that must behave the same in six months, pin an exact full model name instead of an alias. Also note that your <code>/model</code> choice carries to <strong>subagents</strong> that inherit it: switching to opus before delegating runs them on opus too.
+  </div>
 
   <h3>How much effort</h3>
   <p>The same model can work shallow or deep. That's the <strong>effort level</strong>, switched with <code>/effort</code>:</p>
@@ -197,6 +210,28 @@ and numbers and code stay LTR.</code></pre>
   <h3>Seeing where the money goes</h3>
   <p>And if you'd like to see patterns over time — <code>/insights</code> generates an HTML report on your recent sessions on this machine: which projects you work in, how you use the tool, and where things get stuck.</p>
   <p>And finally, measurement: <code>/usage</code> (also <code>/cost</code>) shows what the session cost and where you stand against your plan limits. Worth a look after a big task — it's how you build intuition for what's expensive and what isn't.</p>
+
+  <h3>What actually consumes your allowance</h3>
+  <p>It's worth understanding the mechanism, because it isn't intuitive: <strong>every request re-sends the whole conversation</strong> — the instructions, the memory file, and everything said so far. Each tool call adds another request carrying the tool results too. Everything else follows from that:</p>
+  <ul>
+    <li><strong>One long session costs more than several short ones</strong> — even for the same work. <code>/clear</code> between unrelated tasks is the single biggest saving available.</li>
+    <li><strong>Long output is paid for twice</strong> — once when produced, and again in every request after it. A command that prints a thousand lines keeps charging for itself until the session ends.</li>
+    <li><strong>Agents and squads multiply it</strong> — every subagent and every teammate is its own consumption. That's why Lesson 12 suggests starting with three to five.</li>
+    <li><strong>A bloated memory file is re-sent every time.</strong> An excellent reason to keep CLAUDE.md short and move topic knowledge into Skills and rules files.</li>
+  </ul>
+  <div class="callout info">
+    <span class="co-title">💡 What happens when you run out</span>
+    You'll get a message about a session limit or a weekly one. If it's a <em>general</em> limit, switching model won't help — it's shared across all of them. If the message names a specific model ("you've hit your Opus limit"), moving to another family does work. Recent versions can also wait for the reset and continue the task by themselves.
+  </div>
+
+  <h2>A large project or a monorepo</h2>
+  <p>In a huge repo the defaults work against you: too many files, too much context. Four things that fix it:</p>
+  <ul>
+    <li><strong>Where you open decides what's reachable.</strong> Opening at the root gives access to everything; opening in a subdirectory narrows it to that subtree — which is usually what you want.</li>
+    <li><strong>Layer your CLAUDE.md.</strong> Repo-wide rules at the root, package-specific conventions in each one: <code dir="ltr">packages/api/CLAUDE.md</code>. Check what actually loaded with <code dir="ltr">/context all</code>.</li>
+    <li><strong>Block reads of what isn't relevant</strong> — build directories, vendored code. A <code dir="ltr">deny</code> rule like <code dir="ltr">"Read(./**/dist/**/*)"</code> keeps them from flooding the context.</li>
+    <li><strong>Work across directories</strong> — <code dir="ltr">claude --add-dir ../shared</code> when the task touches a neighbouring package too.</li>
+  </ul>
 
   <h2>Exercises</h2>
   <div class="exercise">

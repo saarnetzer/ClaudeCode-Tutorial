@@ -134,6 +134,16 @@ jobs:
     CLAUDE.md (Lesson 4), commands and Skills (Lesson 5), Hooks (Lesson 6), project MCP servers (Lesson 7) and subagents (Lesson 8) — all live in the repo, so the agent running in CI gets them automatically. Now it's clear why we invested in infrastructure: it's exactly what turns a remote agent from a "stranger" into a "teammate who knows the project".
   </div>
 
+  <div class="callout info">
+    <span class="co-title">💡 Not on GitHub? GitLab works too</span>
+    The idea is identical, only the syntax changes: add a masked CI/CD variable called <code dir="ltr">ANTHROPIC_API_KEY</code>, and build a job that installs Claude Code and runs it with <code dir="ltr">-p</code>:
+    <pre><code>script:
+  - claude -p "review this MR and implement the comments"
+      --permission-mode acceptEdits
+      --allowedTools "Bash Read Edit Write"</code></pre>
+    Note that this is exactly the same <code dir="ltr">-p</code> and the same permission flags from the previous section — what you learned carries over unchanged. Cap the cost with <code dir="ltr">--max-turns</code> and the job's <code dir="ltr">timeout</code>. The integration is in beta and maintained by GitLab.
+  </div>
+
   <h2>A template for a local automation script</h2>
   <p>A useful pattern for periodic maintenance jobs:</p>
   <pre><span class="pre-label">nightly-deps.sh</span><code>#!/bin/bash

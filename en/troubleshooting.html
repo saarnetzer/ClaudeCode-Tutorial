@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide · When something doesn't work</title>
+<meta name="description" content="Troubleshooting Claude Code: command not found, install and login problems, an MCP server that won't connect, hooks that don't fire, Skills that don't load — and the check order that solves most cases.">
+<link rel="canonical" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/troubleshooting.html">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Guide · When something doesn't work">
+<meta property="og:description" content="Troubleshooting Claude Code: command not found, install and login problems, an MCP server that won't connect, hooks that don't fire, Skills that don't load — and the check order that solves most cases.">
+<meta property="og:url" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/troubleshooting.html">
+<meta property="og:image" content="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/og-image.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" hreflang="he" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/troubleshooting.html">
+<link rel="alternate" hreflang="en" href="https://saarnetzer.github.io/ClaudeCode-Tutorial/en/troubleshooting.html">
+<link rel="stylesheet" href="../style.css">
+<script src="../changelog.js" defer></script>
+<script src="../app.js" defer></script>
+<script data-goatcounter="https://saarnetzer.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="site">
+  <div class="brand"><a href="index.html"><span class="spark">✳</span><span class="brand-text"> Claude Code Course</span></a></div>
+  <nav><a class="hlink" href="cheatsheet.html">📋 <span class="hlink-text">Cheat sheet</span></a><a class="hlink" href="glossary.html">📖 <span class="hlink-text">Glossary</span></a><a class="hlink" href="../troubleshooting.html" title="עברית">🇮🇱 <span class="hlink-text">עברית</span></a><button id="themeBtn" class="hbtn" aria-label="Toggle theme" title="Theme">🌓<span class="hbtn-text"> Theme</span></button></nav>
+</header>
+
+<main id="main" class="wrap">
+  <span class="kicker">Guide · for any point in the course</span>
+  <h1>When something doesn't work</h1>
+  <p class="lead">Before you give up: most Claude Code problems are one of five, and all of them have a short fix. This page is ordered as a check sequence — start at the top and stop as soon as you've found it. Bookmark it; it will save you an evening.</p>
+
+  <h2>The check order: three commands that solve most cases</h2>
+  <p>Don't guess. These three tell you what's broken, in this order:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>#</th><th>Command</th><th>What it tells you</th></tr>
+    <tr><td>1</td><td><code dir="ltr">claude --version</code></td><td>Whether the install is sound at all. Run it in a <strong>new terminal window</strong>.</td></tr>
+    <tr><td>2</td><td><code dir="ltr">claude doctor</code></td><td>Diagnostics from your shell, even when the tool won't start: broken settings files, search status, permission problems.</td></tr>
+    <tr><td>3</td><td><code>/doctor</code></td><td>A full checkup from <em>inside</em> a session — and it proposes fixes, asking you before it touches anything.</td></tr>
+  </table>
+  </div>
+  <div class="callout tip">
+    <span class="co-title">✅ The trump card: safe mode</span>
+    Suspect something <em>you added</em> is breaking it — a hook, an MCP server, a plugin, a Skill? Run:
+    <pre><code>claude --safe-mode</code></pre>
+    That starts a session with no CLAUDE.md, no Skills, no plugins, no hooks, no MCP servers and no custom commands. Login, model and built-in tools work as normal. <strong>If the problem disappears, it's in your configuration</strong> — and now you only have to narrow down which part. It's the single most useful check on this page.
+  </div>
+
+  <h2>1. "command not found: claude"</h2>
+  <p>The most common problem, and usually not really an install problem — the tool is there, your system just doesn't know where. First, close your terminal and open a new one; a PATH change only loads in a new window. Still nothing?</p>
+  <h3>Check the file is actually there</h3>
+  <pre><span class="pre-label">macOS / Linux</span><code>ls -la ~/.local/bin/claude</code></pre>
+  <pre><span class="pre-label">Windows (PowerShell)</span><code>Test-Path "$env:USERPROFILE\.local\bin\claude.exe"</code></pre>
+  <p>If the file isn't there, the install didn't complete — go back to <a href="lesson-01.html">Lesson 1</a> and run it again. If it is there, the problem is your PATH:</p>
+  <h3>Add it to your PATH</h3>
+  <pre><span class="pre-label">macOS (zsh — the default)</span><code>echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.zshrc
+source ~/.zshrc</code></pre>
+  <pre><span class="pre-label">Linux (bash)</span><code>echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.bashrc
+source ~/.bashrc</code></pre>
+  <pre><span class="pre-label">Windows (PowerShell, then open a new terminal)</span><code>$currentPath = [Environment]::GetEnvironmentVariable('PATH', 'User')
+[Environment]::SetEnvironmentVariable('PATH', "$currentPath;$env:USERPROFILE\.local\bin", 'User')</code></pre>
+  <div class="callout info">
+    <span class="co-title">💡 Three traps worth knowing</span>
+    <strong>(1)</strong> If you're in a terminal <em>inside</em> a code editor, it inherits PATH from the editor — so you have to restart the editor itself, not just the terminal. <strong>(2)</strong> Not sure which shell you're running? <code dir="ltr">echo $0</code> tells you, so you edit the right file. <strong>(3)</strong> The VS Code extension does <strong>not</strong> put <code>claude</code> on your PATH — you need the standalone install too.
+  </div>
+  <h3>Two installs fighting each other?</h3>
+  <pre><code>which -a claude</code></pre>
+  <p>Several lines means several installs — keep one. To remove the others: <code dir="ltr">npm uninstall -g @anthropic-ai/claude-code</code>, <code dir="ltr">rm -rf ~/.claude/local</code>, <code dir="ltr">brew uninstall --cask claude-code</code> or <code dir="ltr">winget uninstall Anthropic.ClaudeCode</code>, depending on how you installed.</p>
+
+  <h2>2. The install itself fails</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>What you see</th><th>What it means and what to do</th></tr>
+    <tr><td><code dir="ltr">403</code> or <code dir="ltr">syntax error near unexpected token '&lt;'</code></td><td>You got a web page instead of a script — usually a firewall or corporate proxy. Test with <code dir="ltr">curl -sI https://downloads.claude.ai/claude-code-releases/latest</code> (expect 200). Work around it with Homebrew or WinGet.</td></tr>
+    <tr><td><code dir="ltr">EACCES</code> / permission denied</td><td>No write permission. <code dir="ltr">sudo mkdir -p ~/.local/bin</code> then <code dir="ltr">sudo chown -R $(whoami) ~/.local</code>. If you installed via npm and hit permission errors, switch to the native installer — and never run npm with sudo.</td></tr>
+    <tr><td><code dir="ltr">Killed</code> (Linux)</td><td>Out of memory. The install needs about half a gigabyte free, and the tool itself 4 GB. Add a swap file or use a bigger machine.</td></tr>
+    <tr><td>Certificate errors / <code dir="ltr">unable to get local issuer certificate</code></td><td>On Ubuntu: <code dir="ltr">sudo apt-get install ca-certificates</code>. Behind a corporate proxy, ask IT for a PEM of the root certificate and point <code dir="ltr">CURL_CA_BUNDLE</code> and <code dir="ltr">NODE_EXTRA_CA_CERTS</code> at it.</td></tr>
+    <tr><td><code dir="ltr">'irm' is not recognized</code> / an error about <code dir="ltr">&amp;&amp;</code></td><td>You're in the wrong window. <code dir="ltr">irm</code> is PowerShell; the <code dir="ltr">&amp;&amp;</code> command is CMD. See <a href="lesson-01.html">Lesson 1</a>.</td></tr>
+  </table>
+  </div>
+  <div class="callout warn">
+    <span class="co-title">⚠️ Windows: two errors of its own</span>
+    <strong>"requires either Git for Windows or PowerShell"</strong> — install <a href="https://git-scm.com/downloads/win" target="_blank" rel="noopener">Git for Windows</a> and choose the option to add it to PATH.<br>
+    <strong>"does not support 32-bit Windows"</strong> — you opened <code dir="ltr">Windows PowerShell (x86)</code> by mistake. Open the regular one.
+  </div>
+
+  <h2>3. Login problems</h2>
+  <p>The reset that fixes most login cases: <code>/logout</code>, close Claude Code completely, run <code>claude</code>, and sign in again.</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>What you see</th><th>What to do</th></tr>
+    <tr><td><code dir="ltr">403 Request not allowed</code></td><td>Check your subscription is active at <a href="https://claude.ai/settings" target="_blank" rel="noopener">claude.ai/settings</a>. On Console, check your role includes Claude Code access.</td></tr>
+    <tr><td><code dir="ltr">This organization has been disabled</code></td><td>Almost always: an old <code dir="ltr">ANTHROPIC_API_KEY</code> environment variable overriding your subscription. Run <code dir="ltr">unset ANTHROPIC_API_KEY</code> and delete the line from your shell file. Confirm with <code>/status</code>.</td></tr>
+    <tr><td>The browser won't open (SSH, WSL, a container)</td><td>Press <kbd>c</kbd> to copy the URL, open it in your local browser, and paste the code back into the terminal.</td></tr>
+    <tr><td>"That doesn't look like the full code"</td><td>Copy the <strong>whole</strong> code including the <code>#</code>, and paste it quickly — it expires.</td></tr>
+    <tr><td>The token keeps expiring</td><td>Check your system clock. Token validation depends on it.</td></tr>
+  </table>
+  </div>
+
+  <h2>4. An MCP server won't connect</h2>
+  <p><code>/mcp</code> shows the status of every server. The three common causes, in order of frequency:</p>
+  <ul>
+    <li><strong>You never approved it.</strong> A server defined in a project's <code dir="ltr">.mcp.json</code> needs a one-time approval. If you dismissed the prompt: <code dir="ltr">claude mcp reset-project-choices</code>, restart, approve.</li>
+    <li><strong>A relative path.</strong> This is the big trap: paths in <code dir="ltr">.mcp.json</code> resolve relative to <em>where you launched Claude</em>, not relative to the file. For local scripts, always use a full path.</li>
+    <li><strong>The file is in the wrong place.</strong> It must be called <code dir="ltr">.mcp.json</code> and sit at the repo root — <em>not</em> inside <code dir="ltr">.claude/</code>. And servers you write inside <code dir="ltr">settings.json</code> are simply ignored.</li>
+  </ul>
+  <p>Connected but offering no tools? Choose <strong>Reconnect</strong> inside <code>/mcp</code>. If that doesn't help, run <code dir="ltr">claude --debug=mcp</code> and read the log in <code dir="ltr">~/.claude/debug/</code>.</p>
+
+  <h2>5. Hooks don't fire, Skills don't load</h2>
+  <p>These two feel mysterious because <strong>they fail silently</strong> — there's no error message. The first check is always whether the thing loaded at all: <code>/hooks</code> and <code>/skills</code>.</p>
+  <h3>A hook that doesn't fire</h3>
+  <ul>
+    <li>The <code dir="ltr">matcher</code> must be a <strong>string</strong>, not an array.</li>
+    <li>Tool names are <strong>capitalized</strong>: <code dir="ltr">Bash</code>, <code dir="ltr">Edit</code>, <code dir="ltr">Write</code>, <code dir="ltr">Read</code>. <code dir="ltr">"bash"</code> matches nothing.</li>
+    <li>For several tools use a pipe: <code dir="ltr">"Edit|Write"</code>.</li>
+    <li>A misspelled tool name matches nothing — silently.</li>
+    <li>The configuration must sit under the <code dir="ltr">"hooks"</code> key in <code dir="ltr">settings.json</code>. There is no separate hooks file.</li>
+  </ul>
+  <p>To watch evaluation live: <code dir="ltr">claude --debug</code>, then trigger the tool.</p>
+  <h3>A Skill that doesn't load</h3>
+  <ul>
+    <li>The layout must be <code dir="ltr">.claude/skills/name/SKILL.md</code> — a folder with a file inside, not <code dir="ltr">.claude/skills/name.md</code>.</li>
+    <li>The <code>description</code> has to match how you actually phrase requests — it's the model's only way to decide to load it. See <a href="lesson-05.html">Lesson 5</a>.</li>
+    <li>A "user-only" badge in the list means Claude won't invoke it by itself. Check for <code dir="ltr">disable-model-invocation: true</code> in the frontmatter.</li>
+  </ul>
+  <h3>CLAUDE.md being ignored</h3>
+  <p>Run <code>/context</code> — it shows what actually loaded. A CLAUDE.md in a subdirectory only loads when you work in that area. And for settings: <code dir="ltr">settings.local.json</code> beats the project's, which beats your personal one.</p>
+
+  <h2>6. Slowness, memory, and hangs</h2>
+  <div class="table-scroll">
+  <table>
+    <tr><th>Symptom</th><th>What to do</th></tr>
+    <tr><td>Slow, or the session "forgets"</td><td>The context window is full. <code>/compact</code> at a stopping point, <code>/clear</code> between tasks, <code>/context</code> to see what's taking up room. <a href="lesson-04.html">Lesson 4</a>.</td></tr>
+    <tr><td>High memory or CPU</td><td>Restart between big tasks. Check whether it's something you added with <code dir="ltr">claude --safe-mode</code>.</td></tr>
+    <tr><td>A command is stuck and unresponsive</td><td><kbd>Ctrl+C</kbd>. If that won't do it, close the terminal and run <code dir="ltr">claude --resume</code> in the same folder. <strong>Your conversation is kept.</strong></td></tr>
+    <tr><td>Slow or incomplete search</td><td>Install <code>ripgrep</code> on your system. On WSL, keep the project under <code dir="ltr">/home/</code> rather than <code dir="ltr">/mnt/c/</code> — it makes a dramatic difference.</td></tr>
+  </table>
+  </div>
+
+  <h2>When nothing helps</h2>
+  <p>At this point, let Claude diagnose itself: the <code>/debug</code> command turns on detailed logging and then asks it to read the log and explain what happened. The logs live in <code dir="ltr">~/.claude/debug/</code>.</p>
+  <p>And if it looks like a genuine bug, <code>/bug</code> sends a report to Anthropic, with a consent screen showing you exactly what will be sent before anything leaves.</p>
+  <div class="callout info">
+    <span class="co-title">💡 Hit something that isn't here?</span>
+    This page is built from the common cases. If you got stuck on something else and solved it, <a href="feedback.html">tell us</a> and we'll add it, so the next person doesn't lose the same evening.
+  </div>
+
+  <nav class="lesson-nav">
+    <a href="index.html"><span class="dir-label">← Back</span>Course contents</a>
+    <a href="cheatsheet.html"><span class="dir-label">Also useful →</span>The cheat sheet</a>
+  </nav>
+</main>
+
+<footer class="site">A community course for learning Claude Code · official docs: <a href="https://code.claude.com/docs" target="_blank" rel="noopener">code.claude.com/docs</a> · <a href="feedback.html">Found a mistake? Send feedback</a><br>© 2026 Saar Netzer · content licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a> · built with Claude Code</footer>
+</body>
+</html>

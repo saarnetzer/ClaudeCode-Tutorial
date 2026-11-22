@@ -41,6 +41,7 @@
     <li>הגנה על סודות: מפתחות, סיסמאות וקובצי ‎.env</li>
     <li>הזרקת פרומפט — ואיך מתגוננים ממנה</li>
     <li>סנדבוקס: גבול שמערכת ההפעלה אוכפת — ומתי חייבים אותו</li>
+    <li>אילו כלים קיימים, סריקת אבטחה של הקוד, ומה יוצא מהמחשב שלכם</li>
   </ul>
 
   <h2>ההגנה שכבר יש לכם — אם משתמשים בה נכון</h2>
@@ -118,6 +119,47 @@
   <div class="callout info">
     <span class="co-title">💡 סקירת אבטחה בפקודה אחת</span>
     בנוסף לכל ההגנות, יש Skill מובנה לסקירת אבטחה של הקוד עצמו: <code dir="ltr">/security-review</code>. הריצו אותו על שינוי לפני שהוא נכנס — במיוחד בקוד שנוגע בקלט מבחוץ, בהרשאות או בסודות.
+  </div>
+
+  <h2>אילו כלים בכלל קיימים</h2>
+  <p>כתבתם <code dir="ltr">allowedTools "Bash(npm test),Read"</code> — אבל מאיפה הגיעו השמות האלה? לכל פעולה של Claude יש <strong>כלי</strong> עם שם קבוע, וזה אוצר המילים שכללי ההרשאות מדברים בו. אלה העיקריים:</p>
+  <div class="table-scroll">
+  <table>
+    <tr><th>כלי</th><th>מה הוא עושה</th><th>דורש אישור?</th></tr>
+    <tr><td><code>Read</code></td><td>קריאת קובץ</td><td>לא</td></tr>
+    <tr><td><code>Glob</code></td><td>איתור קבצים לפי תבנית</td><td>לא</td></tr>
+    <tr><td><code>Grep</code></td><td>חיפוש בתוכן הקבצים</td><td>לא</td></tr>
+    <tr><td><code>Edit</code></td><td>עריכה ממוקדת בקובץ קיים</td><td><strong>כן</strong></td></tr>
+    <tr><td><code>Write</code></td><td>יצירה או דריסה של קובץ</td><td><strong>כן</strong></td></tr>
+    <tr><td><code>Bash</code></td><td>הרצת פקודת טרמינל</td><td><strong>כן</strong></td></tr>
+    <tr><td><code>WebFetch</code></td><td>משיכת תוכן מכתובת</td><td><strong>כן</strong></td></tr>
+    <tr><td><code>WebSearch</code></td><td>חיפוש באינטרנט</td><td><strong>כן</strong></td></tr>
+    <tr><td><code>Agent</code></td><td>הפעלת סוכן משנה</td><td>לא</td></tr>
+  </table>
+  </div>
+  <p>שימו לב לדפוס: <strong>קריאה לא דורשת אישור, שינוי כן.</strong> זה בדיוק ההיגיון שראיתם בפרק 2 — ועכשיו ברור למה סוכן־בוחן עם <code dir="ltr">tools: Read, Grep, Glob</code> הוא באמת לקריאה בלבד. ‏<code>Read</code>,‏ <code>Grep</code> ו‑<code>Glob</code> כן ישאלו אתכם אם הנתיב נמצא מחוץ לתיקיית העבודה.</p>
+
+  <h2>סריקת אבטחה של הקוד עצמו</h2>
+  <p>כל מה שעשינו עד כה מגן על <em>המחשב</em> שלכם מפני הסוכן. אבל מי בודק את הקוד שנכתב? לזה יש פלאגין ייעודי:</p>
+  <pre><code>/plugin install claude-security@claude-plugins-official</code></pre>
+  <p>ואז <code dir="ltr">/claude-security</code> מריץ סריקה רב־שלבית: מיפוי הארכיטקטורה, בניית מודל איומים, חיפוש פרצות, ואימות עצמאי של כל ממצא כדי לסנן התראות שווא. התוצאה היא תיקייה עם דוח, ובתוכה גם <strong>תיקון מוכן לכל ממצא</strong> — שלא מוחל אוטומטית. מחילים ידנית, אחד־אחד:</p>
+  <pre><code>git apply CLAUDE-SECURITY-&lt;תאריך&gt;/patches/F1.patch</code></pre>
+  <div class="callout info">
+    <span class="co-title">💡 שלוש רמות, לא להתבלבל</span>
+    <code dir="ltr">/security-review</code> — בדיקה מהירה של השינויים בענף שלכם, מובנית וזמינה תמיד. <code dir="ltr">/claude-security</code> — סריקה עמוקה של כל בסיס הקוד, דורשת התקנת פלאגין. ו<strong>כללי ה‑deny וה‑hooks</strong> מהפרק הזה — אלה לא בודקים קוד בכלל, הם מונעים מהסוכן לעשות נזק. שלושתם נחוצים, וכל אחד עונה על שאלה אחרת.
+  </div>
+
+  <h2>מה יוצא מהמחשב שלכם</h2>
+  <p>שאלה שכל אחד שואל לפני שהוא מכניס כלי כזה לעבודה אמיתית, ומגיעה לה תשובה ישרה. ‏Claude Code רץ אצלכם מקומית — אבל המודל לא, ולכן <strong>הפרומפטים והתשובות נשלחים</strong> (מוצפנים בדרך). מה שחשוב לדעת:</p>
+  <ul>
+    <li><strong>שימוש עסקי שונה משימוש פרטי.</strong> תחת תנאים מסחריים (Team, Enterprise, API) הקוד והפרומפטים שלכם <em>אינם</em> משמשים לאימון מודלים. בחשבון פרטי יש הגדרה שקובעת זאת, והיא גם משנה את משך השמירה — בדקו אותה ב<a href="https://claude.ai/settings/data-privacy-controls" target="_blank" rel="noopener">הגדרות הפרטיות</a>.</li>
+    <li><strong>משוב ודיווחי באג שולחים הרבה יותר.</strong> <code>/bug</code> ו‑<code>/feedback</code> מצרפים עותק מהשיחה, כולל קוד, ונשמרים לתקופה ארוכה. יש מסך אישור שמראה בדיוק מה נשלח — <strong>תקראו אותו</strong>.</li>
+    <li><strong>התמלילים יושבים גם אצלכם</strong>, בטקסט פשוט, תחת <code dir="ltr">~/.claude/projects/</code>. אם המחשב משותף — זה שווה מחשבה.</li>
+    <li><strong>ארגונים עם דרישות מחמירות</strong> יכולים לקבל הסדר של אפס שמירת נתונים. זו לא ברירת המחדל וצריך לבקש אותה.</li>
+  </ul>
+  <div class="callout warn">
+    <span class="co-title">⚠️ וזכרו את הזיכרון האוטומטי</span>
+    ב<a href="lesson-04.html">פרק 4</a> ראינו ש‑Claude כותב לעצמו הערות עליכם, והתכונה דולקת כברירת מחדל. זה חלק מאותה תמונה: אם אתם עובדים על קוד רגיש או בסביבה מפוקחת, זו עוד הגדרה שכדאי להחליט עליה במודע ולא בהיסח הדעת.
   </div>
 
   <h2>סודות: הנכס שמגינים עליו הכי חזק</h2>

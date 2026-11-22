@@ -4,6 +4,28 @@
    according to the page's <html lang>. */
 window.COURSE_CHANGELOG = [
   {
+    version: "4.0.0",
+    date: "2026-11-22",
+    title: "מדריך פתרון בעיות, התחלה בדפדפן, ובחירת מודל לעומק",
+    titleEn: "A troubleshooting guide, starting in the browser, and choosing a model",
+    changes: [
+      "🛟 עמוד חדש: כשמשהו לא עובד — התקלות הנפוצות והתיקון לכל אחת, לפי סדר בדיקה. הפקודה לא מזוהה, בעיות התקנה והתחברות, שרת MCP שלא מתחבר, hooks ו-Skills שנכשלים בשקט",
+      "🆕 פרק 1: אפשר להתחיל בלי להתקין כלום — Claude Code בדפדפן, ומתי כן כדאי לחזור לטרמינל",
+      "🧠 פרק 4: בחירת מודל נכתבה מחדש — לא ״חכם מול טיפש״ אלא כמה המודל חוקר ומאמת, מתי לבחור כל אחד, ואיך משתנה דרך הדיבור עם מודלים חזקים",
+      "💰 פרק 4: מה באמת צורך את המכסה (ולמה שיחה ארוכה יקרה משתיים קצרות), מה קורה כשנגמרת, ועבודה בפרויקט גדול ומונורפו",
+      "🔒 פרק 9: רשימת הכלים המובנים ומי מהם דורש אישור · סריקת אבטחה של הקוד · ומה בעצם יוצא מהמחשב שלכם",
+      "פרק 3: נקודות שחזור ולמה הן לא מחליפות את git · פרק 12: workflows דינמיים ושיחות שמדברות ביניהן · פרק 10: הרצה ב-GitLab"
+    ],
+    changesEn: [
+      "🛟 New page: when something doesn't work — the common problems and the fix for each, as a check order. Command not found, install and login problems, an MCP server that won't connect, hooks and Skills that fail silently",
+      "🆕 Lesson 1: you can start with nothing installed — Claude Code in the browser, and when it's worth coming back to the terminal",
+      "🧠 Lesson 4: model selection rewritten — not \"smart versus dumb\" but how much a model investigates and verifies, when to pick each one, and how talking to stronger models differs",
+      "💰 Lesson 4: what actually consumes your allowance (and why one long session costs more than two short ones), what happens when you run out, and working in a large project or monorepo",
+      "🔒 Lesson 9: the built-in tool list and which ones need approval · scanning your code for vulnerabilities · and what actually leaves your machine",
+      "Lesson 3: checkpoints and why they don't replace git · Lesson 12: dynamic workflows and sessions that talk to each other · Lesson 10: running in GitLab"
+    ]
+  },
+  {
     version: "3.9.0",
     date: "2026-11-22",
     title: "זיכרון אוטומטי, דיאגרמות, וגיליון הדפסה",
